@@ -40,6 +40,7 @@
       max-width: 960px;
     }
 
+    /* Cabecera */
     .header-banner {
       text-align: center;
       padding: 12px 0 16px 0;
@@ -62,6 +63,7 @@
       margin-top: 4px;
     }
 
+    /* Navegación por pestañas */
     .nav-tabs {
       display: flex;
       background: #171717;
@@ -150,7 +152,7 @@
       letter-spacing: 0.5px;
     }
 
-    input[type="text"], input[type="number"], input[type="date"], input[type="time"], select {
+    input[type="text"], input[type="number"], input[type="date"], select {
       width: 100%;
       background-color: var(--input-bg);
       border: 1px solid var(--border-color);
@@ -242,76 +244,32 @@
       background-color: #166534;
     }
 
-    .countdown-hero {
-      background: linear-gradient(145deg, #180808 0%, #000000 100%);
-      border: 2px solid var(--primary-red);
-      border-radius: 12px;
-      padding: 24px 16px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .countdown-title {
-      font-size: 0.85rem;
-      color: var(--accent-red);
-      text-transform: uppercase;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .countdown-location {
-      font-size: 1.8rem;
-      font-weight: 900;
-      margin: 6px 0 16px 0;
-      text-transform: uppercase;
-    }
-
-    .countdown-timer {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .countdown-box {
-      background: #141414;
-      border: 1px solid #2e2e2e;
+    /* Contenedor del Calendario de Google */
+    .calendar-container {
+      position: relative;
+      width: 100%;
       border-radius: 8px;
-      padding: 10px 14px;
-      min-width: 68px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: #1a1a1a;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
-    .countdown-num {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1;
+    .calendar-container iframe {
+      width: 100%;
+      height: 650px;
+      border: none;
+      display: block;
+      background: #ffffff;
     }
 
-    .countdown-lbl {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 4px;
+    @media (max-width: 768px) {
+      .calendar-container iframe {
+        height: 520px;
+      }
     }
 
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      margin-bottom: 16px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
+    /* Caja & Tesorería */
     .caja-balance-card {
       background: #000000;
       border: 2px solid var(--accent-green);
@@ -361,6 +319,7 @@
       border-left: 4px solid var(--accent-red);
     }
 
+    /* Listados de Presupuestos */
     .item-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -460,69 +419,51 @@
 <body>
 
 <div class="container">
+  <!-- Cabecera -->
   <div class="header-banner">
     <h1>Xaranga <span>Llenya al Bombo</span></h1>
     <p>Hub Oficial de Gestión · Salida desde Onda</p>
     <div style="margin-top:8px; font-size:0.75rem; color:#a3a3a3;" id="cloudSyncStatus">🔄 Conectando con Firebase...</div>
   </div>
 
+  <!-- Pestañas -->
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-inicio')">🏠 Agenda</button>
+    <button class="tab-btn active" onclick="switchTab('tab-inicio')">📅 Calendario</button>
     <button class="tab-btn" onclick="switchTab('tab-presupuesto')">💰 Presupuestos</button>
     <button class="tab-btn" onclick="switchTab('tab-caja')">📊 Caja & Bote</button>
   </div>
 
-  <!-- PESTAÑA 1: AGENDA & PRÓXIMO BOLO -->
+  <!-- ==================== PESTAÑA 1: CALENDARIO EN VIVO ==================== -->
   <div id="tab-inicio" class="tab-content active">
-    <div class="countdown-hero" id="nextGigHero">
-      <div class="countdown-title">🔥 Próxima Actuación Confirmada 🔥</div>
-      <div class="countdown-location" id="heroLugar">Cargando bolo...</div>
-      
-      <div class="countdown-timer">
-        <div class="countdown-box"><div class="countdown-num" id="cdDays">00</div><div class="countdown-lbl">Días</div></div>
-        <div class="countdown-box"><div class="countdown-num" id="cdHours">00</div><div class="countdown-lbl">Horas</div></div>
-        <div class="countdown-box"><div class="countdown-num" id="cdMinutes">00</div><div class="countdown-lbl">Min</div></div>
-        <div class="countdown-box"><div class="countdown-num" id="cdSeconds">00</div><div class="countdown-lbl">Seg</div></div>
-      </div>
-
-      <div class="hero-meta">
-        <span id="heroFecha">📅 --/--/----</span>
-        <span id="heroHoraSalida">🚐 Salida: --:-- h</span>
-        <span id="heroHoraToque">🎺 Toque: --:-- h</span>
-      </div>
-
-      <div class="hero-actions">
-        <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMaps()">📍 Ver Ruta Maps</button>
-        <button class="btn btn-whatsapp" id="btnHeroCalendar" onclick="anadirAGoogleCalendar()">📅 Google Calendar</button>
-      </div>
-    </div>
-
     <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h3>📅 Bolos Cerrados de la Temporada</h3>
-        <button class="btn-sm btn-fav" onclick="toggleFormBoloConfirmado()">➕ Añadir Bolo Confirmado</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3>📅 Calendario Oficial de Actuaciones</h3>
+        <span style="font-size:0.75rem; color:var(--accent-green); font-weight:700;">🟢 En directo</span>
+      </div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">
+        Sincronizado automáticamente con <strong>xarangallenyaalbombo@gmail.com</strong>. Todo lo añadido en la app de Google Calendar aparece aquí al instante.
+      </p>
+
+      <!-- Google Calendar Embed Interactivo -->
+      <div class="calendar-container">
+        <iframe 
+          src="https://calendar.google.com/calendar/embed?src=xarangallenyaalbombo%40gmail.com&ctz=Europe%2FMadrid&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=0&showTz=0&mode=AGENDA" 
+          scrolling="no">
+        </iframe>
       </div>
 
-      <div id="formNuevoBoloConfirmado" style="display:none; background:#000; padding:16px; border-radius:8px; border:1px solid #333; margin-bottom:16px;">
-        <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--primary-red);">Agendar Nuevo Bolo Oficial</h4>
-        <div class="grid-2col">
-          <div class="form-group"><label>Población / Evento</label><input type="text" id="conf_lugar" placeholder="Ej. Fiestas Nules"></div>
-          <div class="form-group"><label>Fecha</label><input type="date" id="conf_fecha"></div>
-          <div class="form-group"><label>Hora de Salida desde Onda</label><input type="time" id="conf_horaSalida" value="16:00"></div>
-          <div class="form-group"><label>Hora de Toque</label><input type="time" id="conf_horaToque" value="17:30"></div>
-          <div class="form-group"><label>Bote para la caja (€)</label><input type="number" id="conf_bote" value="70"></div>
-          <div class="form-group"><label>Notas / Punto de encuentro</label><input type="text" id="conf_notas" placeholder="Ej. Plaza Mayor, ropa oficial"></div>
-        </div>
-        <button class="btn btn-confirm" style="width:100%; margin-top:10px;" onclick="guardarBoloConfirmadoManual()">💾 Guardar en Agenda y Añadir Bote</button>
+      <div style="margin-top:14px; text-align:center;">
+        <button class="btn btn-fav" style="max-width:320px; margin:0 auto;" onclick="window.open('https://calendar.google.com/calendar/r?cid=xarangallenyaalbombo@gmail.com', '_blank')">
+          ➕ Abrir en mi app de Google Calendar
+        </button>
       </div>
-
-      <div id="listaBolosConfirmados" class="item-list"></div>
     </div>
   </div>
 
-  <!-- PESTAÑA 2: PRESUPUESTADOR INTELIGENTE -->
+  <!-- ==================== PESTAÑA 2: PRESUPUESTADOR INTELIGENTE ==================== -->
   <div id="tab-presupuesto" class="tab-content">
     <div class="grid-2col">
+      <!-- Calculadora -->
       <div class="card">
         <h2>Calculadora de Bolo</h2>
         <div class="form-group">
@@ -570,6 +511,7 @@
         </div>
       </div>
 
+      <!-- Presupuesto Final -->
       <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <h2>Presupuesto</h2>
@@ -580,7 +522,7 @@
           </div>
 
           <ul class="breakdown">
-            <li><span>Mínimo base (2h):</span><span id="baseMin">500 €</span></li>
+            <li><span>Mínimo base (hasta 2h):</span><span id="baseMin">500 €</span></li>
             <li><span>Horas extra toque:</span><span id="costeHorasExtra">0 €</span></li>
             <li><span>Horas de espera:</span><span id="costeEspera">0 €</span></li>
             <li><span>Desplazamiento furgoneta:</span><span id="costeKm">0 €</span></li>
@@ -603,9 +545,10 @@
       </div>
     </div>
 
+    <!-- Bolos Aprendidos y Registro Manual -->
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h3>🧠 Memoria en la Nube (<span id="countAprendidos">0</span>)</h3>
+        <h3>🧠 Memoria en la Nube (<span id="countAprendidos">0</span> bolos)</h3>
         <button class="btn-sm btn-fav" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
       </div>
 
@@ -643,7 +586,7 @@
     </div>
   </div>
 
-  <!-- PESTAÑA 3: CAJA & BOTE -->
+  <!-- ==================== PESTAÑA 3: CAJA & BOTE ==================== -->
   <div id="tab-caja" class="tab-content">
     <div class="caja-balance-card">
       <div style="font-size:0.85rem; color:#a3a3a3; text-transform:uppercase; font-weight:800;">Bote Total Disponible en Caja</div>
@@ -657,7 +600,7 @@
     <div class="card">
       <h3>➕ Registrar Movimiento de Caja</h3>
       <div class="grid-2col">
-        <div class="form-group"><label>Concepto</label><input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote fiestas, Gasolina..."></div>
+        <div class="form-group"><label>Concepto</label><input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote bolo Nules, Gasolina..."></div>
         <div class="form-group"><label>Importe (€)</label><input type="number" id="mov_importe" placeholder="Ej. 50"></div>
         <div class="form-group">
           <label>Tipo de Movimiento</label>
@@ -703,14 +646,11 @@
   const db = getFirestore(app);
 
   const bolosAprendidosCol = collection(db, "bolos_aprendidos");
-  const bolosConfirmadosCol = collection(db, "bolos_confirmados");
   const cajaMovimientosCol = collection(db, "caja_movimientos");
 
   let bolosCloud = [];
-  let bolosConfirmados = [];
   let movimientosCaja = [];
   let resumenCalculo = {};
-  let proximoBoloActual = null;
 
   onSnapshot(bolosAprendidosCol, (snap) => {
     bolosCloud = [];
@@ -718,14 +658,6 @@
     document.getElementById('cloudSyncStatus').innerText = `☁️ Base en la nube sincronizada (${bolosCloud.length} bolos aprendidos)`;
     renderFavoritos();
     window.calcular();
-  });
-
-  onSnapshot(bolosConfirmadosCol, (snap) => {
-    bolosConfirmados = [];
-    snap.forEach(d => bolosConfirmados.push({ id: d.id, ...d.data() }));
-    bolosConfirmados.sort((a, b) => new Date(a.fecha + 'T' + (a.horaSalida || '00:00')) - new Date(b.fecha + 'T' + (b.horaSalida || '00:00')));
-    renderBolosConfirmados();
-    actualizarHeroProximoBolo();
   });
 
   onSnapshot(cajaMovimientosCol, (snap) => {
@@ -743,142 +675,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  function actualizarHeroProximoBolo() {
-    const ahora = new Date();
-    const futuros = bolosConfirmados.filter(b => new Date(b.fecha + 'T' + (b.horaToque || '23:59')) >= ahora);
-
-    if (futuros.length === 0) {
-      document.getElementById('heroLugar').innerText = 'No hay bolos próximos';
-      document.getElementById('heroFecha').innerText = '📅 Próximamente';
-      document.getElementById('heroHoraSalida').innerText = '🚐 --:-- h';
-      document.getElementById('heroHoraToque').innerText = '🎺 --:-- h';
-      proximoBoloActual = null;
-      return;
-    }
-
-    proximoBoloActual = futuros[0];
-    document.getElementById('heroLugar').innerText = proximoBoloActual.lugar;
-    document.getElementById('heroFecha').innerText = `📅 ${proximoBoloActual.fecha}`;
-    document.getElementById('heroHoraSalida').innerText = `🚐 Salida: ${proximoBoloActual.horaSalida || '--:--'} h`;
-    document.getElementById('heroHoraToque').innerText = `🎺 Toque: ${proximoBoloActual.horaToque || '--:--'} h`;
-  }
-
-  setInterval(() => {
-    if (!proximoBoloActual) {
-      document.getElementById('cdDays').innerText = '00';
-      document.getElementById('cdHours').innerText = '00';
-      document.getElementById('cdMinutes').innerText = '00';
-      document.getElementById('cdSeconds').innerText = '00';
-      return;
-    }
-
-    const destino = new Date(proximoBoloActual.fecha + 'T' + (proximoBoloActual.horaSalida || '12:00')).getTime();
-    const ahora = new Date().getTime();
-    const diff = destino - ahora;
-
-    if (diff <= 0) {
-      document.getElementById('cdDays').innerText = '00';
-      document.getElementById('cdHours').innerText = '00';
-      document.getElementById('cdMinutes').innerText = '00';
-      document.getElementById('cdSeconds').innerText = '00';
-      return;
-    }
-
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById('cdDays').innerText = dias.toString().padStart(2, '0');
-    document.getElementById('cdHours').innerText = horas.toString().padStart(2, '0');
-    document.getElementById('cdMinutes').innerText = minutos.toString().padStart(2, '0');
-    document.getElementById('cdSeconds').innerText = segundos.toString().padStart(2, '0');
-  }, 1000);
-
-  window.abrirGoogleMaps = function() {
-    if (!proximoBoloActual) return;
-    const destino = encodeURIComponent(proximoBoloActual.lugar + ' ' + (proximoBoloActual.notas || ''));
-    window.open(`https://www.google.com/maps/dir/Onda,+Castellón/${destino}`, '_blank');
-  };
-
-  window.anadirAGoogleCalendar = function() {
-    if (!proximoBoloActual) return;
-    const b = proximoBoloActual;
-    const fechaLimpia = b.fecha.replace(/-/g, '');
-    const hSalida = (b.horaSalida || '12:00').replace(':', '') + '00';
-    const hFin = (b.horaToque || '22:00').replace(':', '') + '00';
-
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('🎺 Bolo Xaranga: ' + b.lugar)}&dates=${fechaLimpia}T${hSalida}/${fechaLimpia}T${hFin}&details=${encodeURIComponent('Bolo Llenya al Bombo. Salida: ' + b.horaSalida + '. Notas: ' + (b.notas || ''))}&location=${encodeURIComponent(b.lugar)}`;
-    window.open(url, '_blank');
-  };
-
-  window.toggleFormBoloConfirmado = function() {
-    const f = document.getElementById('formNuevoBoloConfirmado');
-    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
-  };
-
-  window.guardarBoloConfirmadoManual = async function() {
-    const lugar = document.getElementById('conf_lugar').value.trim();
-    const fecha = document.getElementById('conf_fecha').value;
-    const horaSalida = document.getElementById('conf_horaSalida').value;
-    const horaToque = document.getElementById('conf_horaToque').value;
-    const bote = parseFloat(document.getElementById('conf_bote').value) || 0;
-    const notas = document.getElementById('conf_notas').value.trim();
-
-    if (!lugar || !fecha) {
-      alert('Introduce al menos el lugar y la fecha del bolo.');
-      return;
-    }
-
-    await addDoc(bolosConfirmadosCol, { lugar, fecha, horaSalida, horaToque, bote, notas, fechaCreacion: Date.now() });
-
-    if (bote > 0) {
-      await addDoc(cajaMovimientosCol, {
-        concepto: `Bote bolo ${lugar} (${fecha})`,
-        importe: bote,
-        tipo: 'ingreso',
-        fecha: fecha,
-        fechaCreacion: Date.now()
-      });
-    }
-
-    document.getElementById('conf_lugar').value = '';
-    window.toggleFormBoloConfirmado();
-    alert(`¡Bolo en ${lugar} agendado y ${bote} € añadidos al bote común!`);
-  };
-
-  function renderBolosConfirmados() {
-    const contenedor = document.getElementById('listaBolosConfirmados');
-    if (bolosConfirmados.length === 0) {
-      contenedor.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay bolos cerrados en la agenda. Añade uno arriba.</p>';
-      return;
-    }
-
-    contenedor.innerHTML = bolosConfirmados.map(b => `
-      <div class="item-card">
-        <div>
-          <div class="item-title">${b.lugar}</div>
-          <div class="item-meta">
-            📅 <strong>${b.fecha}</strong><br>
-            🚐 Salida: ${b.horaSalida || '--:--'} · 🎺 Toque: ${b.horaToque || '--:--'}<br>
-            💰 Bote aportado: <strong style="color:var(--accent-green);">${b.bote || 0} €</strong><br>
-            ${b.notas ? '📝 ' + b.notas : ''}
-          </div>
-        </div>
-        <div style="display:flex; gap:6px;">
-          <button class="btn-sm btn-fav" style="flex:1;" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.lugar)}', '_blank')">📍 Mapa</button>
-          <button class="btn-sm btn-fav" style="color:var(--accent-red);" onclick="window.eliminarBoloConfirmado('${b.id}')">Borrar</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  window.eliminarBoloConfirmado = async function(id) {
-    if (confirm('¿Eliminar este bolo de la agenda oficial?')) {
-      await deleteDoc(doc(db, "bolos_confirmados", id));
-    }
-  };
-
+  // ================= CAJA & TESORERÍA =================
   window.guardarMovimientoCaja = async function() {
     const concepto = document.getElementById('mov_concepto').value.trim();
     const importe = parseFloat(document.getElementById('mov_importe').value);
@@ -937,6 +734,7 @@
     }
   };
 
+  // ================= PRESUPUESTADOR & APRENDIZAJE =================
   window.toggleFormularioManual = function() {
     const f = document.getElementById('manualForm');
     f.style.display = (f.style.display === 'block') ? 'none' : 'block';
@@ -983,7 +781,28 @@
     return 130.0 + (horasE - 6.0) * 15.0;
   }
 
-  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente) {
+  function calcularSubtotalTeoricoPuro(horasT, horasE, km, numMusicos, incluyeComida, requiereAlojamiento, incluyeAlojamiento) {
+    const BASE_MINIMA_CHARANGA = 500;
+    const factorEscalaMusicos = numMusicos / 9;
+    const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscalaMusicos;
+    const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscalaMusicos;
+    let kmFacturables = Math.max(0, km - 40);
+    let costeKmCalc = 0;
+    if (kmFacturables > 0) {
+      let tramoMedio = Math.min(kmFacturables, 180.0);
+      costeKmCalc += tramoMedio * 1.023;
+      kmFacturables -= tramoMedio;
+      if (kmFacturables > 0) {
+        costeKmCalc += kmFacturables * 0.26;
+      }
+    }
+    const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
+    const costeDietas = incluyeComida ? 0 : (numMusicos * 20);
+    const costeHotel = (requiereAlojamiento && !incluyeAlojamiento) ? (numMusicos * 35) : 0;
+    return BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
+  }
+
+  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente, incluyeComida, requiereAlojamiento) {
     if (bolosCloud.length === 0) return 0;
     let sumaPonderada = 0;
     let pesoTotal = 0;
@@ -994,8 +813,10 @@
       const distKm = Math.abs(b.km - km) / 100.0;
       const distDias = Math.abs(b.dias - dias);
       const distCliente = (b.tipoCliente === tipoCliente) ? 0 : 0.5;
+      const distComida = (b.incluyeComida === incluyeComida) ? 0 : 0.3;
+      const distAloj = (b.requiereAlojamiento === requiereAlojamiento) ? 0 : 0.4;
 
-      const dist = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2);
+      const dist = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2 + distComida**2 + distAloj**2);
       if (dist < 1.7) {
         const peso = 1.0 / (dist + 0.08);
         const subtotalRef = b.subtotalBaseTeorico || b.precioDia;
@@ -1046,7 +867,7 @@
     else if (dias >= 4) { factorDesc = 0.80; textoDesc = "20 %"; }
 
     let subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalBase * factorDesc);
-    const correccion = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente);
+    const correccion = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente, incluyeComida, requiereAlojamiento);
     subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalDia + correccion);
 
     const partes = numMusicos + 1;
@@ -1092,20 +913,40 @@
 
   window.copiarMensajeWhatsApp = function() {
     const r = resumenCalculo;
-    let texto = `🎺 *PRESUPUESTO · XARANGA LLENYA AL BOMBO* 🎺\nHola, os pasamos la propuesta para *${r.lugar}*:\n\n• *Duración:* ${r.dias > 1 ? r.dias + ' días' : '1 jornada'}\n• *Formación:* ${r.numMusicos} músicos\n• *Actuación:* ${r.horasT} h de música en directo\n• *Desplazamiento:* Furgoneta incluida · salida desde Onda\n• *Manutención:* ${r.incluyeComida ? 'A cargo de la organización' : 'Dietas incluidas'}\n\n💰 *PRECIO TOTAL:* *${r.precioTotal} €* ${r.dias > 1 ? '(' + r.precioDia + ' €/día)' : ''}\n\n¡A dar llenya! 🔥`;
+    let detalleDias = r.dias > 1 ? `• *Duración:* ${r.dias} días de actuación` : `• *Duración:* 1 jornada`;
+    let detalleHorario = `• *Actuación:* ${r.horasT} h de música en directo`;
+    if (r.horasE > 0) detalleHorario += `\n• *Disponibilidad / Descanso:* ${r.horasE} h`;
+    let detalleManutencion = r.incluyeComida ? `• *Manutención:* A cargo de la organización` : `• *Manutención:* Dietas incluidas`;
+
+    let texto = `🎺 *PRESUPUESTO · XARANGA LLENYA AL BOMBO* 🎺
+Hola, os pasamos la propuesta para *${r.lugar}*:
+
+${detalleDias}
+• *Formación:* ${r.numMusicos} músicos
+${detalleHorario}
+• *Desplazamiento:* Furgoneta incluida · salida desde Onda
+${detalleManutencion}
+
+💰 *PRECIO TOTAL:* *${r.precioTotal} €* ${r.dias > 1 ? '(' + r.precioDia + ' €/día)' : ''}
+
+Cualquier duda nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
 
     navigator.clipboard.writeText(texto).then(() => {
       const b = document.getElementById('btnCopiar');
       const prev = b.innerHTML;
       b.innerHTML = '✅ ¡Copiado!';
-      setTimeout(() => b.innerHTML = prev, 2000);
+      b.style.backgroundColor = '#16a34a';
+      setTimeout(() => { 
+        b.innerHTML = prev; 
+        b.style.backgroundColor = 'var(--primary-red)';
+      }, 2000);
     });
   };
 
   window.guardarFavorito = async function() {
     const nuevo = { ...resumenCalculo, fechaCreacion: Date.now() };
     await addDoc(bolosAprendidosCol, nuevo);
-    alert('⭐ ¡Presupuesto guardado y aprendido en la nube!');
+    alert('⭐ ¡Presupuesto guardado y sincronizado en la nube!');
   };
 
   window.guardarBoloManual = async function() {
@@ -1125,18 +966,19 @@
       return;
     }
 
+    const subtotalTeorico = calcularSubtotalTeoricoPuro(horasT, horasE, km, 9, incluyeComida, requiereAlojamiento, incluyeAlojamiento);
     const precioDia = Math.round(precioPactado / dias);
     await addDoc(bolosAprendidosCol, {
       lugar, tipoCliente, horasT, horasE, km, dias, numMusicos: 9,
       incluyeComida, requiereAlojamiento, incluyeAlojamiento,
-      subtotalBaseTeorico: precioDia, precioTotal: precioPactado, precioDia,
+      subtotalBaseTeorico: subtotalTeorico, precioTotal: precioPactado, precioDia,
       pagoMusico: Math.round((precioDia / 10) / 5) * 5, fechaCreacion: Date.now()
     });
 
     document.getElementById('m_lugar').value = '';
     document.getElementById('m_precioPactado').value = '';
     window.toggleFormularioManual();
-    alert(`¡Bolo en ${lugar} sincronizado!`);
+    alert(`¡Bolo en ${lugar} guardado y aprendido!`);
   };
 
   function renderFavoritos() {
@@ -1163,7 +1005,7 @@
   }
 
   window.eliminarFavorito = async function(id) {
-    if (confirm('¿Borrar de la memoria compartida?')) {
+    if (confirm('¿Borrar este bolo de la memoria compartida?')) {
       await deleteDoc(doc(db, "bolos_aprendidos", id));
     }
   };
@@ -1171,7 +1013,6 @@
   window.onload = function() {
     window.calcular();
     document.getElementById('mov_fecha').value = new Date().toISOString().split('T')[0];
-    document.getElementById('conf_fecha').value = new Date().toISOString().split('T')[0];
   };
 </script>
 
