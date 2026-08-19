@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Hub Oficial - Xaranga Llenya al Bombo</title>
   <style>
     :root {
@@ -30,15 +30,18 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-white);
-      padding: 16px 12px 90px 12px;
+      padding: 8px 6px 70px 6px;
       display: flex;
       justify-content: center;
       min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
     }
 
     .container {
       width: 100%;
       max-width: 960px;
+      margin: 0 auto;
     }
 
     /* PANTALLA DE ACCESO GOOGLE */
@@ -46,16 +49,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 80vh;
+      min-height: 85vh;
+      padding: 12px;
     }
 
     .login-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 36px 24px;
+      padding: 24px 16px;
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
       text-align: center;
       box-shadow: 0 8px 35px rgba(0, 0, 0, 0.85);
     }
@@ -63,7 +67,7 @@
     .login-card h2 {
       border: none;
       padding: 0;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       margin-bottom: 6px;
     }
 
@@ -75,24 +79,18 @@
       background: #ffffff;
       color: #000000;
       border: 1px solid #ffffff;
-      padding: 14px 18px;
+      padding: 12px 14px;
       border-radius: 8px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       width: 100%;
-      margin-top: 20px;
-      transition: all 0.2s ease;
+      margin-top: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-
-    .btn-google:hover {
-      background: #e5e5e5;
-      transform: translateY(-1px);
     }
 
     .login-error {
@@ -100,32 +98,30 @@
       background: rgba(220, 38, 38, 0.15);
       border: 1px solid var(--accent-red);
       color: #fca5a5;
-      padding: 12px;
+      padding: 10px;
       border-radius: 6px;
-      font-size: 0.82rem;
-      margin-top: 18px;
-      line-height: 1.4;
+      font-size: 0.8rem;
+      margin-top: 14px;
       text-align: left;
     }
 
-    /* ESTILOS DINÁMICOS DEL HUB */
+    /* HUB INTERNO Y COMPONENTES */
     .top-actions {
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .header-banner {
       text-align: center;
-      padding: 6px 0 24px 0;
+      padding: 2px 0 12px 0;
     }
 
     .welcome-hero-text {
-      font-size: 2.2rem;
+      font-size: 1.35rem;
       font-weight: 900;
       color: var(--text-white);
-      margin-bottom: 6px;
-      letter-spacing: -0.5px;
+      margin-bottom: 4px;
       line-height: 1.2;
     }
 
@@ -135,18 +131,18 @@
     }
 
     .header-banner h2 {
-      font-size: 1.1rem;
+      font-size: 0.88rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--text-muted);
       border: none;
       padding: 0;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .header-banner p {
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       color: #737373;
     }
 
@@ -155,18 +151,18 @@
       background: #171717;
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      padding: 4px;
-      margin-bottom: 20px;
-      gap: 6px;
+      padding: 3px;
+      margin-bottom: 12px;
+      gap: 3px;
     }
 
     .tab-btn {
       flex: 1;
-      padding: 10px 8px;
+      padding: 8px 2px;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       border-radius: 6px;
@@ -174,7 +170,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       transition: all 0.2s;
     }
 
@@ -194,45 +190,45 @@
 
     .grid-2col {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
 
-    @media (max-width: 768px) {
+    @media (min-width: 768px) {
       .grid-2col {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
     }
 
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      margin-bottom: 12px;
     }
 
     h3 {
-      font-size: 1.15rem;
-      margin-bottom: 16px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
       font-weight: 700;
       color: var(--text-white);
-      border-left: 4px solid var(--primary-red);
-      padding-left: 10px;
+      border-left: 3px solid var(--primary-red);
+      padding-left: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       text-align: left;
     }
 
     label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
+      margin-bottom: 3px;
+      font-size: 0.73rem;
       color: var(--text-muted);
       font-weight: 600;
       text-transform: uppercase;
@@ -244,57 +240,49 @@
       background-color: var(--input-bg);
       border: 1px solid var(--border-color);
       color: var(--text-white);
-      padding: 10px 12px;
+      padding: 9px;
       border-radius: 6px;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       outline: none;
-      transition: all 0.2s;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--primary-red);
-      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
     }
 
     .checkbox-group {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
+      margin-top: 8px;
       background: #1a1a1a;
-      padding: 10px 12px;
+      padding: 8px 10px;
       border-radius: 6px;
       border: 1px solid var(--border-color);
+      font-size: 0.8rem;
     }
 
     .checkbox-group input {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       accent-color: var(--primary-red);
-      cursor: pointer;
     }
 
     .sub-checkbox {
-      margin-left: 16px;
+      margin-left: 12px;
       border-left: 3px solid var(--primary-red);
       background: #111111;
     }
 
     .btn {
       flex: 1;
-      padding: 12px;
+      padding: 10px;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       border: none;
-      transition: all 0.2s;
     }
 
     .btn-fav {
@@ -303,17 +291,9 @@
       border: 1px solid #404040;
     }
 
-    .btn-fav:hover {
-      background-color: #333333;
-    }
-
     .btn-whatsapp {
       background-color: var(--primary-red);
       color: var(--text-white);
-    }
-
-    .btn-whatsapp:hover {
-      background-color: var(--primary-red-hover);
     }
 
     .btn-confirm {
@@ -322,9 +302,9 @@
     }
 
     .btn-sm {
-      padding: 6px 12px;
-      font-size: 0.75rem;
-      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 0.65rem;
+      border-radius: 5px;
       border: 1px solid #404040;
       cursor: pointer;
       font-weight: 700;
@@ -332,22 +312,19 @@
       background: #1f1f1f;
     }
 
-    .btn-sm:hover {
-      background: #2a2a2a;
-    }
-
+    /* CONTADOR MÓVIL EXACTO */
     .countdown-hero {
       background: linear-gradient(145deg, #1f0808 0%, #000000 100%);
       border: 2px solid var(--primary-red);
-      border-radius: 12px;
-      padding: 24px 16px;
+      border-radius: 10px;
+      padding: 14px 8px;
       text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 25px rgba(220, 38, 38, 0.25);
+      margin-bottom: 12px;
+      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2);
     }
 
     .countdown-title {
-      font-size: 0.85rem;
+      font-size: 0.7rem;
       color: var(--accent-red);
       text-transform: uppercase;
       font-weight: 800;
@@ -355,60 +332,61 @@
     }
 
     .countdown-location {
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       font-weight: 900;
-      margin: 6px 0 16px 0;
+      margin: 4px 0 10px 0;
       text-transform: uppercase;
+      word-break: break-word;
     }
 
     .countdown-timer {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 5px;
+      margin-bottom: 10px;
     }
 
     .countdown-box {
       background: #141414;
       border: 1px solid #2e2e2e;
-      border-radius: 8px;
-      padding: 8px 12px;
-      min-width: 64px;
+      border-radius: 6px;
+      padding: 5px 6px;
+      min-width: 48px;
     }
 
     .countdown-num {
-      font-size: 1.7rem;
+      font-size: 1.2rem;
       font-weight: 900;
       color: #ffffff;
       line-height: 1;
     }
 
     .countdown-lbl {
-      font-size: 0.65rem;
+      font-size: 0.5rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .hero-meta {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      font-size: 0.88rem;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 0.75rem;
       color: #cbd5e1;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
+    /* CALENDARIO ULTRA COMPACTO PARA MÓVIL */
     .cal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     .cal-month-title {
-      font-size: 1.2rem;
+      font-size: 0.9rem;
       font-weight: 800;
       text-transform: capitalize;
       color: var(--text-white);
@@ -418,58 +396,43 @@
       background: #262626;
       color: #ffffff;
       border: 1px solid #404040;
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 4px 6px;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 0.7rem;
       font-weight: 700;
-    }
-
-    .cal-nav-btn:hover {
-      background: var(--primary-red);
-      border-color: var(--primary-red);
     }
 
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-      margin-bottom: 20px;
+      gap: 2px;
+      margin-bottom: 12px;
     }
 
     .cal-day-name {
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.55rem;
       font-weight: 800;
       color: var(--text-muted);
-      padding: 6px 0;
+      padding: 2px 0;
       text-transform: uppercase;
     }
 
     .cal-cell {
       background: #0d0d0d;
-      border: 1px solid #222222;
-      border-radius: 8px;
-      min-height: 62px;
-      padding: 6px 4px;
+      border: 1px solid #1f1f1f;
+      border-radius: 4px;
+      min-height: 42px;
+      padding: 2px 1px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.15s ease;
-      position: relative;
-    }
-
-    .cal-cell:hover {
-      border-color: #555555;
-      background: #171717;
-    }
-
-    .cal-cell.other-month {
-      opacity: 0.25;
     }
 
     .cal-cell.today {
-      border: 2px solid var(--accent-red);
+      border: 1.5px solid var(--accent-red);
     }
 
     .cal-cell.selected {
@@ -478,7 +441,7 @@
     }
 
     .cal-cell-num {
-      font-size: 0.8rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: #e5e5e5;
     }
@@ -486,93 +449,84 @@
     .cal-event-pill {
       background: var(--primary-red);
       color: #ffffff;
-      font-size: 0.65rem;
+      font-size: 0.45rem;
       font-weight: 700;
-      padding: 2px 4px;
-      border-radius: 4px;
+      padding: 1px;
+      border-radius: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 2px;
-      display: flex;
-      align-items: center;
-      gap: 3px;
+      margin-top: 1px;
     }
 
     .cal-events-feed {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
 
     .event-card {
       background: #0d0d0d;
       border: 1px solid var(--border-color);
-      border-left: 4px solid var(--primary-red);
-      border-radius: 8px;
-      padding: 14px;
+      border-left: 3px solid var(--primary-red);
+      border-radius: 6px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 6px;
     }
 
     .event-card-title {
-      font-size: 1.05rem;
+      font-size: 0.9rem;
       font-weight: 800;
       color: var(--text-white);
     }
 
     .event-card-meta {
-      font-size: 0.82rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
-    /* CAJA REACTIVA */
+    /* BOTE Y CAJA REACTIVO MÓVIL */
     .caja-dashboard {
       background: #000000;
       border: 2px solid var(--accent-green);
-      border-radius: 14px;
-      padding: 24px 20px;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
-      margin-bottom: 24px;
+      border-radius: 10px;
+      padding: 14px 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+      margin-bottom: 12px;
       transition: all 0.3s ease;
     }
 
     .caja-dashboard.negativo {
       border-color: var(--accent-red) !important;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.25) !important;
     }
 
     .caja-dashboard.positivo {
       border-color: var(--accent-green) !important;
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.25) !important;
     }
 
     .caja-hero-header {
       text-align: center;
-      padding-bottom: 18px;
-      margin-bottom: 18px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
       border-bottom: 1px solid #222222;
     }
 
     .caja-hero-label {
-      font-size: 0.85rem;
+      font-size: 0.7rem;
       color: #a3a3a3;
       font-weight: 800;
-      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
     .caja-hero-total {
-      font-size: 3rem;
+      font-size: 2.2rem;
       font-weight: 900;
       color: var(--accent-green);
-      margin: 4px 0 0 0;
+      margin: 2px 0 0 0;
       line-height: 1.1;
-      letter-spacing: -1px;
-      transition: color 0.3s ease;
     }
 
     .caja-hero-total.negativo {
@@ -582,112 +536,92 @@
     .caja-cards-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    @media (max-width: 600px) {
-      .caja-cards-grid {
-        grid-template-columns: 1fr;
-      }
+      gap: 8px;
     }
 
     .caja-pill-card {
       background: #141414;
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 16px 14px;
+      border-radius: 6px;
+      padding: 10px 8px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 3px;
     }
 
     .caja-pill-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
+      gap: 4px;
+      font-size: 0.68rem;
       font-weight: 700;
       color: #d4d4d8;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .caja-pill-amount {
-      font-size: 1.7rem;
+      font-size: 1.2rem;
       font-weight: 900;
-      line-height: 1.2;
     }
 
     .tx-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 14px;
+      padding: 8px 10px;
       background: #0d0d0d;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      margin-bottom: 8px;
-      transition: border-color 0.15s ease;
+      border-radius: 6px;
+      margin-bottom: 6px;
     }
 
-    .tx-item:hover {
-      border-color: #404040;
-    }
-
-    .tx-ingreso { border-left: 4px solid var(--accent-green); }
-    .tx-gasto { border-left: 4px solid var(--accent-red); }
+    .tx-ingreso { border-left: 3px solid var(--accent-green); }
+    .tx-gasto { border-left: 3px solid var(--accent-red); }
 
     .total-display {
       background-color: #000000;
       border: 2px solid var(--primary-red);
-      border-radius: 8px;
-      padding: 18px;
+      border-radius: 6px;
+      padding: 12px;
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .total-amount {
-      font-size: 2.5rem;
+      font-size: 1.8rem;
       font-weight: 900;
       color: var(--text-white);
-      margin: 4px 0;
+      margin: 2px 0;
     }
 
     .total-amount span { color: var(--primary-red); }
 
     .breakdown {
       list-style: none;
-      font-size: 0.86rem;
+      font-size: 0.78rem;
     }
 
     .breakdown li {
       display: flex;
       justify-content: space-between;
-      padding: 7px 0;
+      padding: 5px 0;
       border-bottom: 1px solid #222222;
     }
 
     .share-box {
-      margin-top: 14px;
-      padding: 14px;
+      margin-top: 10px;
+      padding: 10px;
       background-color: #000000;
       border-radius: 6px;
-      font-size: 0.88rem;
-      border-left: 4px solid var(--primary-red);
+      font-size: 0.78rem;
+      border-left: 3px solid var(--primary-red);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .share-item {
-      background: #141414;
-      padding: 8px 10px;
-      border-radius: 4px;
-      border: 1px solid #262626;
+      gap: 6px;
     }
 
     .share-item strong {
-      font-size: 1.15rem;
+      font-size: 1rem;
       color: var(--accent-red);
     }
   </style>
@@ -696,18 +630,17 @@
 
 <div class="container" id="mainContainer">
 
-  <!-- ==================== PANTALLA DE ACCESO GOOGLE ==================== -->
   <div id="loginView">
     <div class="login-card">
       <h2>Xaranga <span>Llenya al Bombo</span></h2>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">🔒 Área Privada · Acceso Músicos</p>
+      <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">🔒 Área Privada · Músicos</p>
       
-      <p style="font-size:0.8rem; color:#737373; line-height:1.4;">
-        Inicia sesión con tu cuenta de Google autorizada para acceder a los bolos, presupuestos y caja.
+      <p style="font-size:0.75rem; color:#737373; line-height:1.4;">
+        Inicia sesión con tu cuenta de Google autorizada.
       </p>
 
       <button class="btn-google" id="btnLoginGoogle" onclick="window.iniciarSesionGoogle()">
-        <svg width="20" height="20" viewBox="0 0 48 48">
+        <svg width="16" height="16" viewBox="0 0 48 48">
           <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
           <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
           <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
@@ -720,7 +653,6 @@
     </div>
   </div>
 
-  <!-- CONTENEDOR VACÍO DEL HUB (SE CONSTRUYE SÓLO DESPUÉS DE VALIDAR CON GOOGLE) -->
   <div id="hubRoot"></div>
 
 </div>
@@ -761,7 +693,6 @@
   const bolosAprendidosCol = collection(db, "bolos_aprendidos");
   const cajaMovimientosCol = collection(db, "caja_movimientos");
 
-  // ================= LISTA BLANCA DE MÚSICOS =================
   const WHITELIST_CORREOS = [
     "xarangallenyaalbombo@gmail.com",
     "aaronsm2492@gmail.com",
@@ -817,7 +748,6 @@
   let movimientosCaja = [];
   let resumenCalculo = {};
 
-  // ================= INYECCIÓN DINÁMICA DEL HUB =================
   function renderHubCompleto(nombreBienvenida, nombreCaja) {
     const hubRoot = document.getElementById('hubRoot');
     hubRoot.innerHTML = `
@@ -827,9 +757,9 @@
         </div>
 
         <div class="header-banner">
-          <div class="welcome-hero-text" id="saludoUsuarioGrande">Bienvenido de nuevo <span>${nombreBienvenida}</span></div>
+          <div class="welcome-hero-text" id="saludoUsuarioGrande">Bienvenido <span>${nombreBienvenida}</span></div>
           <h2>Xaranga Llenya al Bombo</h2>
-          <p>Hub Oficial de Gestión · Salida desde Onda</p>
+          <p>Hub Oficial · Onda</p>
         </div>
 
         <div class="nav-tabs">
@@ -842,7 +772,7 @@
         <div id="tab-inicio" class="tab-content active">
           <div class="countdown-hero">
             <div class="countdown-title">PRÓXIMO BOLO</div>
-            <div class="countdown-location" id="heroLugar">Cargando bolos...</div>
+            <div class="countdown-location" id="heroLugar">Cargando...</div>
             
             <div class="countdown-timer">
               <div class="countdown-box"><div class="countdown-num" id="cdDays">00</div><div class="countdown-lbl">Días</div></div>
@@ -857,31 +787,31 @@
               <span id="heroLugarUbi">📍 --</span>
             </div>
 
-            <div style="display:flex; gap:10px; max-width:400px; margin:0 auto;">
-              <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMapsHero()">📍 Ver en Google Maps</button>
+            <div style="display:flex; justify-content:center; margin-top:4px;">
+              <button class="btn btn-fav" style="max-width:240px; padding:8px;" id="btnHeroMaps" onclick="abrirGoogleMapsHero()">📍 Google Maps</button>
             </div>
           </div>
 
           <div class="card">
             <div class="cal-header">
-              <button class="cal-nav-btn" onclick="cambiarMes(-1)">◀ Mes Anterior</button>
+              <button class="cal-nav-btn" onclick="cambiarMes(-1)">◀ Ant</button>
               <div class="cal-month-title" id="calMesTitulo">Agosto 2026</div>
-              <button class="cal-nav-btn" onclick="cambiarMes(1)">Mes Siguiente ▶</button>
+              <button class="cal-nav-btn" onclick="cambiarMes(1)">Sig ▶</button>
             </div>
 
             <div class="cal-grid" id="calDiasGrid">
-              <div class="cal-day-name">Lun</div>
-              <div class="cal-day-name">Mar</div>
-              <div class="cal-day-name">Mié</div>
-              <div class="cal-day-name">Jue</div>
-              <div class="cal-day-name">Vie</div>
-              <div class="cal-day-name">Sáb</div>
-              <div class="cal-day-name">Dom</div>
+              <div class="cal-day-name">L</div>
+              <div class="cal-day-name">M</div>
+              <div class="cal-day-name">X</div>
+              <div class="cal-day-name">J</div>
+              <div class="cal-day-name">V</div>
+              <div class="cal-day-name">S</div>
+              <div class="cal-day-name">D</div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:12px;">
-              <h3 id="tituloEventosSeleccionados" style="margin-bottom:0;">🎺 Próximos Bolos Agendados</h3>
-              <button class="btn-sm btn-fav" onclick="cargarEventosGoogleCalendar()">🔄 Actualizar Calendario</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; margin-bottom:8px;">
+              <h3 id="tituloEventosSeleccionados" style="margin-bottom:0; font-size:0.85rem;">🎺 Bolos Agendados</h3>
+              <button class="btn-sm btn-fav" onclick="cargarEventosGoogleCalendar()">🔄 Actualizar</button>
             </div>
 
             <div id="contenedorEventosFeed" class="cal-events-feed"></div>
@@ -942,9 +872,9 @@
               <div>
                 <h3>Presupuesto</h3>
                 <div class="total-display">
-                  <div style="font-size:0.75rem; color:#a3a3a3; text-transform:uppercase; font-weight:700;">Presupuesto Sugerido</div>
+                  <div style="font-size:0.7rem; color:#a3a3a3; text-transform:uppercase; font-weight:700;">Presupuesto Sugerido</div>
                   <div class="total-amount" id="precioTotal">700 <span>€</span></div>
-                  <div id="precioPorDia" style="color:#a3a3a3; font-size:0.9rem;">700 € / día</div>
+                  <div id="precioPorDia" style="color:#a3a3a3; font-size:0.85rem;">700 € / día</div>
                 </div>
 
                 <ul class="breakdown">
@@ -964,7 +894,7 @@
                 </div>
               </div>
 
-              <div class="btn-group" style="display:flex; gap:10px; margin-top:16px;">
+              <div class="btn-group" style="display:flex; gap:8px; margin-top:14px;">
                 <button class="btn btn-fav" id="btnGuardar" onclick="window.guardarFavorito()">⭐ Guardar</button>
                 <button class="btn btn-whatsapp" id="btnCopiar" onclick="window.copiarMensajeWhatsApp()">📋 WhatsApp</button>
               </div>
@@ -972,13 +902,13 @@
           </div>
 
           <div class="card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-              <h3>🧠 Memoria en la Nube (<span id="countAprendidos">0</span> bolos)</h3>
-              <button class="btn-sm btn-fav" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <h3>🧠 Memoria (<span id="countAprendidos">0</span> bolos)</h3>
+              <button class="btn-sm btn-fav" onclick="window.toggleFormularioManual()">➕ Registrar Bolo</button>
             </div>
 
-            <div id="manualForm" style="display:none; background:#000; padding:16px; border-radius:8px; border:1px solid #333; margin-bottom:16px;">
-              <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--primary-red);">Registrar Bolo Histórico con Precio Real</h4>
+            <div id="manualForm" style="display:none; background:#000; padding:12px; border-radius:6px; border:1px solid #333; margin-bottom:12px;">
+              <h4 style="font-size:0.85rem; margin-bottom:8px; color:var(--primary-red);">Registrar Bolo Histórico</h4>
               <div class="grid-2col">
                 <div class="form-group"><label>Población</label><input type="text" id="m_lugar"></div>
                 <div class="form-group"><label>Tipo de Cliente</label><select id="m_tipoCliente"><option value="estandar">Peña / Ayto</option><option value="particular">Particular</option></select></div>
@@ -987,7 +917,7 @@
                 <div class="form-group"><label>Km Totales</label><input type="number" id="m_km" value="40" step="5"></div>
                 <div class="form-group"><label>Días</label><input type="number" id="m_dias" value="1"></div>
                 
-                <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px;">
+                <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:6px;">
                   <div class="checkbox-group" style="margin-top:0;">
                     <input type="checkbox" id="m_incluyeComida" checked>
                     <label for="m_incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización puso la comida/cena</label>
@@ -1004,14 +934,14 @@
 
                 <div class="form-group" style="grid-column:1/-1;"><label style="color:var(--accent-red);">Precio Real Cobrado (€)</label><input type="number" id="m_precioPactado"></div>
               </div>
-              <button class="btn btn-fav" style="width:100%; margin-top:10px;" onclick="window.guardarBoloManual()">💾 Guardar y Entrenar</button>
+              <button class="btn btn-fav" style="width:100%; margin-top:8px;" onclick="window.guardarBoloManual()">💾 Guardar y Entrenar</button>
             </div>
 
-            <div id="contenedorFavoritos" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px;"></div>
+            <div id="contenedorFavoritos" style="display:grid; grid-template-columns:1fr; gap:8px;"></div>
           </div>
         </div>
 
-        <!-- PESTAÑA 3: CAJA & BOTE REACTIVO -->
+        <!-- PESTAÑA 3: CAJA & BOTE -->
         <div id="tab-caja" class="tab-content">
           
           <div class="caja-dashboard positivo" id="cajaDashboardCard">
@@ -1024,7 +954,7 @@
               <div class="caja-pill-card">
                 <div class="caja-pill-header">
                   <span>🏦</span>
-                  <span>En Banco / Cuenta</span>
+                  <span>Banco / Cuenta</span>
                 </div>
                 <div class="caja-pill-amount" id="cajaBancoDisplay" style="color: var(--accent-blue);">0 €</div>
               </div>
@@ -1032,7 +962,7 @@
               <div class="caja-pill-card">
                 <div class="caja-pill-header">
                   <span>💵</span>
-                  <span>En Efectivo / Mano</span>
+                  <span>Efectivo / Mano</span>
                 </div>
                 <div class="caja-pill-amount" id="cajaEfectivoDisplay" style="color: var(--accent-green);">0 €</div>
               </div>
@@ -1040,32 +970,32 @@
           </div>
 
           <div class="card">
-            <h3>➕ Registrar Movimiento de Bote</h3>
+            <h3>➕ Registrar Movimiento</h3>
             <div class="grid-2col">
               <div class="form-group">
                 <label>Concepto</label>
-                <input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote bolo Nules...">
+                <input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote Nules...">
               </div>
               <div class="form-group">
                 <label>Importe (€)</label>
                 <input type="number" id="mov_importe" placeholder="Ej. 50">
               </div>
               <div class="form-group">
-                <label>Tipo de Movimiento</label>
+                <label>Tipo</label>
                 <select id="mov_tipo">
-                  <option value="ingreso">🟢 Ingreso (Bote bolo, aportación, lotería...)</option>
-                  <option value="gasto">🔴 Gasto (Material, furgoneta, cenas...)</option>
+                  <option value="ingreso">🟢 Ingreso (Bote bolo, lotería...)</option>
+                  <option value="gasto">🔴 Gasto (Material, furgoneta...)</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Medio de Pago</label>
+                <label>Medio</label>
                 <select id="mov_medio">
-                  <option value="efectivo">💵 En Efectivo (Mano / Bote físico)</option>
-                  <option value="banco">🏦 En Cuenta / Banco (Transferencia / Bizum)</option>
+                  <option value="efectivo">💵 Efectivo (Bote físico)</option>
+                  <option value="banco">🏦 Cuenta / Banco</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Músico Responsable</label>
+                <label>Responsable</label>
                 <select id="mov_responsable">
                   <option value="Diego">Diego</option>
                   <option value="Aarón">Aarón</option>
@@ -1088,7 +1018,7 @@
                 <input type="date" id="mov_fecha">
               </div>
             </div>
-            <button class="btn btn-confirm" style="width:100%; margin-top:6px;" onclick="guardarMovimientoCaja()">💾 Registrar Movimiento</button>
+            <button class="btn btn-confirm" style="width:100%; margin-top:6px;" onclick="guardarMovimientoCaja()">💾 Registrar</button>
           </div>
 
           <div class="card">
@@ -1099,7 +1029,6 @@
       </div>
     `;
 
-    // Autoseleccionar responsable de caja
     const respSelect = document.getElementById('mov_responsable');
     if (respSelect) {
       for (let i = 0; i < respSelect.options.length; i++) {
@@ -1111,7 +1040,6 @@
     }
   }
 
-  // ================= AUTENTICACIÓN GOOGLE BLINDADA =================
   onAuthStateChanged(auth, (user) => {
     const loginView = document.getElementById('loginView');
     const hubRoot = document.getElementById('hubRoot');
@@ -1128,11 +1056,10 @@
         const nombreBienvenida = NOMBRES_MUSICOS[emailUsuario] || (user.displayName ? user.displayName.split(' ')[0] : 'Músico');
         const nombreCaja = NOMBRES_CAJA[emailUsuario] || "Charanga (General)";
 
-        // CONSTRUIR EL HUB EN PANTALLA
         renderHubCompleto(nombreBienvenida, nombreCaja);
         iniciarHub();
       } else {
-        errBox.innerHTML = `⛔ <strong>Acceso denegado:</strong> La cuenta <em>${user.email}</em> no pertenece a la plantilla de la charanga.`;
+        errBox.innerHTML = `⛔ <strong>Acceso denegado:</strong> La cuenta <em>${user.email}</em> no pertenece a la plantilla.`;
         errBox.style.display = 'block';
         hubRoot.innerHTML = '';
         signOut(auth);
@@ -1149,17 +1076,17 @@
     errBox.style.display = 'none';
 
     try {
-      btn.innerHTML = '⏳ Conectando con Google...';
+      btn.innerHTML = '⏳ Conectando...';
       await signInWithPopup(auth, provider);
     } catch (e) {
       console.error(e);
       if (e.code !== 'auth/popup-closed-by-user') {
-        errBox.innerText = 'Error al iniciar sesión con Google: ' + e.message;
+        errBox.innerText = 'Error: ' + e.message;
         errBox.style.display = 'block';
       }
     } finally {
       btn.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 48 48">
+        <svg width="16" height="16" viewBox="0 0 48 48">
           <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
           <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
           <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
@@ -1171,7 +1098,7 @@
   };
 
   window.cerrarSesion = function() {
-    if (confirm('¿Cerrar sesión en este dispositivo?')) {
+    if (confirm('¿Cerrar sesión?')) {
       signOut(auth);
     }
   };
@@ -1197,7 +1124,6 @@
     });
   }
 
-  // ================= CALENDARIO ENGINE =================
   const CALENDAR_ID = "xarangallenyaalbombo@gmail.com";
   let gEvents = [];
   let fechaActualCal = new Date();
@@ -1213,7 +1139,7 @@
     "Villar del Arzobispo", "La Llosa", "La Vilavella", "Vilavella", "Moncofa", "Moncofar",
     "Castelló de la Plana", "Castellón de la Plana", "Castelló", "Castellón",
     "Vila-real", "Villarreal", "Almassora", "Almazora", "Benicàssim", "Benicasim",
-    "Burriana", "Borriana", "Nules", "Betxí", "Bechí", "Artana", "Tales", "Sueras", "Suera",
+    "Burriana", "Borriana", "Nules", "Betxí", "Bechí", "Artana", "Tales", "Sueras",
     "Costur", "Fórnoles", "Fornoles", "Ain", "Aín", "l'Alcora", "Alcora", "Ribesalbes",
     "Fanzara", "Montanejos", "Cirat", "Segorbe", "La Vall d'Uixó", "Vall d'Uixó",
     "Almenara", "Chilches", "Xilxes", "Peñíscola", "Vinaròs", "Benicarló", "Morella",
@@ -1231,22 +1157,7 @@
         return pueblo;
       }
     }
-
-    const regexInternoOnda = /\b(peña|penya|casal|comparsa|comisi[oó]n|quintos|quinta|fiesta privada|boda|cumple|cumpleaños)\b/i;
-    if (regexInternoOnda.test(textoCompleto)) {
-      return 'Onda';
-    }
-
-    let limpio = titulo || '';
-    limpio = limpio.replace(/^(acto|bolo|actuaci[oó]n|fiesta[s]?|tardeo|pasacalle[s]?|diana|procesi[oó]n|charanga)\s*(de\s*|en\s*|d['’]\s*|:\s*|-\s*)?/i, '');
-    limpio = limpio.replace(/(\s*[-–/]\s*|\s+)(pase\s*\d+|1er\s*pase|2º?\s*pase|1[ºª]\s*pase|2[ºª]\s*pase|mañana|tarde|noche|sesi[oó]n\s*\d+|part\s*\d+|\(.*?\)).*$/i, '');
-    limpio = limpio.trim();
-
-    if (!limpio || limpio.length < 3 || /^(fiestas|concierto|evento)$/i.test(limpio)) {
-      return 'Onda';
-    }
-
-    return limpio;
+    return 'Onda';
   }
 
   async function cargarEventosGoogleCalendar() {
@@ -1265,7 +1176,7 @@
         const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
         const dd = String(dateObj.getDate()).padStart(2, '0');
         const dateKey = `${yyyy}-${mm}-${dd}`;
-        const hora = item.start.dateTime ? dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : 'Hora por confirmar';
+        const hora = item.start.dateTime ? dateObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : 'Todo el día';
         const rawLocation = item.location || '';
         const puebloLimpio = extraerLugarDestino(item.summary || '', rawLocation);
 
@@ -1284,7 +1195,6 @@
       actualizarProximoBoloHero();
     } catch (e) {
       console.warn("Error cargando Google Calendar:", e);
-      renderCalendar();
     }
   }
   window.cargarEventosGoogleCalendar = cargarEventosGoogleCalendar;
@@ -1296,7 +1206,6 @@
 
     const y = fechaActualCal.getFullYear();
     const m = fechaActualCal.getMonth();
-
     elMes.innerText = `${nombresMeses[m]} ${y}`;
 
     while (grid.children.length > 7) {
@@ -1306,14 +1215,13 @@
     const primerDiaMes = new Date(y, m, 1);
     const ultimoDiaMes = new Date(y, m + 1, 0);
     const totalDias = ultimoDiaMes.getDate();
-
     let primerDiaSemana = (primerDiaMes.getDay() + 6) % 7;
 
     const ultimoDiaMesAnterior = new Date(y, m, 0).getDate();
     for (let i = primerDiaSemana - 1; i >= 0; i--) {
       const cell = document.createElement('div');
       cell.className = 'cal-cell other-month';
-      cell.innerHTML = `<span class="cal-cell-num">${ultimoDiaMesAnterior - i}</span>`;
+      cell.innerHTML = `<span class="cal-cell-num" style="opacity:0.3">${ultimoDiaMesAnterior - i}</span>`;
       grid.appendChild(cell);
     }
 
@@ -1364,11 +1272,11 @@
     } else {
       const hoy = new Date();
       filtrados = gEvents.filter(ev => new Date(ev.startIso) >= new Date(hoy.setHours(0,0,0,0)));
-      titulo.innerText = `🎺 Próximos Bolos Agendados (${filtrados.length})`;
+      titulo.innerText = `🎺 Próximos Bolos (${filtrados.length})`;
     }
 
     if (filtrados.length === 0) {
-      contenedor.innerHTML = `<p style="color:#737373; font-size:0.85rem; grid-column:1/-1;">No hay bolos programados para esta fecha.</p>`;
+      contenedor.innerHTML = `<p style="color:#737373; font-size:0.75rem;">No hay bolos programados.</p>`;
       return;
     }
 
@@ -1378,13 +1286,11 @@
           <div class="event-card-title">${ev.titulo}</div>
           <div class="event-card-meta">
             📅 <strong>${ev.dateKey}</strong> · ⏰ ${ev.hora}<br>
-            📍 Destino: <strong>${ev.lugar}</strong>
+            📍 <strong>${ev.lugar}</strong>
             ${ev.descripcion ? '<br>📝 ' + ev.descripcion : ''}
           </div>
         </div>
-        <div style="display:flex; gap:6px;">
-          <button class="btn-sm btn-fav" style="flex:1;" onclick="window.abrirMapsRuta('${encodeURIComponent(ev.lugar)}')">📍 Ver en Google Maps</button>
-        </div>
+        <button class="btn-sm btn-fav" onclick="window.abrirMapsRuta('${encodeURIComponent(ev.lugar)}')">📍 Google Maps</button>
       </div>
     `).join('');
   }
@@ -1411,7 +1317,7 @@
     const futuros = gEvents.filter(ev => new Date(ev.startIso) >= ahora);
 
     if (futuros.length === 0) {
-      elLugar.innerText = 'No hay bolos próximos';
+      elLugar.innerText = 'Sin bolos próximos';
       document.getElementById('heroFecha').innerText = '📅 --/--/----';
       document.getElementById('heroHora').innerText = '🎺 --:-- h';
       document.getElementById('heroLugarUbi').innerText = '📍 --';
@@ -1433,15 +1339,7 @@
 
   setInterval(() => {
     const elDays = document.getElementById('cdDays');
-    if (!elDays) return;
-
-    if (!proximoBoloHero) {
-      elDays.innerText = '00';
-      document.getElementById('cdHours').innerText = '00';
-      document.getElementById('cdMinutes').innerText = '00';
-      document.getElementById('cdSeconds').innerText = '00';
-      return;
-    }
+    if (!elDays || !proximoBoloHero) return;
 
     const destino = new Date(proximoBoloHero.startIso).getTime();
     const ahora = new Date().getTime();
@@ -1466,7 +1364,6 @@
     document.getElementById('cdSeconds').innerText = segundos.toString().padStart(2, '0');
   }, 1000);
 
-  // ================= SWITCH PESTAÑAS =================
   window.switchTab = function(tabId) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1476,7 +1373,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // ================= CAJA & BOTE REACTIVO =================
   window.guardarMovimientoCaja = async function() {
     const concepto = document.getElementById('mov_concepto').value.trim();
     const importe = parseFloat(document.getElementById('mov_importe').value);
@@ -1491,12 +1387,7 @@
     }
 
     await addDoc(cajaMovimientosCol, {
-      concepto,
-      importe,
-      tipo,
-      medio,
-      responsable,
-      fecha,
+      concepto, importe, tipo, medio, responsable, fecha,
       fechaCreacion: Date.now()
     });
 
@@ -1545,20 +1436,20 @@
     document.getElementById('cajaEfectivoDisplay').innerText = `${totalEfectivo.toLocaleString('es-ES')} €`;
 
     if (movimientosCaja.length === 0) {
-      contenedor.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay movimientos de caja registrados.</p>';
+      contenedor.innerHTML = '<p style="color:#737373; font-size:0.75rem;">No hay movimientos.</p>';
       return;
     }
 
     contenedor.innerHTML = movimientosCaja.map(m => `
       <div class="tx-item ${m.tipo === 'ingreso' ? 'tx-ingreso' : 'tx-gasto'}">
         <div>
-          <div style="font-weight:700; font-size:0.95rem;">${m.concepto}</div>
-          <div style="font-size:0.75rem; color:#a3a3a3; margin-top:2px;">
+          <div style="font-weight:700; font-size:0.82rem;">${m.concepto}</div>
+          <div style="font-size:0.65rem; color:#a3a3a3; margin-top:2px;">
             📅 ${m.fecha} · 👤 <strong>${m.responsable || 'Charanga'}</strong> · ${m.medio === 'banco' ? '🏦 Banco' : '💵 Efectivo'}
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <strong style="font-size:1.1rem; color:${m.tipo === 'ingreso' ? 'var(--accent-green)' : 'var(--accent-red)'};">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <strong style="font-size:0.95rem; color:${m.tipo === 'ingreso' ? 'var(--accent-green)' : 'var(--accent-red)'};">
             ${m.tipo === 'ingreso' ? '+' : '-'}${m.importe} €
           </strong>
           <button class="btn-sm btn-fav" style="color:#737373;" onclick="window.eliminarMovimientoCaja('${m.id}')">✕</button>
@@ -1568,12 +1459,11 @@
   }
 
   window.eliminarMovimientoCaja = async function(id) {
-    if (confirm('¿Eliminar este apunte de caja?')) {
+    if (confirm('¿Eliminar este apunte?')) {
       await deleteDoc(doc(db, "caja_movimientos", id));
     }
   };
 
-  // ================= PRESUPUESTADOR =================
   window.toggleFormularioManual = function() {
     const f = document.getElementById('manualForm');
     if (f) f.style.display = (f.style.display === 'block') ? 'none' : 'block';
@@ -1631,9 +1521,7 @@
       let tramoMedio = Math.min(kmFacturables, 180.0);
       costeKmCalc += tramoMedio * 1.023;
       kmFacturables -= tramoMedio;
-      if (kmFacturables > 0) {
-        costeKmCalc += kmFacturables * 0.26;
-      }
+      if (kmFacturables > 0) costeKmCalc += kmFacturables * 0.26;
     }
     const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
     const costeDietas = incluyeComida ? 0 : (numMusicos * 20);
@@ -1788,7 +1676,7 @@ Cualquier duda nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
   window.guardarFavorito = async function() {
     const nuevo = { ...resumenCalculo, fechaCreacion: Date.now() };
     await addDoc(bolosAprendidosCol, nuevo);
-    alert('⭐ ¡Presupuesto guardado y sincronizado en la nube!');
+    alert('⭐ ¡Presupuesto guardado!');
   };
 
   window.guardarBoloManual = async function() {
@@ -1820,7 +1708,7 @@ Cualquier duda nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
     document.getElementById('m_lugar').value = '';
     document.getElementById('m_precioPactado').value = '';
     window.toggleFormularioManual();
-    alert(`¡Bolo en ${lugar} guardado y aprendido!`);
+    alert(`¡Bolo en ${lugar} guardado!`);
   };
 
   function renderFavoritos() {
@@ -1830,18 +1718,16 @@ Cualquier duda nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
 
     countEl.innerText = bolosCloud.length;
     if (bolosCloud.length === 0) {
-      cont.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay bolos aprendidos.</p>';
+      cont.innerHTML = '<p style="color:#737373; font-size:0.75rem;">No hay bolos guardados.</p>';
       return;
     }
     cont.innerHTML = bolosCloud.map(f => `
-      <div style="background:#0a0a0a; border:1px solid var(--border-color); border-radius:6px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+      <div style="background:#0a0a0a; border:1px solid var(--border-color); border-radius:6px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; gap:6px;">
         <div>
-          <div style="font-weight:800; font-size:1rem; text-transform:uppercase;">${f.lugar}</div>
-          <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.4;">
-            ${f.horasT}h música ${f.horasE > 0 ? '+ ' + f.horasE + 'h espera' : ''} · ${f.km} km<br>
-            <strong>${f.precioTotal} €</strong> ${f.dias > 1 ? '(' + f.precioDia + ' €/día)' : ''} · <em>${f.pagoMusico || '-'} €/músico</em>
-            ${!f.incluyeComida ? '<br><span style="color:#f59e0b; font-size:0.75rem;">🍽️ Dietas charanga</span>' : ''}
-            ${f.requiereAlojamiento ? '<br><span style="color:#93c5fd; font-size:0.75rem;">🛌 Con alojamiento</span>' : ''}
+          <div style="font-weight:800; font-size:0.85rem; text-transform:uppercase;">${f.lugar}</div>
+          <div style="font-size:0.7rem; color:var(--text-muted); line-height:1.4;">
+            ${f.horasT}h música · ${f.km} km<br>
+            <strong>${f.precioTotal} €</strong> (${f.pagoMusico || '-'} €/músico)
           </div>
         </div>
         <button class="btn-sm btn-fav" style="color:var(--accent-red);" onclick="window.eliminarFavorito('${f.id}')">Borrar</button>
@@ -1850,7 +1736,7 @@ Cualquier duda nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
   }
 
   window.eliminarFavorito = async function(id) {
-    if (confirm('¿Borrar este bolo de la memoria compartida?')) {
+    if (confirm('¿Borrar este bolo?')) {
       await deleteDoc(doc(db, "bolos_aprendidos", id));
     }
   };
