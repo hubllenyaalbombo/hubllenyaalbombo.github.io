@@ -306,7 +306,6 @@
       margin-bottom: 14px;
     }
 
-    /* Estilos del Calendario Custom */
     .cal-header {
       display: flex;
       justify-content: space-between;
@@ -436,7 +435,6 @@
       line-height: 1.5;
     }
 
-    /* Caja & Presupuestos */
     .caja-balance-card {
       background: #000000;
       border: 2px solid var(--accent-green);
@@ -572,7 +570,7 @@
       </div>
 
       <div style="display:flex; gap:10px; max-width:400px; margin:0 auto;">
-        <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMapsHero()">📍 Ver Ruta GPS (desde Onda)</button>
+        <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMapsHero()">📍 Ver en Google Maps</button>
       </div>
     </div>
 
@@ -802,15 +800,51 @@
 
   const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-  // Función que limpia el texto (Ej. "Acto Costur" -> "Costur")
-  function extraerLugarDestino(titulo, lugar) {
-    if (lugar && lugar !== 'Consultar' && lugar.trim() !== '') {
-      return lugar.trim();
+  // Diccionario ordenado de municipios y pueblos habituales (nombres compuestos primero)
+  const PUEBLOS_CONOCIDOS = [
+    "Fuentes de Ayódar", "Fuentes de Ayodar", "Fuente la Reina", "Huerta del Rey",
+    "La Iglesuela del Cid", "Iglesuela del Cid", "Villahermosa del Río", "Villahermosa del Rio", "Villahermosa",
+    "San Juan de Moró", "Sant Joan de Moró", "Lucena del Cid", "Atzeneta del Maestrat",
+    "Villar del Arzobispo", "La Llosa", "La Vilavella", "Vilavella", "Moncofa", "Moncofar",
+    "Castelló de la Plana", "Castellón de la Plana", "Castelló", "Castellón",
+    "Vila-real", "Villarreal", "Almassora", "Almazora", "Benicàssim", "Benicasim",
+    "Burriana", "Borriana", "Nules", "Betxí", "Bechí", "Artana", "Tales", "Sueras", "Suera",
+    "Costur", "Fórnoles", "Fornoles", "Ain", "Aín", "l'Alcora", "Alcora", "Ribesalbes",
+    "Fanzara", "Montanejos", "Cirat", "Segorbe", "La Vall d'Uixó", "Vall d'Uixó",
+    "Almenara", "Chilches", "Xilxes", "Peñíscola", "Vinaròs", "Benicarló", "Morella",
+    "Torreblanca", "Oropesa del Mar", "Oropesa", "Cabanes", "Sant Mateu", "Albocàsser",
+    "Onda"
+  ];
+
+  function extraerLugarDestino(titulo, lugarRaw) {
+    const textoCompleto = `${titulo || ''} ${lugarRaw && lugarRaw !== 'Consultar' ? lugarRaw : ''}`.trim();
+    if (!textoCompleto) return 'Onda';
+
+    // 1. Buscar si coincide con alguno de los pueblos conocidos (ignorando mayúsculas/minúsculas)
+    for (const pueblo of PUEBLOS_CONOCIDOS) {
+      const regexPueblo = new RegExp(`\\b${pueblo.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
+      if (regexPueblo.test(textoCompleto)) {
+        return pueblo;
+      }
     }
-    if (!titulo) return 'Castellón';
-    // Elimina prefijos típicos: "Acto ", "Bolo ", "Actuación ", "Fiestas de ", etc.
-    let limpio = titulo.replace(/^(acto|bolo|actuaci[oó]n|fiestas|tardeo)\s*(de\s*|en\s*|d['’]\s*|:\s*|-\s*)?/i, '').trim();
-    return limpio || 'Castellón';
+
+    // 2. Si contiene términos de peñas, casales o eventos internos sin pueblo específico -> Es en Onda
+    const regexInternoOnda = /\b(peña|penya|casal|comparsa|comisi[oó]n|quintos|quinta|fiesta privada|boda|cumple|cumpleaños)\b/i;
+    if (regexInternoOnda.test(textoCompleto)) {
+      return 'Onda';
+    }
+
+    // 3. Limpieza general: quitar prefijos y sufijos de pases
+    let limpio = titulo || '';
+    limpio = limpio.replace(/^(acto|bolo|actuaci[oó]n|fiesta[s]?|tardeo|pasacalle[s]?|diana|procesi[oó]n|charanga)\s*(de\s*|en\s*|d['’]\s*|:\s*|-\s*)?/i, '');
+    limpio = limpio.replace(/(\s*[-–/]\s*|\s+)(pase\s*\d+|1er\s*pase|2º?\s*pase|1[ºª]\s*pase|2[ºª]\s*pase|mañana|tarde|noche|sesi[oó]n\s*\d+|part\s*\d+|\(.*?\)).*$/i, '');
+    limpio = limpio.trim();
+
+    if (!limpio || limpio.length < 3 || /^(fiestas|concierto|evento)$/i.test(limpio)) {
+      return 'Onda';
+    }
+
+    return limpio;
   }
 
   async function cargarEventosGoogleCalendar() {
@@ -948,14 +982,19 @@
           </div>
         </div>
         <div style="display:flex; gap:6px;">
-          <button class="btn-sm btn-fav" style="flex:1;" onclick="window.abrirMapsRuta('${encodeURIComponent(ev.lugar)}')">📍 Ver Ruta desde Onda</button>
+          <button class="btn-sm btn-fav" style="flex:1;" onclick="window.abrirMapsRuta('${encodeURIComponent(ev.lugar)}')">📍 Ver en Google Maps</button>
         </div>
       </div>
     `).join('');
   }
 
   window.abrirMapsRuta = function(destino) {
-    window.open(`https://www.google.com/maps/dir/Onda,+Castellón/${destino}`, '_blank');
+    const destinoDecoded = decodeURIComponent(destino);
+    if (destinoDecoded.toLowerCase() === 'onda') {
+      window.open('https://www.google.com/maps/search/?api=1&query=Onda,+Castellón', '_blank');
+    } else {
+      window.open(`https://www.google.com/maps/dir/Onda,+Castellón/${encodeURIComponent(destinoDecoded + ', España')}`, '_blank');
+    }
   };
 
   window.cambiarMes = function(offset) {
@@ -981,7 +1020,7 @@
     document.getElementById('heroLugar').innerText = proximoBoloHero.titulo;
     document.getElementById('heroFecha').innerText = `📅 ${proximoBoloHero.dateKey}`;
     document.getElementById('heroHora').innerText = `🎺 ${proximoBoloHero.hora}`;
-    document.getElementById('heroLugarUbi').innerText = `📍 Destino: ${proximoBoloHero.lugar}`;
+    document.getElementById('heroLugarUbi').innerText = `📍 ${proximoBoloHero.lugar}`;
   }
 
   window.abrirGoogleMapsHero = function() {
