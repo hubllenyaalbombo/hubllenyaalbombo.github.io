@@ -41,7 +41,7 @@
       max-width: 960px;
     }
 
-    /* PANTALLA DE LOGIN */
+    /* PANTALLA DE ACCESO GOOGLE */
     #loginView {
       display: flex;
       justify-content: center;
@@ -53,17 +53,17 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 32px 24px;
+      padding: 36px 24px;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       text-align: center;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.85);
     }
 
     .login-card h2 {
       border: none;
       padding: 0;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       margin-bottom: 6px;
     }
 
@@ -71,18 +71,44 @@
       color: var(--primary-red);
     }
 
+    .btn-google {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      margin-top: 20px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .btn-google:hover {
+      background: #e5e5e5;
+      transform: translateY(-1px);
+    }
+
     .login-error {
       display: none;
       background: rgba(220, 38, 38, 0.15);
       border: 1px solid var(--accent-red);
       color: #fca5a5;
-      padding: 10px;
+      padding: 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
-      margin-top: 14px;
+      font-size: 0.82rem;
+      margin-top: 18px;
+      line-height: 1.4;
+      text-align: left;
     }
 
-    /* HUB VIEW (OCULTO POR DEFECTO) */
+    /* HUB INTERNO */
     #hubView {
       display: none;
     }
@@ -210,7 +236,7 @@
       letter-spacing: 0.5px;
     }
 
-    input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="date"], select {
+    input[type="text"], input[type="number"], input[type="date"], select {
       width: 100%;
       background-color: var(--input-bg);
       border: 1px solid var(--border-color);
@@ -598,38 +624,35 @@
 
 <div class="container">
 
-  <!-- ==================== PANTALLA DE LOGIN ==================== -->
+  <!-- ==================== PANTALLA DE ACCESO GOOGLE ==================== -->
   <div id="loginView">
     <div class="login-card">
       <h2>Xaranga <span>Llenya al Bombo</span></h2>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:20px;">🔒 Acceso Exclusivo para Músicos</p>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">🔒 Área Privada · Acceso Músicos</p>
       
-      <div class="form-group">
-        <label for="loginEmail">Correo de Músico</label>
-        <input type="email" id="loginEmail" placeholder="usuario@gmail.com">
-      </div>
+      <p style="font-size:0.8rem; color:#737373; line-height:1.4;">
+        Inicia sesión con tu cuenta de Google autorizada para acceder a los bolos, presupuestos y caja.
+      </p>
 
-      <div class="form-group">
-        <label for="loginPassword">Contraseña</label>
-        <input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter') window.iniciarSesion()">
-      </div>
-
-      <button class="btn btn-whatsapp" id="btnLogin" style="width:100%; margin-top:10px;" onclick="window.iniciarSesion()">
-        🎺 Entrar al Hub
+      <button class="btn-google" id="btnLoginGoogle" onclick="window.iniciarSesionGoogle()">
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Entrar con Google
       </button>
 
-      <div class="login-error" id="loginError">
-        Contraseña o correo incorrecto. Consulta con la charanga.
-      </div>
+      <div class="login-error" id="loginError"></div>
     </div>
   </div>
 
   <!-- ==================== CONTENIDO DEL HUB ==================== -->
   <div id="hubView">
     
-    <!-- Barra superior de usuario y desconexión -->
     <div class="user-bar">
-      <span style="color:#cbd5e1;">👤 Sesión iniciada: <strong id="userEmailDisplay" style="color:var(--text-white);">--</strong></span>
+      <span style="color:#cbd5e1;">👤 Músico: <strong id="userEmailDisplay" style="color:var(--text-white);">--</strong></span>
       <button class="btn-sm btn-fav" onclick="window.cerrarSesion()" style="color:var(--accent-red);">Cerrar Sesión 🚪</button>
     </div>
 
@@ -860,7 +883,8 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { 
     getAuth, 
-    signInWithEmailAndPassword, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
     signOut, 
     onAuthStateChanged 
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -884,47 +908,87 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
   const db = getFirestore(app);
 
   const bolosAprendidosCol = collection(db, "bolos_aprendidos");
   const cajaMovimientosCol = collection(db, "caja_movimientos");
 
+  // ================= LISTA BLANCA DE MÚSICOS =================
+  // Agrega o edita aquí los correos autorizados
+  const WHITELIST_CORREOS = [
+    "xarangallenyaalbombo@gmail.com",
+    "aaronsm2492@gmail.com",
+    "carloscatalanparra1@gmail.com",
+    "dsansano070403@gmail.com",
+    "jaaguilellagarcia@gmail.com",
+    "joanicogr@gmail.com",
+    "joevericat@gmail.com",
+    "karatekavictor@gmail.com",
+    "laracubells.joanmiquel@gmail.com",
+    "lluis.b.ramos98@gmail.com",
+    "maguilellagarcia@gmail.com",
+    "rubencerisuelo72@gmail.com",
+    "rubenmartinezvarelles@gmail.com",
+    "toniesbri89@gmail.com"
+    
+  ];
+
   let bolosCloud = [];
   let movimientosCaja = [];
   let resumenCalculo = {};
 
-  // ================= AUTENTICACIÓN FIREBASE =================
+  // ================= AUTENTICACIÓN GOOGLE =================
   onAuthStateChanged(auth, (user) => {
     const loginView = document.getElementById('loginView');
     const hubView = document.getElementById('hubView');
+    const errBox = document.getElementById('loginError');
 
     if (user) {
-      loginView.style.display = 'none';
-      hubView.style.display = 'block';
-      document.getElementById('userEmailDisplay').innerText = user.email;
-      iniciarHub();
+      const emailUsuario = (user.email || '').toLowerCase().trim();
+      const estaAutorizado = WHITELIST_CORREOS.some(e => e.toLowerCase().trim() === emailUsuario);
+
+      if (estaAutorizado) {
+        loginView.style.display = 'none';
+        hubView.style.display = 'block';
+        errBox.style.display = 'none';
+        document.getElementById('userEmailDisplay').innerText = user.displayName ? `${user.displayName} (${user.email})` : user.email;
+        iniciarHub();
+      } else {
+        errBox.innerHTML = `⛔ <strong>Acceso denegado:</strong> La cuenta <em>${user.email}</em> no pertenece a la plantilla de la charanga.`;
+        errBox.style.display = 'block';
+        signOut(auth);
+      }
     } else {
       hubView.style.display = 'none';
       loginView.style.display = 'flex';
     }
   });
 
-  window.iniciarSesion = async function() {
-    const email = document.getElementById('loginEmail').value.trim();
-    const pass = document.getElementById('loginPassword').value;
-    const btn = document.getElementById('btnLogin');
+  window.iniciarSesionGoogle = async function() {
+    const btn = document.getElementById('btnLoginGoogle');
     const errBox = document.getElementById('loginError');
-
     errBox.style.display = 'none';
-    btn.innerHTML = '⏳ Entrando...';
 
     try {
-      await signInWithEmailAndPassword(auth, email, pass);
+      btn.innerHTML = '⏳ Conectando con Google...';
+      await signInWithPopup(auth, provider);
     } catch (e) {
       console.error(e);
-      errBox.style.display = 'block';
+      if (e.code !== 'auth/popup-closed-by-user') {
+        errBox.innerText = 'Error al iniciar sesión con Google: ' + e.message;
+        errBox.style.display = 'block';
+      }
     } finally {
-      btn.innerHTML = '🎺 Entrar al Hub';
+      btn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Entrar con Google
+      `;
     }
   };
 
