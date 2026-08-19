@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presupuestador - Xaranga Llenya al Bombo</title>
+  <style>
+    :root {
+      --bg-color: #0a0a0a;
+      --card-bg: #141414;
+      --card-border: #262626;
+      --primary-red: #dc2626;
+      --primary-red-hover: #b91c1c;
+      --accent-red: #ef4444;
+      --text-white: #ffffff;
+      --text-muted: #a3a3a3;
+      --input-bg: #000000;
+      --border-color: #333333;
+      --accent-blue: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-white);
+      padding: 24px 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .header-banner {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .header-banner h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-white);
+    }
+
+    .header-banner h1 span {
+      color: var(--primary-red);
+    }
+
+    .header-banner p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .learning-badge {
+      display: inline-block;
+      margin-top: 8px;
+      background: #1e1e1e;
+      border: 1px solid var(--border-color);
+      color: #cbd5e1;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .learning-badge span {
+      color: var(--accent-red);
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .card-header-flex h3 {
+      margin-bottom: 0;
+    }
+
+    h2, h3 {
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+      color: var(--text-white);
+      border-left: 4px solid var(--primary-red);
+      padding-left: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      background: #1a1a1a;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-group input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary-red);
+      cursor: pointer;
+    }
+
+    .sub-checkbox {
+      margin-left: 16px;
+      border-left: 3px solid var(--primary-red);
+      background: #111111;
+    }
+
+    .result-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .total-display {
+      background-color: #000000;
+      border: 2px solid var(--primary-red);
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .total-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .total-amount {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--text-white);
+      margin: 4px 0;
+    }
+
+    .total-amount span {
+      color: var(--primary-red);
+    }
+
+    .per-day {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .breakdown {
+      list-style: none;
+      font-size: 0.86rem;
+    }
+
+    .breakdown li {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #222222;
+    }
+
+    .breakdown li:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown span:last-child {
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .share-box {
+      margin-top: 14px;
+      padding: 14px;
+      background-color: #000000;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      border-left: 4px solid var(--primary-red);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .share-box .share-title {
+      grid-column: 1 / -1;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .share-item {
+      background: #141414;
+      padding: 8px 10px;
+      border-radius: 4px;
+      border: 1px solid #262626;
+    }
+
+    .share-item span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .share-item strong {
+      font-size: 1.15rem;
+      color: var(--accent-red);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-fav {
+      background-color: #262626;
+      color: var(--text-white);
+      border: 1px solid #404040;
+    }
+
+    .btn-fav:hover {
+      background-color: #333333;
+      border-color: #555555;
+    }
+
+    .btn-whatsapp {
+      background-color: var(--primary-red);
+      color: var(--text-white);
+    }
+
+    .btn-whatsapp:hover {
+      background-color: var(--primary-red-hover);
+    }
+
+    .btn-manual-toggle {
+      background: #222222;
+      color: #cbd5e1;
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-manual-toggle:hover {
+      background: var(--primary-red);
+      color: #ffffff;
+      border-color: var(--primary-red);
+    }
+
+    /* Formulario Manual Ocultable */
+    .manual-form-container {
+      display: none;
+      background: #000000;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 14px;
+      margin-bottom: 16px;
+    }
+
+    .manual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .manual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .fav-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .fav-item {
+      background-color: #0a0a0a;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .fav-title {
+      font-weight: 800;
+      color: var(--text-white);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .fav-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .fav-meta strong {
+      color: var(--accent-red);
+    }
+
+    .fav-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .btn-load {
+      background-color: #262626;
+      color: var(--text-white);
+      flex: 1;
+    }
+
+    .btn-load:hover {
+      background-color: var(--primary-red);
+    }
+
+    .btn-del {
+      background-color: transparent;
+      color: #737373;
+      border: 1px solid #333333;
+    }
+
+    .btn-del:hover {
+      background-color: #262626;
+      color: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .no-favs {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-banner full-width">
+    <h1>Xaranga <span>Llenya al Bombo</span></h1>
+    <p>Presupuestador Oficial de Actuaciones · Salida desde Onda</p>
+    <div class="learning-badge" id="learningStatus">🧠 Memoria activa: <span>0</span> bolos aprendidos</div>
+  </div>
+
+  <!-- Formulario -->
+  <div class="card">
+    <h2>Datos del Bolo</h2>
+
+    <div class="form-group">
+      <label for="lugar">Población / Actuación</label>
+      <input type="text" id="lugar" value="Nules" placeholder="Ej. Iglesuela del Cid, Huerta del Rey..." oninput="calcular()">
+    </div>
+
+    <div class="form-group">
+      <label for="tipoCliente">Tipo de Contratante</label>
+      <select id="tipoCliente" onchange="calcular()">
+        <option value="estandar" selected>Peña / Comisión de Fiestas / Ayuntamiento · Estándar</option>
+        <option value="particular">Particular / Despedida / Cumpleaños · -5%</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="horasTocadas">Horas de música en directo (por día)</label>
+      <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="calcular()">
+    </div>
+
+    <div class="form-group">
+      <label for="horasEspera">Horas de espera / descanso entre pases</label>
+      <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="calcular()">
+    </div>
+
+    <div class="form-group">
+      <label for="kmTotales">Km totales ida y vuelta (desde Onda)</label>
+      <input type="number" id="kmTotales" value="42" min="0" step="5" oninput="calcular()">
+    </div>
+
+    <div class="form-group">
+      <label for="dias">Días de actuación consecutivos</label>
+      <input type="number" id="dias" value="1" min="1" step="1" oninput="calcular()">
+    </div>
+
+    <div class="form-group">
+      <label for="musicos">Músicos en plantilla</label>
+      <input type="number" id="musicos" value="9" min="1" step="1" oninput="calcular()">
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="incluyeComida" checked onchange="calcular()">
+      <label for="incluyeComida" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">La organización pone la comida/cena</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="requiereAlojamiento" onchange="toggleAlojamiento()">
+      <label for="requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">Requiere hacer noche / alojamiento</label>
+    </div>
+
+    <div class="checkbox-group sub-checkbox" id="contenedorIncluyeAlojamiento" style="display: none;">
+      <input type="checkbox" id="incluyeAlojamiento" checked onchange="calcular()">
+      <label for="incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">El alojamiento lo cubre la organización</label>
+    </div>
+  </div>
+
+  <!-- Resultado y Desglose -->
+  <div class="card result-box">
+    <div>
+      <h2>Presupuesto</h2>
+      
+      <div class="total-display">
+        <div class="total-label">Presupuesto Final Sugerido</div>
+        <div class="total-amount" id="precioTotal">700 <span>€</span></div>
+        <div class="per-day" id="precioPorDia">700 € / día · 1 día</div>
+      </div>
+
+      <ul class="breakdown">
+        <li>
+          <span>Mínimo inicial (hasta 2h):</span>
+          <span id="baseMin">500 €</span>
+        </li>
+        <li>
+          <span>Horas extra tocando:</span>
+          <span id="costeHorasExtra">0 €</span>
+        </li>
+        <li>
+          <span>Horas de espera / descanso:</span>
+          <span id="costeEspera">0 €</span>
+        </li>
+        <li>
+          <span>Desplazamiento furgoneta y ruta:</span>
+          <span id="costeKm">0 €</span>
+        </li>
+        <li>
+          <span>Suplemento dietas / manutención:</span>
+          <span id="costeDietas">0 €</span>
+        </li>
+        <li>
+          <span>Suplemento noche (si no ponen hotel):</span>
+          <span id="costeHotel">0 €</span>
+        </li>
+        <li>
+          <span>Ajuste tipo de cliente:</span>
+          <span id="ajusteCliente" style="color:var(--primary-red);">0 %</span>
+        </li>
+        <li>
+          <span>Descuento por volumen (multidía):</span>
+          <span id="descuentoVolumen" style="color:var(--primary-red);">0 %</span>
+        </li>
+        <li>
+          <span>Corrección histórica aprendida:</span>
+          <span id="ajusteHistorico" style="color:#60a5fa;">0 €</span>
+        </li>
+      </ul>
+
+      <div class="share-box">
+        <div class="share-title">Reparto Interno · por día</div>
+        <div class="share-item">
+          <span>Por Músico</span>
+          <strong id="pagoMusico">70 €</strong>
+        </div>
+        <div class="share-item">
+          <span>Bote</span>
+          <strong id="pagoFurgoneta">70 €</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-fav" id="btnGuardar" onclick="guardarFavorito()">
+        ⭐ Guardar
+      </button>
+      <button class="btn btn-whatsapp" id="btnCopiar" onclick="copiarMensajeWhatsApp()">
+        📋 Copiar WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Sección de Favoritos y Registro Manual -->
+  <div class="card full-width">
+    <div class="card-header-flex">
+      <h3>⭐ Bolos Guardados y Aprendidos</h3>
+      <button class="btn-manual-toggle" onclick="toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
+    </div>
+
+    <!-- Formulario para introducir un bolo histórico manualmente con precio pactado -->
+    <div class="manual-form-container" id="manualForm">
+      <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--primary-red); text-transform:uppercase;">Registrar Bolo Pasado con Precio Real</h4>
+      <div class="manual-grid">
+        <div class="form-group">
+          <label for="m_lugar">Población / Nombre</label>
+          <input type="text" id="m_lugar" placeholder="Ej. Fiestas de Verano...">
+        </div>
+        <div class="form-group">
+          <label for="m_tipoCliente">Tipo de Cliente</label>
+          <select id="m_tipoCliente">
+            <option value="estandar">Peña / Comisión / Ayto</option>
+            <option value="particular">Particular</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="m_horasT">Horas de Música (por día)</label>
+          <input type="number" id="m_horasT" value="3" min="0.5" step="0.5">
+        </div>
+        <div class="form-group">
+          <label for="m_horasE">Horas de Espera (por día)</label>
+          <input type="number" id="m_horasE" value="0" min="0" step="0.5">
+        </div>
+        <div class="form-group">
+          <label for="m_km">Km totales ida/vuelta</label>
+          <input type="number" id="m_km" value="40" step="5">
+        </div>
+        <div class="form-group">
+          <label for="m_dias">Días de Bolo</label>
+          <input type="number" id="m_dias" value="1" min="1">
+        </div>
+        <div class="form-group">
+          <label for="m_precioPactado" style="color:var(--accent-red);">Precio Total Cobrado Real (€)</label>
+          <input type="number" id="m_precioPactado" placeholder="Ej. 750" step="10">
+        </div>
+        <div class="form-group" style="display:flex; align-items:flex-end;">
+          <button class="btn btn-fav" style="width:100%;" onclick="guardarBoloManual()">💾 Guardar y Entrenar Algoritmo</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="contenedorFavoritos" class="fav-list">
+    </div>
+  </div>
+</div>
+
+<script>
+  let resumenCalculo = {};
+
+  function toggleFormularioManual() {
+    const f = document.getElementById('manualForm');
+    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function toggleAlojamiento() {
+    const requiere = document.getElementById('requiereAlojamiento').checked;
+    const sub = document.getElementById('contenedorIncluyeAlojamiento');
+    if (requiere) {
+      sub.style.display = 'flex';
+    } else {
+      sub.style.display = 'none';
+      document.getElementById('incluyeAlojamiento').checked = true;
+    }
+    calcular();
+  }
+
+  function calcularCosteToqueEscalonado(horasT) {
+    if (horasT <= 2) return 0;
+    
+    let h_extra = horasT - 2;
+    let coste = 0;
+
+    if (h_extra <= 0.5) {
+      coste += h_extra * 240.0;
+    } else {
+      let t1 = Math.min(h_extra, 2.0);
+      coste += 120.0 + (t1 - 0.5) * 186.666;
+    }
+    h_extra -= Math.min(Math.max(0, h_extra), 2.0);
+
+    if (h_extra > 0) {
+      let t2 = Math.min(h_extra, 2.0);
+      coste += t2 * 150.0;
+      h_extra -= t2;
+    }
+
+    if (h_extra > 0) {
+      coste += h_extra * 100.0;
+    }
+
+    return coste;
+  }
+
+  function calcularCosteEsperaEscalonado(horasE) {
+    if (horasE <= 0) return 0;
+    if (horasE <= 1) return horasE * 30.0;
+    if (horasE <= 2) return 30.0 + (horasE - 1.0) * 25.0;
+    if (horasE <= 3) return 55.0 + (horasE - 2.0) * 20.0;
+    if (horasE <= 4) return 75.0 + (horasE - 3.0) * 20.0;
+    if (horasE <= 5) return 95.0 + (horasE - 4.0) * 20.0;
+    if (horasE <= 6) return 115.0 + (horasE - 5.0) * 15.0;
+    return 130.0 + (horasE - 6.0) * 15.0;
+  }
+
+  function calcularSubtotalTeoricoPuro(horasT, horasE, km, numMusicos, incluyeComida, requiereAlojamiento, incluyeAlojamiento) {
+    const BASE_MINIMA_CHARANGA = 500;
+    const KM_CORTESIA = 40;
+    const DIETA_POR_MUSICO = 20;
+    const SUPLEMENTO_HOTEL_PERSONA = 35;
+
+    const factorEscalaMusicos = numMusicos / 9;
+    const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscalaMusicos;
+    const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscalaMusicos;
+    
+    let kmFacturables = Math.max(0, km - KM_CORTESIA);
+    let costeKmCalc = 0;
+    if (kmFacturables > 0) {
+      let tramoMedio = Math.min(kmFacturables, 180.0);
+      costeKmCalc += tramoMedio * 1.023;
+      kmFacturables -= tramoMedio;
+      if (kmFacturables > 0) {
+        costeKmCalc += kmFacturables * 0.26;
+      }
+    }
+    const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
+
+    const costeDietas = incluyeComida ? 0 : (numMusicos * DIETA_POR_MUSICO);
+    const costeHotel = (requiereAlojamiento && !incluyeAlojamiento) ? (numMusicos * SUPLEMENTO_HOTEL_PERSONA) : 0;
+
+    return BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
+  }
+
+  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente) {
+    const historico = getFavoritos();
+    if (historico.length === 0) return 0;
+
+    let sumaPonderadaDiferencias = 0;
+    let pesoTotal = 0;
+
+    historico.forEach(b => {
+      const distHoras = Math.abs(b.horasT - horasT) / 4.0;
+      const distEspera = Math.abs(b.horasE - horasE) / 3.0;
+      const distKm = Math.abs(b.km - km) / 100.0;
+      const distDias = Math.abs(b.dias - dias);
+      const distCliente = (b.tipoCliente === tipoCliente) ? 0 : 0.5;
+
+      const distanciaTotal = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2);
+
+      if (distanciaTotal < 1.6) {
+        const peso = 1.0 / (distanciaTotal + 0.08);
+        const subtotalRef = b.subtotalBaseTeorico || (b.precioDia);
+        const ratioCorreccion = (b.precioDia - subtotalRef) || 0;
+        sumaPonderadaDiferencias += ratioCorreccion * peso;
+        pesoTotal += peso;
+      }
+    });
+
+    if (pesoTotal === 0) return 0;
+    return Math.round((sumaPonderadaDiferencias / pesoTotal) / 10) * 10;
+  }
+
+  function calcular() {
+    const lugar = document.getElementById('lugar').value.trim() || 'Vuestra localidad';
+    const tipoCliente = document.getElementById('tipoCliente').value;
+    const horasT = parseFloat(document.getElementById('horasTocadas').value) || 0;
+    const horasE = parseFloat(document.getElementById('horasEspera').value) || 0;
+    const km = parseFloat(document.getElementById('kmTotales').value) || 0;
+    const dias = parseInt(document.getElementById('dias').value) || 1;
+    const numMusicos = parseInt(document.getElementById('musicos').value) || 9;
+    const incluyeComida = document.getElementById('incluyeComida').checked;
+    const requiereAlojamiento = document.getElementById('requiereAlojamiento').checked;
+    const incluyeAlojamiento = document.getElementById('incluyeAlojamiento').checked;
+
+    const BASE_MINIMA_CHARANGA = 500;
+    const factorEscalaMusicos = numMusicos / 9;
+    const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscalaMusicos;
+    const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscalaMusicos;
+
+    let kmFacturables = Math.max(0, km - 40);
+    let costeKmCalc = 0;
+    if (kmFacturables > 0) {
+      let tramoMedio = Math.min(kmFacturables, 180.0);
+      costeKmCalc += tramoMedio * 1.023;
+      kmFacturables -= tramoMedio;
+      if (kmFacturables > 0) {
+        costeKmCalc += kmFacturables * 0.26;
+      }
+    }
+    const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
+    const costeDietas = incluyeComida ? 0 : (numMusicos * 20);
+    const costeHotel = (requiereAlojamiento && !incluyeAlojamiento) ? (numMusicos * 35) : 0;
+
+    let subtotalBase = BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
+
+    let factorDescuento = 1.0;
+    let textoDescuento = "0 %";
+    if (dias === 2 || dias === 3) {
+      factorDescuento = 0.90;
+      textoDescuento = "10 %";
+    } else if (dias >= 4) {
+      factorDescuento = 0.80;
+      textoDescuento = "20 %";
+    }
+
+    let subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalBase * factorDescuento);
+
+    const correccionAprendida = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente);
+    subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalDia + correccionAprendida);
+
+    const partesTotales = numMusicos + 1;
+    const cuotaTeorica = subtotalDia / partesTotales;
+
+    let cuotaRedondeada = Math.round(cuotaTeorica / 5) * 5;
+    if (cuotaRedondeada < 50) cuotaRedondeada = 50;
+
+    let pagoPorMusico = cuotaRedondeada;
+    let boteFurgoneta = cuotaRedondeada;
+    let precioDiaFinal = cuotaRedondeada * partesTotales;
+    let textoCliente = "0 %";
+
+    if (tipoCliente === 'particular') {
+      textoCliente = "-5 %";
+      let subtotalParticular = subtotalDia * 0.95;
+      precioDiaFinal = Math.round(subtotalParticular / 10) * 10;
+      if (precioDiaFinal < BASE_MINIMA_CHARANGA) precioDiaFinal = BASE_MINIMA_CHARANGA;
+
+      boteFurgoneta = precioDiaFinal - (pagoPorMusico * numMusicos);
+      if (boteFurgoneta < 30) {
+        boteFurgoneta = 30;
+        precioDiaFinal = (pagoPorMusico * numMusicos) + boteFurgoneta;
+      }
+    }
+
+    const precioTotal = precioDiaFinal * dias;
+
+    resumenCalculo = {
+      lugar,
+      tipoCliente,
+      horasT,
+      horasE,
+      km,
+      dias,
+      numMusicos,
+      incluyeComida,
+      requiereAlojamiento,
+      incluyeAlojamiento,
+      pagoPorMusico,
+      boteFurgoneta,
+      subtotalBaseTeorico: subtotalBase,
+      precioDia: precioDiaFinal,
+      precioTotal
+    };
+
+    document.getElementById('precioTotal').innerHTML = `${precioTotal.toLocaleString('es-ES')} <span>€</span>`;
+    document.getElementById('precioPorDia').innerText = `${precioDiaFinal.toLocaleString('es-ES')} € / día · ${dias} ${dias > 1 ? 'días' : 'día'}`;
+    
+    document.getElementById('baseMin').innerText = BASE_MINIMA_CHARANGA.toLocaleString('es-ES') + " €";
+    document.getElementById('costeHorasExtra').innerText = Math.round(costeExtra).toLocaleString('es-ES') + " €";
+    document.getElementById('costeEspera').innerText = Math.round(costeEspera).toLocaleString('es-ES') + " €";
+    document.getElementById('costeKm').innerText = Math.round(costeKm).toLocaleString('es-ES') + " €";
+    document.getElementById('costeDietas').innerText = Math.round(costeDietas).toLocaleString('es-ES') + " €";
+    document.getElementById('costeHotel').innerText = Math.round(costeHotel).toLocaleString('es-ES') + " €";
+    document.getElementById('ajusteCliente').innerText = textoCliente;
+    document.getElementById('descuentoVolumen').innerText = textoDescuento;
+    document.getElementById('ajusteHistorico').innerText = (correccionAprendida >= 0 ? '+' : '') + correccionAprendida + " €";
+
+    document.getElementById('pagoMusico').innerText = pagoPorMusico + " €";
+    document.getElementById('pagoFurgoneta').innerText = boteFurgoneta + " €";
+  }
+
+  function copiarMensajeWhatsApp() {
+    const r = resumenCalculo;
+    
+    let detalleHorario = `• *Actuación:* ${r.horasT} h de música en directo`;
+    if (r.horasE > 0) {
+      detalleHorario += `\n• *Disponibilidad / Descanso entre pases:* ${r.horasE} h`;
+    }
+
+    let detalleDias = r.dias > 1 ? `• *Duración:* ${r.dias} días de actuación` : `• *Duración:* 1 jornada`;
+    let detalleManutencion = r.incluyeComida 
+      ? `• *Manutención:* A cargo de la organización` 
+      : `• *Manutención:* Dietas incluidas`;
+
+    let detalleAlojamiento = '';
+    if (r.requiereAlojamiento) {
+      detalleAlojamiento = r.incluyeAlojamiento 
+        ? `\n• *Alojamiento:* A cargo de la comisión/organización`
+        : `\n• *Alojamiento:* Suplemento de estancia incluido en presupuesto`;
+    }
+
+    let precioFormateado = r.dias > 1 
+      ? `*${r.precioTotal} €* · ${r.precioDia} € / día` 
+      : `*${r.precioTotal} €*`;
+
+    const texto = `🎺 *PRESUPUESTO · XARANGA LLENYA AL BOMBO* 🎺
+Hola, os pasamos la propuesta para la actuación en *${r.lugar}*:
+
+${detalleDias}
+• *Formación:* ${r.numMusicos} músicos
+${detalleHorario}
+• *Desplazamiento:* Furgoneta incluida · salida desde Onda${detalleAlojamiento}
+${detalleManutencion}
+
+💰 *PRECIO TOTAL:* ${precioFormateado}
+
+Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
+
+    navigator.clipboard.writeText(texto).then(() => {
+      const btn = document.getElementById('btnCopiar');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✅ ¡Copiado!';
+      btn.style.backgroundColor = '#16a34a';
+      setTimeout(() => { 
+        btn.innerHTML = originalText; 
+        btn.style.backgroundColor = 'var(--primary-red)';
+      }, 2000);
+    });
+  }
+
+  function getFavoritos() {
+    return JSON.parse(localStorage.getItem('charanga_favoritos') || '[]');
+  }
+
+  function guardarFavorito() {
+    const favoritos = getFavoritos();
+    const nuevo = {
+      id: Date.now(),
+      lugar: resumenCalculo.lugar,
+      tipoCliente: resumenCalculo.tipoCliente,
+      horasT: resumenCalculo.horasT,
+      horasE: resumenCalculo.horasE,
+      km: resumenCalculo.km,
+      dias: resumenCalculo.dias,
+      numMusicos: resumenCalculo.numMusicos,
+      incluyeComida: resumenCalculo.incluyeComida,
+      requiereAlojamiento: resumenCalculo.requiereAlojamiento,
+      incluyeAlojamiento: resumenCalculo.incluyeAlojamiento,
+      subtotalBaseTeorico: resumenCalculo.subtotalBaseTeorico,
+      precioTotal: resumenCalculo.precioTotal,
+      precioDia: resumenCalculo.precioDia,
+      pagoPorMusico: resumenCalculo.pagoPorMusico
+    };
+
+    favoritos.push(nuevo);
+    localStorage.setItem('charanga_favoritos', JSON.stringify(favoritos));
+    renderFavoritos();
+    calcular();
+
+    const btn = document.getElementById('btnGuardar');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⭐ ¡Guardado!';
+    setTimeout(() => { btn.innerHTML = originalText; }, 1500);
+  }
+
+  // Guardar un bolo histórico manualmente con precio cerrado
+  function guardarBoloManual() {
+    const lugar = document.getElementById('m_lugar').value.trim() || 'Bolo Histórico';
+    const tipoCliente = document.getElementById('m_tipoCliente').value;
+    const horasT = parseFloat(document.getElementById('m_horasT').value) || 2;
+    const horasE = parseFloat(document.getElementById('m_horasE').value) || 0;
+    const km = parseFloat(document.getElementById('m_km').value) || 40;
+    const dias = parseInt(document.getElementById('m_dias').value) || 1;
+    const precioPactado = parseFloat(document.getElementById('m_precioPactado').value);
+
+    if (!precioPactado || precioPactado <= 0) {
+      alert('Introduce el precio total cobrado en ese bolo.');
+      return;
+    }
+
+    const subtotalTeorico = calcularSubtotalTeoricoPuro(horasT, horasE, km, 9, true, false, true);
+    const precioDia = Math.round(precioPactado / dias);
+    const pagoPorMusico = Math.round((precioDia / 10) / 5) * 5;
+
+    const nuevo = {
+      id: Date.now(),
+      lugar,
+      tipoCliente,
+      horasT,
+      horasE,
+      km,
+      dias,
+      numMusicos: 9,
+      incluyeComida: true,
+      requiereAlojamiento: false,
+      incluyeAlojamiento: true,
+      subtotalBaseTeorico: subtotalTeorico,
+      precioTotal: precioPactado,
+      precioDia: precioDia,
+      pagoPorMusico: pagoPorMusico
+    };
+
+    const favoritos = getFavoritos();
+    favoritos.push(nuevo);
+    localStorage.setItem('charanga_favoritos', JSON.stringify(favoritos));
+    
+    // Limpiar campos y ocultar formulario
+    document.getElementById('m_lugar').value = '';
+    document.getElementById('m_precioPactado').value = '';
+    toggleFormularioManual();
+    
+    renderFavoritos();
+    calcular();
+    alert(`¡Bolo en ${lugar} guardado! El algoritmo ha aprendido de este precio.`);
+  }
+
+  function cargarFavorito(id) {
+    const favoritos = getFavoritos();
+    const item = favoritos.find(f => f.id === id);
+    if (!item) return;
+
+    document.getElementById('lugar').value = item.lugar;
+    document.getElementById('tipoCliente').value = item.tipoCliente || 'estandar';
+    document.getElementById('horasTocadas').value = item.horasT;
+    document.getElementById('horasEspera').value = item.horasE;
+    document.getElementById('kmTotales').value = item.km;
+    document.getElementById('dias').value = item.dias;
+    document.getElementById('musicos').value = item.numMusicos;
+    document.getElementById('incluyeComida').checked = item.incluyeComida;
+    document.getElementById('requiereAlojamiento').checked = !!item.requiereAlojamiento;
+    document.getElementById('incluyeAlojamiento').checked = item.incluyeAlojamiento !== undefined ? item.incluyeAlojamiento : true;
+    
+    toggleAlojamiento();
+    calcular();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function eliminarFavorito(id) {
+    let favoritos = getFavoritos();
+    favoritos = favoritos.filter(f => f.id !== id);
+    localStorage.setItem('charanga_favoritos', JSON.stringify(favoritos));
+    renderFavoritos();
+    calcular();
+  }
+
+  function renderFavoritos() {
+    const contenedor = document.getElementById('contenedorFavoritos');
+    const favoritos = getFavoritos();
+
+    document.getElementById('learningStatus').innerHTML = `🧠 Memoria activa: <span>${favoritos.length}</span> bolos aprendidos`;
+
+    if (favoritos.length === 0) {
+      contenedor.innerHTML = '<p class="no-favs">No hay bolos en la memoria. Añade bolos pasados arriba para entrenar el algoritmo.</p>';
+      return;
+    }
+
+    const etiquetasCliente = {
+      'estandar': 'Estándar',
+      'particular': 'Particular'
+    };
+
+    contenedor.innerHTML = favoritos.map(f => `
+      <div class="fav-item">
+        <div>
+          <div class="fav-title">${f.lugar} · <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">${etiquetasCliente[f.tipoCliente] || 'Estándar'}</span></div>
+          <div class="fav-meta">
+            ${f.dias > 1 ? f.dias + ' días · ' : ''}${f.horasT}h toque ${f.horasE > 0 ? '+ ' + f.horasE + 'h espera' : ''} · ${f.km} km<br>
+            <strong>${f.precioTotal} €</strong> ${f.dias > 1 ? '· ' + f.precioDia + ' €/día' : ''} · <em>${f.pagoPorMusico || '-'} €/músico</em>
+            ${f.requiereAlojamiento ? '<br><span style="color:#93c5fd; font-size:0.75rem;">🛌 Con alojamiento</span>' : ''}
+          </div>
+        </div>
+        <div class="fav-actions">
+          <button class="btn-sm btn-load" onclick="cargarFavorito(${f.id})">Cargar</button>
+          <button class="btn-sm btn-del" onclick="eliminarFavorito(${f.id})">Borrar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.onload = function() {
+    calcular();
+    renderFavoritos();
+  };
+</script>
+
+</body>
+</html>
