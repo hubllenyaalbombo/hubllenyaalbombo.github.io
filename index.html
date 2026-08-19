@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Presupuestador - Xaranga Llenya al Bombo</title>
+  <title>Hub Oficial - Xaranga Llenya al Bombo</title>
   <style>
     :root {
       --bg-color: #0a0a0a;
@@ -12,11 +12,12 @@
       --primary-red: #dc2626;
       --primary-red-hover: #b91c1c;
       --accent-red: #ef4444;
+      --accent-green: #22c55e;
+      --accent-blue: #3b82f6;
       --text-white: #ffffff;
       --text-muted: #a3a3a3;
       --input-bg: #000000;
       --border-color: #333333;
-      --accent-blue: #3b82f6;
     }
 
     * {
@@ -29,7 +30,7 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-white);
-      padding: 24px 16px;
+      padding: 16px 12px 90px 12px;
       display: flex;
       justify-content: center;
     }
@@ -37,24 +38,11 @@
     .container {
       width: 100%;
       max-width: 960px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .full-width {
-      grid-column: 1 / -1;
     }
 
     .header-banner {
       text-align: center;
-      padding: 10px 0;
+      padding: 12px 0 16px 0;
     }
 
     .header-banner h1 {
@@ -62,7 +50,6 @@
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: var(--text-white);
     }
 
     .header-banner h1 span {
@@ -75,39 +62,67 @@
       margin-top: 4px;
     }
 
-    .learning-badge {
-      display: inline-block;
-      margin-top: 8px;
-      background: #1e1e1e;
+    .nav-tabs {
+      display: flex;
+      background: #171717;
       border: 1px solid var(--border-color);
-      color: #cbd5e1;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 20px;
+      gap: 6px;
     }
 
-    .learning-badge span {
-      color: var(--accent-red);
+    .tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--primary-red);
+      color: var(--text-white);
+      box-shadow: 0 2px 10px rgba(220, 38, 38, 0.4);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 22px;
+      padding: 20px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-    }
-
-    .card-header-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .card-header-flex h3 {
-      margin-bottom: 0;
+      margin-bottom: 20px;
     }
 
     h2, h3 {
@@ -128,14 +143,14 @@
     label {
       display: block;
       margin-bottom: 6px;
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    input[type="text"], input[type="number"], select {
+    input[type="text"], input[type="number"], input[type="date"], input[type="time"], select {
       width: 100%;
       background-color: var(--input-bg);
       border: 1px solid var(--border-color);
@@ -147,7 +162,7 @@
       transition: all 0.2s;
     }
 
-    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    input:focus, select:focus {
       border-color: var(--primary-red);
       box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
     }
@@ -161,7 +176,6 @@
       padding: 10px 12px;
       border-radius: 6px;
       border: 1px solid var(--border-color);
-      transition: all 0.2s ease;
     }
 
     .checkbox-group input {
@@ -177,108 +191,6 @@
       background: #111111;
     }
 
-    .result-box {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .total-display {
-      background-color: #000000;
-      border: 2px solid var(--primary-red);
-      border-radius: 8px;
-      padding: 18px;
-      text-align: center;
-      margin-bottom: 16px;
-      position: relative;
-    }
-
-    .total-label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
-    }
-
-    .total-amount {
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: var(--text-white);
-      margin: 4px 0;
-    }
-
-    .total-amount span {
-      color: var(--primary-red);
-    }
-
-    .per-day {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .breakdown {
-      list-style: none;
-      font-size: 0.86rem;
-    }
-
-    .breakdown li {
-      display: flex;
-      justify-content: space-between;
-      padding: 7px 0;
-      border-bottom: 1px solid #222222;
-    }
-
-    .breakdown li:last-child {
-      border-bottom: none;
-    }
-
-    .breakdown span:last-child {
-      font-weight: 700;
-      color: var(--text-white);
-    }
-
-    .share-box {
-      margin-top: 14px;
-      padding: 14px;
-      background-color: #000000;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      border-left: 4px solid var(--primary-red);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .share-box .share-title {
-      grid-column: 1 / -1;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
-    }
-
-    .share-item {
-      background: #141414;
-      padding: 8px 10px;
-      border-radius: 4px;
-      border: 1px solid #262626;
-    }
-
-    .share-item span {
-      display: block;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .share-item strong {
-      font-size: 1.15rem;
-      color: var(--accent-red);
-    }
-
     .btn-group {
       display: flex;
       gap: 10px;
@@ -289,7 +201,7 @@
       flex: 1;
       padding: 12px;
       border-radius: 6px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -310,7 +222,6 @@
 
     .btn-fav:hover {
       background-color: #333333;
-      border-color: #555555;
     }
 
     .btn-whatsapp {
@@ -322,84 +233,161 @@
       background-color: var(--primary-red-hover);
     }
 
-    .btn-manual-toggle {
-      background: #222222;
-      color: #cbd5e1;
-      border: 1px solid var(--border-color);
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-manual-toggle:hover {
-      background: var(--primary-red);
+    .btn-confirm {
+      background-color: #15803d;
       color: #ffffff;
-      border-color: var(--primary-red);
     }
 
-    .manual-form-container {
-      display: none;
-      background: #000000;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 16px;
-      margin-top: 14px;
-      margin-bottom: 16px;
+    .btn-confirm:hover {
+      background-color: #166534;
     }
 
-    .manual-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    .countdown-hero {
+      background: linear-gradient(145deg, #180808 0%, #000000 100%);
+      border: 2px solid var(--primary-red);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    @media (max-width: 600px) {
-      .manual-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .fav-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .fav-item {
-      background-color: #0a0a0a;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .fav-title {
+    .countdown-title {
+      font-size: 0.85rem;
+      color: var(--accent-red);
+      text-transform: uppercase;
       font-weight: 800;
-      color: var(--text-white);
-      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .countdown-location {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin: 6px 0 16px 0;
       text-transform: uppercase;
     }
 
-    .fav-meta {
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .countdown-box {
+      background: #141414;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      padding: 10px 14px;
+      min-width: 68px;
+    }
+
+    .countdown-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .countdown-lbl {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .caja-balance-card {
+      background: #000000;
+      border: 2px solid var(--accent-green);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .caja-balance-amount {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--accent-green);
+      margin: 6px 0;
+    }
+
+    .caja-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .caja-stat-box {
+      background: #141414;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .tx-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #0d0d0d;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tx-ingreso {
+      border-left: 4px solid var(--accent-green);
+    }
+
+    .tx-gasto {
+      border-left: 4px solid var(--accent-red);
+    }
+
+    .item-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .item-card {
+      background: #0a0a0a;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .item-title {
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .item-meta {
       font-size: 0.82rem;
       color: var(--text-muted);
       line-height: 1.4;
-    }
-
-    .fav-meta strong {
-      color: var(--accent-red);
-    }
-
-    .fav-actions {
-      display: flex;
-      gap: 6px;
     }
 
     .btn-sm {
@@ -412,236 +400,280 @@
       text-transform: uppercase;
     }
 
-    .btn-load {
-      background-color: #262626;
+    .total-display {
+      background-color: #000000;
+      border: 2px solid var(--primary-red);
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .total-amount {
+      font-size: 2.5rem;
+      font-weight: 900;
       color: var(--text-white);
-      flex: 1;
+      margin: 4px 0;
     }
 
-    .btn-load:hover {
-      background-color: var(--primary-red);
+    .total-amount span {
+      color: var(--primary-red);
     }
 
-    .btn-del {
-      background-color: transparent;
-      color: #737373;
-      border: 1px solid #333333;
+    .breakdown {
+      list-style: none;
+      font-size: 0.86rem;
     }
 
-    .btn-del:hover {
-      background-color: #262626;
+    .breakdown li {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #222222;
+    }
+
+    .share-box {
+      margin-top: 14px;
+      padding: 14px;
+      background-color: #000000;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      border-left: 4px solid var(--primary-red);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .share-item {
+      background: #141414;
+      padding: 8px 10px;
+      border-radius: 4px;
+      border: 1px solid #262626;
+    }
+
+    .share-item strong {
+      font-size: 1.15rem;
       color: var(--accent-red);
-      border-color: var(--accent-red);
-    }
-
-    .no-favs {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-style: italic;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header-banner full-width">
+  <div class="header-banner">
     <h1>Xaranga <span>Llenya al Bombo</span></h1>
-    <p>Presupuestador Oficial de Actuaciones · Salida desde Onda</p>
-    <div class="learning-badge" id="learningStatus">🔄 Conectando a la nube...</div>
+    <p>Hub Oficial de Gestión · Salida desde Onda</p>
+    <div style="margin-top:8px; font-size:0.75rem; color:#a3a3a3;" id="cloudSyncStatus">🔄 Conectando con Firebase...</div>
   </div>
 
-  <div class="card">
-    <h2>Datos del Bolo</h2>
-
-    <div class="form-group">
-      <label for="lugar">Población / Actuación</label>
-      <input type="text" id="lugar" value="Nules" placeholder="Ej. Iglesuela del Cid, Huerta del Rey..." oninput="window.calcular()">
-    </div>
-
-    <div class="form-group">
-      <label for="tipoCliente">Tipo de Contratante</label>
-      <select id="tipoCliente" onchange="window.calcular()">
-        <option value="estandar" selected>Peña / Comisión de Fiestas / Ayuntamiento · Estándar</option>
-        <option value="particular">Particular / Despedida / Cumpleaños · -5%</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="horasTocadas">Horas de música en directo (por día)</label>
-      <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="window.calcular()">
-    </div>
-
-    <div class="form-group">
-      <label for="horasEspera">Horas de espera / descanso entre pases</label>
-      <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="window.calcular()">
-    </div>
-
-    <div class="form-group">
-      <label for="kmTotales">Km totales ida y vuelta (desde Onda)</label>
-      <input type="number" id="kmTotales" value="42" min="0" step="5" oninput="window.calcular()">
-    </div>
-
-    <div class="form-group">
-      <label for="dias">Días de actuación consecutivos</label>
-      <input type="number" id="dias" value="1" min="1" step="1" oninput="window.calcular()">
-    </div>
-
-    <div class="form-group">
-      <label for="musicos">Músicos en plantilla</label>
-      <input type="number" id="musicos" value="9" min="1" step="1" oninput="window.calcular()">
-    </div>
-
-    <div class="checkbox-group">
-      <input type="checkbox" id="incluyeComida" checked onchange="window.calcular()">
-      <label for="incluyeComida" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">La organización pone la comida/cena</label>
-    </div>
-
-    <div class="checkbox-group">
-      <input type="checkbox" id="requiereAlojamiento" onchange="window.toggleAlojamiento()">
-      <label for="requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">Requiere hacer noche / alojamiento</label>
-    </div>
-
-    <div class="checkbox-group sub-checkbox" id="contenedorIncluyeAlojamiento" style="display: none;">
-      <input type="checkbox" id="incluyeAlojamiento" checked onchange="window.calcular()">
-      <label for="incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">El alojamiento lo cubre la organización</label>
-    </div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-inicio')">🏠 Agenda</button>
+    <button class="tab-btn" onclick="switchTab('tab-presupuesto')">💰 Presupuestos</button>
+    <button class="tab-btn" onclick="switchTab('tab-caja')">📊 Caja & Bote</button>
   </div>
 
-  <div class="card result-box">
-    <div>
-      <h2>Presupuesto</h2>
+  <!-- PESTAÑA 1: AGENDA & PRÓXIMO BOLO -->
+  <div id="tab-inicio" class="tab-content active">
+    <div class="countdown-hero" id="nextGigHero">
+      <div class="countdown-title">🔥 Próxima Actuación Confirmada 🔥</div>
+      <div class="countdown-location" id="heroLugar">Cargando bolo...</div>
       
-      <div class="total-display">
-        <div class="total-label">Presupuesto Final Sugerido</div>
-        <div class="total-amount" id="precioTotal">700 <span>€</span></div>
-        <div class="per-day" id="precioPorDia">700 € / día · 1 día</div>
+      <div class="countdown-timer">
+        <div class="countdown-box"><div class="countdown-num" id="cdDays">00</div><div class="countdown-lbl">Días</div></div>
+        <div class="countdown-box"><div class="countdown-num" id="cdHours">00</div><div class="countdown-lbl">Horas</div></div>
+        <div class="countdown-box"><div class="countdown-num" id="cdMinutes">00</div><div class="countdown-lbl">Min</div></div>
+        <div class="countdown-box"><div class="countdown-num" id="cdSeconds">00</div><div class="countdown-lbl">Seg</div></div>
       </div>
 
-      <ul class="breakdown">
-        <li>
-          <span>Mínimo inicial (hasta 2h):</span>
-          <span id="baseMin">500 €</span>
-        </li>
-        <li>
-          <span>Horas extra tocando:</span>
-          <span id="costeHorasExtra">0 €</span>
-        </li>
-        <li>
-          <span>Horas de espera / descanso:</span>
-          <span id="costeEspera">0 €</span>
-        </li>
-        <li>
-          <span>Desplazamiento furgoneta y ruta:</span>
-          <span id="costeKm">0 €</span>
-        </li>
-        <li>
-          <span>Suplemento dietas / manutención:</span>
-          <span id="costeDietas">0 €</span>
-        </li>
-        <li>
-          <span>Suplemento noche (si no ponen hotel):</span>
-          <span id="costeHotel">0 €</span>
-        </li>
-        <li>
-          <span>Ajuste tipo de cliente:</span>
-          <span id="ajusteCliente" style="color:var(--primary-red);">0 %</span>
-        </li>
-        <li>
-          <span>Descuento por volumen (multidía):</span>
-          <span id="descuentoVolumen" style="color:var(--primary-red);">0 %</span>
-        </li>
-        <li>
-          <span>Corrección histórica aprendida:</span>
-          <span id="ajusteHistorico" style="color:#60a5fa;">0 €</span>
-        </li>
-      </ul>
+      <div class="hero-meta">
+        <span id="heroFecha">📅 --/--/----</span>
+        <span id="heroHoraSalida">🚐 Salida: --:-- h</span>
+        <span id="heroHoraToque">🎺 Toque: --:-- h</span>
+      </div>
 
-      <div class="share-box">
-        <div class="share-title">Reparto Interno · por día</div>
-        <div class="share-item">
-          <span>Por Músico</span>
-          <strong id="pagoMusico">70 €</strong>
-        </div>
-        <div class="share-item">
-          <span>Bote</span>
-          <strong id="pagoFurgoneta">70 €</strong>
-        </div>
+      <div class="hero-actions">
+        <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMaps()">📍 Ver Ruta Maps</button>
+        <button class="btn btn-whatsapp" id="btnHeroCalendar" onclick="anadirAGoogleCalendar()">📅 Google Calendar</button>
       </div>
     </div>
 
-    <div class="btn-group">
-      <button class="btn btn-fav" id="btnGuardar" onclick="window.guardarFavorito()">
-        ⭐ Guardar
-      </button>
-      <button class="btn btn-whatsapp" id="btnCopiar" onclick="window.copiarMensajeWhatsApp()">
-        📋 Copiar WhatsApp
-      </button>
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3>📅 Bolos Cerrados de la Temporada</h3>
+        <button class="btn-sm btn-fav" onclick="toggleFormBoloConfirmado()">➕ Añadir Bolo Confirmado</button>
+      </div>
+
+      <div id="formNuevoBoloConfirmado" style="display:none; background:#000; padding:16px; border-radius:8px; border:1px solid #333; margin-bottom:16px;">
+        <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--primary-red);">Agendar Nuevo Bolo Oficial</h4>
+        <div class="grid-2col">
+          <div class="form-group"><label>Población / Evento</label><input type="text" id="conf_lugar" placeholder="Ej. Fiestas Nules"></div>
+          <div class="form-group"><label>Fecha</label><input type="date" id="conf_fecha"></div>
+          <div class="form-group"><label>Hora de Salida desde Onda</label><input type="time" id="conf_horaSalida" value="16:00"></div>
+          <div class="form-group"><label>Hora de Toque</label><input type="time" id="conf_horaToque" value="17:30"></div>
+          <div class="form-group"><label>Bote para la caja (€)</label><input type="number" id="conf_bote" value="70"></div>
+          <div class="form-group"><label>Notas / Punto de encuentro</label><input type="text" id="conf_notas" placeholder="Ej. Plaza Mayor, ropa oficial"></div>
+        </div>
+        <button class="btn btn-confirm" style="width:100%; margin-top:10px;" onclick="guardarBoloConfirmadoManual()">💾 Guardar en Agenda y Añadir Bote</button>
+      </div>
+
+      <div id="listaBolosConfirmados" class="item-list"></div>
     </div>
   </div>
 
-  <div class="card full-width">
-    <div class="card-header-flex">
-      <h3>⭐ Bolos en la Nube (Base Compartida)</h3>
-      <button class="btn-manual-toggle" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
-    </div>
-
-    <div class="manual-form-container" id="manualForm">
-      <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--primary-red); text-transform:uppercase;">Registrar Bolo Pasado con Precio Real</h4>
-      <div class="manual-grid">
+  <!-- PESTAÑA 2: PRESUPUESTADOR INTELIGENTE -->
+  <div id="tab-presupuesto" class="tab-content">
+    <div class="grid-2col">
+      <div class="card">
+        <h2>Calculadora de Bolo</h2>
         <div class="form-group">
-          <label for="m_lugar">Población / Nombre</label>
-          <input type="text" id="m_lugar" placeholder="Ej. Fiestas de Verano...">
+          <label for="lugar">Población / Actuación</label>
+          <input type="text" id="lugar" value="Nules" oninput="window.calcular()">
         </div>
         <div class="form-group">
-          <label for="m_tipoCliente">Tipo de Cliente</label>
-          <select id="m_tipoCliente">
-            <option value="estandar">Peña / Comisión / Ayto</option>
-            <option value="particular">Particular</option>
+          <label for="tipoCliente">Tipo de Contratante</label>
+          <select id="tipoCliente" onchange="window.calcular()">
+            <option value="estandar" selected>Peña / Comisión / Ayto · Estándar</option>
+            <option value="particular">Particular / Despedida · -5%</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="m_horasT">Horas de Música (por día)</label>
-          <input type="number" id="m_horasT" value="3" min="0.5" step="0.5">
+          <label for="horasTocadas">Horas tocando (por día)</label>
+          <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="window.calcular()">
         </div>
         <div class="form-group">
-          <label for="m_horasE">Horas de Espera (por día)</label>
-          <input type="number" id="m_horasE" value="0" min="0" step="0.5">
+          <label for="horasEspera">Horas espera / descanso (por día)</label>
+          <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="window.calcular()">
         </div>
         <div class="form-group">
-          <label for="m_km">Km totales ida/vuelta</label>
-          <input type="number" id="m_km" value="40" step="5">
+          <label for="kmTotales">Km totales ida/vuelta (desde Onda)</label>
+          <input type="number" id="kmTotales" value="42" step="5" oninput="window.calcular()">
         </div>
         <div class="form-group">
-          <label for="m_dias">Días de Bolo</label>
-          <input type="number" id="m_dias" value="1" min="1">
+          <label for="dias">Días de actuación consecutivos</label>
+          <input type="number" id="dias" value="1" min="1" oninput="window.calcular()">
         </div>
-        
-        <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px;">
-          <div class="checkbox-group" style="margin-top:0;">
-            <input type="checkbox" id="m_incluyeComida" checked>
-            <label for="m_incluyeComida" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">La organización puso la comida/cena</label>
+        <div class="form-group">
+          <label for="musicos">Músicos en plantilla</label>
+          <input type="number" id="musicos" value="9" min="1" oninput="window.calcular()">
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="incluyeComida" checked onchange="window.calcular()">
+          <label for="incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización pone la comida/cena</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="requiereAlojamiento" onchange="window.toggleAlojamiento()">
+          <label for="requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">Requiere hacer noche / alojamiento</label>
+        </div>
+        <div class="checkbox-group sub-checkbox" id="contenedorIncluyeAlojamiento" style="display:none;">
+          <input type="checkbox" id="incluyeAlojamiento" checked onchange="window.calcular()">
+          <label for="incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">El alojamiento lo cubre la organización</label>
+        </div>
+      </div>
+
+      <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <h2>Presupuesto</h2>
+          <div class="total-display">
+            <div style="font-size:0.75rem; color:#a3a3a3; text-transform:uppercase; font-weight:700;">Presupuesto Sugerido</div>
+            <div class="total-amount" id="precioTotal">700 <span>€</span></div>
+            <div id="precioPorDia" style="color:#a3a3a3; font-size:0.9rem;">700 € / día</div>
           </div>
-          <div class="checkbox-group" style="margin-top:0;">
-            <input type="checkbox" id="m_requiereAlojamiento" onchange="window.toggleManualAlojamiento()">
-            <label for="m_requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">Requirió noche / alojamiento</label>
-          </div>
-          <div class="checkbox-group sub-checkbox" id="m_contenedorIncluyeAlojamiento" style="display:none; margin-top:0;">
-            <input type="checkbox" id="m_incluyeAlojamiento" checked>
-            <label for="m_incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">El alojamiento lo cubrió la organización</label>
+
+          <ul class="breakdown">
+            <li><span>Mínimo base (2h):</span><span id="baseMin">500 €</span></li>
+            <li><span>Horas extra toque:</span><span id="costeHorasExtra">0 €</span></li>
+            <li><span>Horas de espera:</span><span id="costeEspera">0 €</span></li>
+            <li><span>Desplazamiento furgoneta:</span><span id="costeKm">0 €</span></li>
+            <li><span>Dietas manutención:</span><span id="costeDietas">0 €</span></li>
+            <li><span>Suplemento hotel:</span><span id="costeHotel">0 €</span></li>
+            <li><span>Descuento multidía:</span><span id="descuentoVolumen" style="color:var(--primary-red);">0 %</span></li>
+            <li><span>Ajuste histórico aprendido:</span><span id="ajusteHistorico" style="color:#60a5fa;">0 €</span></li>
+          </ul>
+
+          <div class="share-box">
+            <div class="share-item"><span>Por Músico</span><strong id="pagoMusico">70 €</strong></div>
+            <div class="share-item"><span>Bote</span><strong id="pagoFurgoneta">70 €</strong></div>
           </div>
         </div>
 
-        <div class="form-group" style="grid-column: 1 / -1;">
-          <label for="m_precioPactado" style="color:var(--accent-red);">Precio Total Cobrado Real (€)</label>
-          <input type="number" id="m_precioPactado" placeholder="Ej. 750" step="10">
-        </div>
-        <div class="form-group" style="grid-column: 1 / -1;">
-          <button class="btn btn-fav" style="width:100%;" onclick="window.guardarBoloManual()">💾 Guardar y Sincronizar en la Nube</button>
+        <div class="btn-group">
+          <button class="btn btn-fav" id="btnGuardar" onclick="window.guardarFavorito()">⭐ Guardar</button>
+          <button class="btn btn-whatsapp" id="btnCopiar" onclick="window.copiarMensajeWhatsApp()">📋 WhatsApp</button>
         </div>
       </div>
     </div>
 
-    <div id="contenedorFavoritos" class="fav-list">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3>🧠 Memoria en la Nube (<span id="countAprendidos">0</span>)</h3>
+        <button class="btn-sm btn-fav" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
+      </div>
+
+      <div id="manualForm" style="display:none; background:#000; padding:16px; border-radius:8px; border:1px solid #333; margin-bottom:16px;">
+        <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--primary-red);">Registrar Bolo Histórico con Precio Real</h4>
+        <div class="grid-2col">
+          <div class="form-group"><label>Población</label><input type="text" id="m_lugar"></div>
+          <div class="form-group"><label>Tipo de Cliente</label><select id="m_tipoCliente"><option value="estandar">Peña / Ayto</option><option value="particular">Particular</option></select></div>
+          <div class="form-group"><label>Horas Música</label><input type="number" id="m_horasT" value="3" step="0.5"></div>
+          <div class="form-group"><label>Horas Espera</label><input type="number" id="m_horasE" value="0" step="0.5"></div>
+          <div class="form-group"><label>Km Totales</label><input type="number" id="m_km" value="40" step="5"></div>
+          <div class="form-group"><label>Días</label><input type="number" id="m_dias" value="1"></div>
+          
+          <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px;">
+            <div class="checkbox-group" style="margin-top:0;">
+              <input type="checkbox" id="m_incluyeComida" checked>
+              <label for="m_incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización puso la comida/cena</label>
+            </div>
+            <div class="checkbox-group" style="margin-top:0;">
+              <input type="checkbox" id="m_requiereAlojamiento" onchange="window.toggleManualAlojamiento()">
+              <label for="m_requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">Requirió noche / alojamiento</label>
+            </div>
+            <div class="checkbox-group sub-checkbox" id="m_contenedorIncluyeAlojamiento" style="display:none; margin-top:0;">
+              <input type="checkbox" id="m_incluyeAlojamiento" checked>
+              <label for="m_incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">El alojamiento lo cubrió la organización</label>
+            </div>
+          </div>
+
+          <div class="form-group" style="grid-column:1/-1;"><label style="color:var(--accent-red);">Precio Real Cobrado (€)</label><input type="number" id="m_precioPactado"></div>
+        </div>
+        <button class="btn btn-fav" style="width:100%; margin-top:10px;" onclick="window.guardarBoloManual()">💾 Guardar y Entrenar</button>
+      </div>
+
+      <div id="contenedorFavoritos" class="item-list"></div>
+    </div>
+  </div>
+
+  <!-- PESTAÑA 3: CAJA & BOTE -->
+  <div id="tab-caja" class="tab-content">
+    <div class="caja-balance-card">
+      <div style="font-size:0.85rem; color:#a3a3a3; text-transform:uppercase; font-weight:800;">Bote Total Disponible en Caja</div>
+      <div class="caja-balance-amount" id="cajaTotalDisplay">0 €</div>
+      <div class="caja-stats">
+        <div class="caja-stat-box"><span style="color:#a3a3a3; font-size:0.75rem; display:block;">Total Ingresos</span><strong id="cajaIngresosDisplay" style="color:var(--accent-green);">+0 €</strong></div>
+        <div class="caja-stat-box"><span style="color:#a3a3a3; font-size:0.75rem; display:block;">Total Gastos</span><strong id="cajaGastosDisplay" style="color:var(--accent-red);">-0 €</strong></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>➕ Registrar Movimiento de Caja</h3>
+      <div class="grid-2col">
+        <div class="form-group"><label>Concepto</label><input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote fiestas, Gasolina..."></div>
+        <div class="form-group"><label>Importe (€)</label><input type="number" id="mov_importe" placeholder="Ej. 50"></div>
+        <div class="form-group">
+          <label>Tipo de Movimiento</label>
+          <select id="mov_tipo">
+            <option value="ingreso">🟢 Ingreso (Bote bolo, aportación, lotería...)</option>
+            <option value="gasto">🔴 Gasto (Material, furgoneta, cenas...)</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Fecha</label><input type="date" id="mov_fecha"></div>
+      </div>
+      <button class="btn btn-confirm" style="width:100%; margin-top:6px;" onclick="guardarMovimientoCaja()">💾 Registrar Movimiento</button>
+    </div>
+
+    <div class="card">
+      <h3>📋 Historial de Movimientos</h3>
+      <div id="listaMovimientosCaja"></div>
     </div>
   </div>
 </div>
@@ -669,27 +701,241 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const bolosCollection = collection(db, "bolos_aprendidos");
+
+  const bolosAprendidosCol = collection(db, "bolos_aprendidos");
+  const bolosConfirmadosCol = collection(db, "bolos_confirmados");
+  const cajaMovimientosCol = collection(db, "caja_movimientos");
 
   let bolosCloud = [];
+  let bolosConfirmados = [];
+  let movimientosCaja = [];
   let resumenCalculo = {};
+  let proximoBoloActual = null;
 
-  onSnapshot(bolosCollection, (snapshot) => {
+  onSnapshot(bolosAprendidosCol, (snap) => {
     bolosCloud = [];
-    snapshot.forEach(docSnap => {
-      bolosCloud.push({
-        id: docSnap.id,
-        ...docSnap.data()
-      });
-    });
+    snap.forEach(d => bolosCloud.push({ id: d.id, ...d.data() }));
+    document.getElementById('cloudSyncStatus').innerText = `☁️ Base en la nube sincronizada (${bolosCloud.length} bolos aprendidos)`;
     renderFavoritos();
-    calcular();
-  }, (error) => {
-    console.warn("Modo offline o error al conectar con Firestore:", error);
-    bolosCloud = JSON.parse(localStorage.getItem('charanga_favoritos') || '[]');
-    renderFavoritos();
-    calcular();
+    window.calcular();
   });
+
+  onSnapshot(bolosConfirmadosCol, (snap) => {
+    bolosConfirmados = [];
+    snap.forEach(d => bolosConfirmados.push({ id: d.id, ...d.data() }));
+    bolosConfirmados.sort((a, b) => new Date(a.fecha + 'T' + (a.horaSalida || '00:00')) - new Date(b.fecha + 'T' + (b.horaSalida || '00:00')));
+    renderBolosConfirmados();
+    actualizarHeroProximoBolo();
+  });
+
+  onSnapshot(cajaMovimientosCol, (snap) => {
+    movimientosCaja = [];
+    snap.forEach(d => movimientosCaja.push({ id: d.id, ...d.data() }));
+    movimientosCaja.sort((a, b) => (b.fechaCreacion || 0) - (a.fechaCreacion || 0));
+    renderCaja();
+  });
+
+  window.switchTab = function(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  function actualizarHeroProximoBolo() {
+    const ahora = new Date();
+    const futuros = bolosConfirmados.filter(b => new Date(b.fecha + 'T' + (b.horaToque || '23:59')) >= ahora);
+
+    if (futuros.length === 0) {
+      document.getElementById('heroLugar').innerText = 'No hay bolos próximos';
+      document.getElementById('heroFecha').innerText = '📅 Próximamente';
+      document.getElementById('heroHoraSalida').innerText = '🚐 --:-- h';
+      document.getElementById('heroHoraToque').innerText = '🎺 --:-- h';
+      proximoBoloActual = null;
+      return;
+    }
+
+    proximoBoloActual = futuros[0];
+    document.getElementById('heroLugar').innerText = proximoBoloActual.lugar;
+    document.getElementById('heroFecha').innerText = `📅 ${proximoBoloActual.fecha}`;
+    document.getElementById('heroHoraSalida').innerText = `🚐 Salida: ${proximoBoloActual.horaSalida || '--:--'} h`;
+    document.getElementById('heroHoraToque').innerText = `🎺 Toque: ${proximoBoloActual.horaToque || '--:--'} h`;
+  }
+
+  setInterval(() => {
+    if (!proximoBoloActual) {
+      document.getElementById('cdDays').innerText = '00';
+      document.getElementById('cdHours').innerText = '00';
+      document.getElementById('cdMinutes').innerText = '00';
+      document.getElementById('cdSeconds').innerText = '00';
+      return;
+    }
+
+    const destino = new Date(proximoBoloActual.fecha + 'T' + (proximoBoloActual.horaSalida || '12:00')).getTime();
+    const ahora = new Date().getTime();
+    const diff = destino - ahora;
+
+    if (diff <= 0) {
+      document.getElementById('cdDays').innerText = '00';
+      document.getElementById('cdHours').innerText = '00';
+      document.getElementById('cdMinutes').innerText = '00';
+      document.getElementById('cdSeconds').innerText = '00';
+      return;
+    }
+
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('cdDays').innerText = dias.toString().padStart(2, '0');
+    document.getElementById('cdHours').innerText = horas.toString().padStart(2, '0');
+    document.getElementById('cdMinutes').innerText = minutos.toString().padStart(2, '0');
+    document.getElementById('cdSeconds').innerText = segundos.toString().padStart(2, '0');
+  }, 1000);
+
+  window.abrirGoogleMaps = function() {
+    if (!proximoBoloActual) return;
+    const destino = encodeURIComponent(proximoBoloActual.lugar + ' ' + (proximoBoloActual.notas || ''));
+    window.open(`https://www.google.com/maps/dir/Onda,+Castellón/${destino}`, '_blank');
+  };
+
+  window.anadirAGoogleCalendar = function() {
+    if (!proximoBoloActual) return;
+    const b = proximoBoloActual;
+    const fechaLimpia = b.fecha.replace(/-/g, '');
+    const hSalida = (b.horaSalida || '12:00').replace(':', '') + '00';
+    const hFin = (b.horaToque || '22:00').replace(':', '') + '00';
+
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('🎺 Bolo Xaranga: ' + b.lugar)}&dates=${fechaLimpia}T${hSalida}/${fechaLimpia}T${hFin}&details=${encodeURIComponent('Bolo Llenya al Bombo. Salida: ' + b.horaSalida + '. Notas: ' + (b.notas || ''))}&location=${encodeURIComponent(b.lugar)}`;
+    window.open(url, '_blank');
+  };
+
+  window.toggleFormBoloConfirmado = function() {
+    const f = document.getElementById('formNuevoBoloConfirmado');
+    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+  };
+
+  window.guardarBoloConfirmadoManual = async function() {
+    const lugar = document.getElementById('conf_lugar').value.trim();
+    const fecha = document.getElementById('conf_fecha').value;
+    const horaSalida = document.getElementById('conf_horaSalida').value;
+    const horaToque = document.getElementById('conf_horaToque').value;
+    const bote = parseFloat(document.getElementById('conf_bote').value) || 0;
+    const notas = document.getElementById('conf_notas').value.trim();
+
+    if (!lugar || !fecha) {
+      alert('Introduce al menos el lugar y la fecha del bolo.');
+      return;
+    }
+
+    await addDoc(bolosConfirmadosCol, { lugar, fecha, horaSalida, horaToque, bote, notas, fechaCreacion: Date.now() });
+
+    if (bote > 0) {
+      await addDoc(cajaMovimientosCol, {
+        concepto: `Bote bolo ${lugar} (${fecha})`,
+        importe: bote,
+        tipo: 'ingreso',
+        fecha: fecha,
+        fechaCreacion: Date.now()
+      });
+    }
+
+    document.getElementById('conf_lugar').value = '';
+    window.toggleFormBoloConfirmado();
+    alert(`¡Bolo en ${lugar} agendado y ${bote} € añadidos al bote común!`);
+  };
+
+  function renderBolosConfirmados() {
+    const contenedor = document.getElementById('listaBolosConfirmados');
+    if (bolosConfirmados.length === 0) {
+      contenedor.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay bolos cerrados en la agenda. Añade uno arriba.</p>';
+      return;
+    }
+
+    contenedor.innerHTML = bolosConfirmados.map(b => `
+      <div class="item-card">
+        <div>
+          <div class="item-title">${b.lugar}</div>
+          <div class="item-meta">
+            📅 <strong>${b.fecha}</strong><br>
+            🚐 Salida: ${b.horaSalida || '--:--'} · 🎺 Toque: ${b.horaToque || '--:--'}<br>
+            💰 Bote aportado: <strong style="color:var(--accent-green);">${b.bote || 0} €</strong><br>
+            ${b.notas ? '📝 ' + b.notas : ''}
+          </div>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn-sm btn-fav" style="flex:1;" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.lugar)}', '_blank')">📍 Mapa</button>
+          <button class="btn-sm btn-fav" style="color:var(--accent-red);" onclick="window.eliminarBoloConfirmado('${b.id}')">Borrar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.eliminarBoloConfirmado = async function(id) {
+    if (confirm('¿Eliminar este bolo de la agenda oficial?')) {
+      await deleteDoc(doc(db, "bolos_confirmados", id));
+    }
+  };
+
+  window.guardarMovimientoCaja = async function() {
+    const concepto = document.getElementById('mov_concepto').value.trim();
+    const importe = parseFloat(document.getElementById('mov_importe').value);
+    const tipo = document.getElementById('mov_tipo').value;
+    const fecha = document.getElementById('mov_fecha').value || new Date().toISOString().split('T')[0];
+
+    if (!concepto || !importe || importe <= 0) {
+      alert('Introduce un concepto y un importe válido.');
+      return;
+    }
+
+    await addDoc(cajaMovimientosCol, { concepto, importe, tipo, fecha, fechaCreacion: Date.now() });
+    document.getElementById('mov_concepto').value = '';
+    document.getElementById('mov_importe').value = '';
+  };
+
+  function renderCaja() {
+    let ingresos = 0;
+    let gastos = 0;
+
+    movimientosCaja.forEach(m => {
+      if (m.tipo === 'ingreso') ingresos += m.importe;
+      else gastos += m.importe;
+    });
+
+    const saldoTotal = ingresos - gastos;
+    document.getElementById('cajaTotalDisplay').innerText = `${saldoTotal.toLocaleString('es-ES')} €`;
+    document.getElementById('cajaIngresosDisplay').innerText = `+${ingresos.toLocaleString('es-ES')} €`;
+    document.getElementById('cajaGastosDisplay').innerText = `-${gastos.toLocaleString('es-ES')} €`;
+
+    const contenedor = document.getElementById('listaMovimientosCaja');
+    if (movimientosCaja.length === 0) {
+      contenedor.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay movimientos de caja registrados.</p>';
+      return;
+    }
+
+    contenedor.innerHTML = movimientosCaja.map(m => `
+      <div class="tx-item ${m.tipo === 'ingreso' ? 'tx-ingreso' : 'tx-gasto'}">
+        <div>
+          <div style="font-weight:700; font-size:0.9rem;">${m.concepto}</div>
+          <div style="font-size:0.75rem; color:#a3a3a3;">📅 ${m.fecha}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <strong style="font-size:1.1rem; color:${m.tipo === 'ingreso' ? 'var(--accent-green)' : 'var(--accent-red)'};">
+            ${m.tipo === 'ingreso' ? '+' : '-'}${m.importe} €
+          </strong>
+          <button class="btn-sm btn-fav" style="color:#737373;" onclick="window.eliminarMovimientoCaja('${m.id}')">✕</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.eliminarMovimientoCaja = async function(id) {
+    if (confirm('¿Eliminar este apunte de caja?')) {
+      await deleteDoc(doc(db, "caja_movimientos", id));
+    }
+  };
 
   window.toggleFormularioManual = function() {
     const f = document.getElementById('manualForm');
@@ -698,29 +944,21 @@
 
   window.toggleManualAlojamiento = function() {
     const req = document.getElementById('m_requiereAlojamiento').checked;
-    const sub = document.getElementById('m_contenedorIncluyeAlojamiento');
-    sub.style.display = req ? 'flex' : 'none';
+    document.getElementById('m_contenedorIncluyeAlojamiento').style.display = req ? 'flex' : 'none';
   };
 
   window.toggleAlojamiento = function() {
-    const requiere = document.getElementById('requiereAlojamiento').checked;
-    const sub = document.getElementById('contenedorIncluyeAlojamiento');
-    if (requiere) {
-      sub.style.display = 'flex';
-    } else {
-      sub.style.display = 'none';
-      document.getElementById('incluyeAlojamiento').checked = true;
-    }
-    calcular();
+    const req = document.getElementById('requiereAlojamiento').checked;
+    document.getElementById('contenedorIncluyeAlojamiento').style.display = req ? 'flex' : 'none';
+    window.calcular();
   };
 
   function calcularCosteToqueEscalonado(horasT) {
     if (horasT <= 2) return 0;
     let h_extra = horasT - 2;
     let coste = 0;
-    if (h_extra <= 0.5) {
-      coste += h_extra * 240.0;
-    } else {
+    if (h_extra <= 0.5) coste += h_extra * 240.0;
+    else {
       let t1 = Math.min(h_extra, 2.0);
       coste += 120.0 + (t1 - 0.5) * 186.666;
     }
@@ -730,9 +968,7 @@
       coste += t2 * 150.0;
       h_extra -= t2;
     }
-    if (h_extra > 0) {
-      coste += h_extra * 100.0;
-    }
+    if (h_extra > 0) coste += h_extra * 100.0;
     return coste;
   }
 
@@ -747,28 +983,7 @@
     return 130.0 + (horasE - 6.0) * 15.0;
   }
 
-  function calcularSubtotalTeoricoPuro(horasT, horasE, km, numMusicos, incluyeComida, requiereAlojamiento, incluyeAlojamiento) {
-    const BASE_MINIMA_CHARANGA = 500;
-    const factorEscalaMusicos = numMusicos / 9;
-    const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscalaMusicos;
-    const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscalaMusicos;
-    let kmFacturables = Math.max(0, km - 40);
-    let costeKmCalc = 0;
-    if (kmFacturables > 0) {
-      let tramoMedio = Math.min(kmFacturables, 180.0);
-      costeKmCalc += tramoMedio * 1.023;
-      kmFacturables -= tramoMedio;
-      if (kmFacturables > 0) {
-        costeKmCalc += kmFacturables * 0.26;
-      }
-    }
-    const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
-    const costeDietas = incluyeComida ? 0 : (numMusicos * 20);
-    const costeHotel = (requiereAlojamiento && !incluyeAlojamiento) ? (numMusicos * 35) : 0;
-    return BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
-  }
-
-  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente, incluyeComida, requiereAlojamiento) {
+  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente) {
     if (bolosCloud.length === 0) return 0;
     let sumaPonderada = 0;
     let pesoTotal = 0;
@@ -779,16 +994,13 @@
       const distKm = Math.abs(b.km - km) / 100.0;
       const distDias = Math.abs(b.dias - dias);
       const distCliente = (b.tipoCliente === tipoCliente) ? 0 : 0.5;
-      const distComida = (b.incluyeComida === incluyeComida) ? 0 : 0.3;
-      const distAloj = (b.requiereAlojamiento === requiereAlojamiento) ? 0 : 0.4;
 
-      const distanciaTotal = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2 + distComida**2 + distAloj**2);
-
-      if (distanciaTotal < 1.7) {
-        const peso = 1.0 / (distanciaTotal + 0.08);
+      const dist = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2);
+      if (dist < 1.7) {
+        const peso = 1.0 / (dist + 0.08);
         const subtotalRef = b.subtotalBaseTeorico || b.precioDia;
-        const ratioCorreccion = (b.precioDia - subtotalRef) || 0;
-        sumaPonderada += ratioCorreccion * peso;
+        const diff = (b.precioDia - subtotalRef) || 0;
+        sumaPonderada += diff * peso;
         pesoTotal += peso;
       }
     });
@@ -810,19 +1022,17 @@
     const incluyeAlojamiento = document.getElementById('incluyeAlojamiento').checked;
 
     const BASE_MINIMA_CHARANGA = 500;
-    const factorEscalaMusicos = numMusicos / 9;
-    const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscalaMusicos;
-    const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscalaMusicos;
+    const factorEscala = numMusicos / 9;
+    const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscala;
+    const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscala;
 
-    let kmFacturables = Math.max(0, km - 40);
+    let kmFact = Math.max(0, km - 40);
     let costeKmCalc = 0;
-    if (kmFacturables > 0) {
-      let tramoMedio = Math.min(kmFacturables, 180.0);
-      costeKmCalc += tramoMedio * 1.023;
-      kmFacturables -= tramoMedio;
-      if (kmFacturables > 0) {
-        costeKmCalc += kmFacturables * 0.26;
-      }
+    if (kmFact > 0) {
+      let tramo = Math.min(kmFact, 180.0);
+      costeKmCalc += tramo * 1.023;
+      kmFact -= tramo;
+      if (kmFact > 0) costeKmCalc += kmFact * 0.26;
     }
     const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
     const costeDietas = incluyeComida ? 0 : (numMusicos * 20);
@@ -830,171 +1040,78 @@
 
     let subtotalBase = BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
 
-    let factorDescuento = 1.0;
-    let textoDescuento = "0 %";
-    if (dias === 2 || dias === 3) {
-      factorDescuento = 0.90;
-      textoDescuento = "10 %";
-    } else if (dias >= 4) {
-      factorDescuento = 0.80;
-      textoDescuento = "20 %";
-    }
+    let factorDesc = 1.0;
+    let textoDesc = "0 %";
+    if (dias === 2 || dias === 3) { factorDesc = 0.90; textoDesc = "10 %"; }
+    else if (dias >= 4) { factorDesc = 0.80; textoDesc = "20 %"; }
 
-    let subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalBase * factorDescuento);
+    let subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalBase * factorDesc);
+    const correccion = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente);
+    subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalDia + correccion);
 
-    const correccionAprendida = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente, incluyeComida, requiereAlojamiento);
-    subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalDia + correccionAprendida);
+    const partes = numMusicos + 1;
+    let cuota = Math.round((subtotalDia / partes) / 5) * 5;
+    if (cuota < 50) cuota = 50;
 
-    const partesTotales = numMusicos + 1;
-    const cuotaTeorica = subtotalDia / partesTotales;
-
-    let cuotaRedondeada = Math.round(cuotaTeorica / 5) * 5;
-    if (cuotaRedondeada < 50) cuotaRedondeada = 50;
-
-    let pagoPorMusico = cuotaRedondeada;
-    let boteFurgoneta = cuotaRedondeada;
-    let precioDiaFinal = cuotaRedondeada * partesTotales;
-    let textoCliente = "0 %";
+    let pagoMusico = cuota;
+    let boteFurgoneta = cuota;
+    let precioDia = cuota * partes;
 
     if (tipoCliente === 'particular') {
-      textoCliente = "-5 %";
-      let subtotalParticular = subtotalDia * 0.95;
-      precioDiaFinal = Math.round(subtotalParticular / 10) * 10;
-      if (precioDiaFinal < BASE_MINIMA_CHARANGA) precioDiaFinal = BASE_MINIMA_CHARANGA;
-
-      boteFurgoneta = precioDiaFinal - (pagoPorMusico * numMusicos);
+      precioDia = Math.round((subtotalDia * 0.95) / 10) * 10;
+      if (precioDia < BASE_MINIMA_CHARANGA) precioDia = BASE_MINIMA_CHARANGA;
+      boteFurgoneta = precioDia - (pagoMusico * numMusicos);
       if (boteFurgoneta < 30) {
         boteFurgoneta = 30;
-        precioDiaFinal = (pagoPorMusico * numMusicos) + boteFurgoneta;
+        precioDia = (pagoMusico * numMusicos) + boteFurgoneta;
       }
     }
 
-    const precioTotal = precioDiaFinal * dias;
+    const precioTotal = precioDia * dias;
 
     resumenCalculo = {
-      lugar,
-      tipoCliente,
-      horasT,
-      horasE,
-      km,
-      dias,
-      numMusicos,
-      incluyeComida,
-      requiereAlojamiento,
-      incluyeAlojamiento,
-      pagoPorMusico,
-      boteFurgoneta,
-      subtotalBaseTeorico: subtotalBase,
-      precioDia: precioDiaFinal,
-      precioTotal
+      lugar, tipoCliente, horasT, horasE, km, dias, numMusicos,
+      incluyeComida, requiereAlojamiento, incluyeAlojamiento,
+      pagoMusico, boteFurgoneta, subtotalBaseTeorico: subtotalBase,
+      precioDia, precioTotal
     };
 
     document.getElementById('precioTotal').innerHTML = `${precioTotal.toLocaleString('es-ES')} <span>€</span>`;
-    document.getElementById('precioPorDia').innerText = `${precioDiaFinal.toLocaleString('es-ES')} € / día · ${dias} ${dias > 1 ? 'días' : 'día'}`;
-    
-    document.getElementById('baseMin').innerText = BASE_MINIMA_CHARANGA.toLocaleString('es-ES') + " €";
-    document.getElementById('costeHorasExtra').innerText = Math.round(costeExtra).toLocaleString('es-ES') + " €";
-    document.getElementById('costeEspera').innerText = Math.round(costeEspera).toLocaleString('es-ES') + " €";
-    document.getElementById('costeKm').innerText = Math.round(costeKm).toLocaleString('es-ES') + " €";
-    document.getElementById('costeDietas').innerText = Math.round(costeDietas).toLocaleString('es-ES') + " €";
-    document.getElementById('costeHotel').innerText = Math.round(costeHotel).toLocaleString('es-ES') + " €";
-    document.getElementById('ajusteCliente').innerText = textoCliente;
-    document.getElementById('descuentoVolumen').innerText = textoDescuento;
-    document.getElementById('ajusteHistorico').innerText = (correccionAprendida >= 0 ? '+' : '') + correccionAprendida + " €";
-
-    document.getElementById('pagoMusico').innerText = pagoPorMusico + " €";
+    document.getElementById('precioPorDia').innerText = `${precioDia.toLocaleString('es-ES')} € / día · ${dias} día(s)`;
+    document.getElementById('baseMin').innerText = BASE_MINIMA_CHARANGA + " €";
+    document.getElementById('costeHorasExtra').innerText = Math.round(costeExtra) + " €";
+    document.getElementById('costeEspera').innerText = Math.round(costeEspera) + " €";
+    document.getElementById('costeKm').innerText = Math.round(costeKm) + " €";
+    document.getElementById('costeDietas').innerText = Math.round(costeDietas) + " €";
+    document.getElementById('costeHotel').innerText = Math.round(costeHotel) + " €";
+    document.getElementById('descuentoVolumen').innerText = textoDesc;
+    document.getElementById('ajusteHistorico').innerText = (correccion >= 0 ? '+' : '') + correccion + " €";
+    document.getElementById('pagoMusico').innerText = pagoMusico + " €";
     document.getElementById('pagoFurgoneta').innerText = boteFurgoneta + " €";
   };
 
   window.copiarMensajeWhatsApp = function() {
     const r = resumenCalculo;
-    let detalleHorario = `• *Actuación:* ${r.horasT} h de música en directo`;
-    if (r.horasE > 0) {
-      detalleHorario += `\n• *Disponibilidad / Descanso entre pases:* ${r.horasE} h`;
-    }
-    let detalleDias = r.dias > 1 ? `• *Duración:* ${r.dias} días de actuación` : `• *Duración:* 1 jornada`;
-    let detalleManutencion = r.incluyeComida 
-      ? `• *Manutención:* A cargo de la organización` 
-      : `• *Manutención:* Dietas incluidas`;
-
-    let detalleAlojamiento = '';
-    if (r.requiereAlojamiento) {
-      detalleAlojamiento = r.incluyeAlojamiento 
-        ? `\n• *Alojamiento:* A cargo de la comisión/organización`
-        : `\n• *Alojamiento:* Suplemento de estancia incluido en presupuesto`;
-    }
-
-    let precioFormateado = r.dias > 1 
-      ? `*${r.precioTotal} €* · ${r.precioDia} € / día` 
-      : `*${r.precioTotal} €*`;
-
-    const texto = `🎺 *PRESUPUESTO · XARANGA LLENYA AL BOMBO* 🎺
-Hola, os pasamos la propuesta para la actuación en *${r.lugar}*:
-
-${detalleDias}
-• *Formación:* ${r.numMusicos} músicos
-${detalleHorario}
-• *Desplazamiento:* Furgoneta incluida · salida desde Onda${detalleAlojamiento}
-${detalleManutencion}
-
-💰 *PRECIO TOTAL:* ${precioFormateado}
-
-Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
+    let texto = `🎺 *PRESUPUESTO · XARANGA LLENYA AL BOMBO* 🎺\nHola, os pasamos la propuesta para *${r.lugar}*:\n\n• *Duración:* ${r.dias > 1 ? r.dias + ' días' : '1 jornada'}\n• *Formación:* ${r.numMusicos} músicos\n• *Actuación:* ${r.horasT} h de música en directo\n• *Desplazamiento:* Furgoneta incluida · salida desde Onda\n• *Manutención:* ${r.incluyeComida ? 'A cargo de la organización' : 'Dietas incluidas'}\n\n💰 *PRECIO TOTAL:* *${r.precioTotal} €* ${r.dias > 1 ? '(' + r.precioDia + ' €/día)' : ''}\n\n¡A dar llenya! 🔥`;
 
     navigator.clipboard.writeText(texto).then(() => {
-      const btn = document.getElementById('btnCopiar');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '✅ ¡Copiado!';
-      btn.style.backgroundColor = '#16a34a';
-      setTimeout(() => { 
-        btn.innerHTML = originalText; 
-        btn.style.backgroundColor = 'var(--primary-red)';
-      }, 2000);
+      const b = document.getElementById('btnCopiar');
+      const prev = b.innerHTML;
+      b.innerHTML = '✅ ¡Copiado!';
+      setTimeout(() => b.innerHTML = prev, 2000);
     });
   };
 
   window.guardarFavorito = async function() {
-    const btn = document.getElementById('btnGuardar');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ Guardando...';
-
-    const nuevo = {
-      lugar: resumenCalculo.lugar,
-      tipoCliente: resumenCalculo.tipoCliente,
-      horasT: resumenCalculo.horasT,
-      horasE: resumenCalculo.horasE,
-      km: resumenCalculo.km,
-      dias: resumenCalculo.dias,
-      numMusicos: resumenCalculo.numMusicos,
-      incluyeComida: resumenCalculo.incluyeComida,
-      requiereAlojamiento: resumenCalculo.requiereAlojamiento,
-      incluyeAlojamiento: resumenCalculo.incluyeAlojamiento,
-      subtotalBaseTeorico: resumenCalculo.subtotalBaseTeorico,
-      precioTotal: resumenCalculo.precioTotal,
-      precioDia: resumenCalculo.precioDia,
-      pagoPorMusico: resumenCalculo.pagoPorMusico,
-      fechaCreacion: Date.now()
-    };
-
-    try {
-      await addDoc(bolosCollection, nuevo);
-      btn.innerHTML = '⭐ ¡Guardado en la Nube!';
-    } catch (e) {
-      console.error(e);
-      let local = JSON.parse(localStorage.getItem('charanga_favoritos') || '[]');
-      local.push({ id: Date.now().toString(), ...nuevo });
-      localStorage.setItem('charanga_favoritos', JSON.stringify(local));
-      bolosCloud = local;
-      renderFavoritos();
-      btn.innerHTML = '⭐ ¡Guardado en Local!';
-    }
-    setTimeout(() => { btn.innerHTML = originalText; }, 1500);
+    const nuevo = { ...resumenCalculo, fechaCreacion: Date.now() };
+    await addDoc(bolosAprendidosCol, nuevo);
+    alert('⭐ ¡Presupuesto guardado y aprendido en la nube!');
   };
 
   window.guardarBoloManual = async function() {
     const lugar = document.getElementById('m_lugar').value.trim() || 'Bolo Histórico';
     const tipoCliente = document.getElementById('m_tipoCliente').value;
-    const horasT = parseFloat(document.getElementById('m_horasT').value) || 2;
+    const horasT = parseFloat(document.getElementById('m_horasT').value) || 3;
     const horasE = parseFloat(document.getElementById('m_horasE').value) || 0;
     const km = parseFloat(document.getElementById('m_km').value) || 40;
     const dias = parseInt(document.getElementById('m_dias').value) || 1;
@@ -1004,112 +1121,57 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
     const precioPactado = parseFloat(document.getElementById('m_precioPactado').value);
 
     if (!precioPactado || precioPactado <= 0) {
-      alert('Introduce el precio total cobrado en ese bolo.');
+      alert('Introduce el precio cobrado.');
       return;
     }
 
-    const subtotalTeorico = calcularSubtotalTeoricoPuro(horasT, horasE, km, 9, incluyeComida, requiereAlojamiento, incluyeAlojamiento);
     const precioDia = Math.round(precioPactado / dias);
-    const pagoPorMusico = Math.round((precioDia / 10) / 5) * 5;
+    await addDoc(bolosAprendidosCol, {
+      lugar, tipoCliente, horasT, horasE, km, dias, numMusicos: 9,
+      incluyeComida, requiereAlojamiento, incluyeAlojamiento,
+      subtotalBaseTeorico: precioDia, precioTotal: precioPactado, precioDia,
+      pagoMusico: Math.round((precioDia / 10) / 5) * 5, fechaCreacion: Date.now()
+    });
 
-    const nuevo = {
-      lugar,
-      tipoCliente,
-      horasT,
-      horasE,
-      km,
-      dias,
-      numMusicos: 9,
-      incluyeComida: incluyeComida,
-      requiereAlojamiento: requiereAlojamiento,
-      incluyeAlojamiento: incluyeAlojamiento,
-      subtotalBaseTeorico: subtotalTeorico,
-      precioTotal: precioPactado,
-      precioDia: precioDia,
-      pagoPorMusico: pagoPorMusico,
-      fechaCreacion: Date.now()
-    };
-
-    try {
-      await addDoc(bolosCollection, nuevo);
-      document.getElementById('m_lugar').value = '';
-      document.getElementById('m_precioPactado').value = '';
-      window.toggleFormularioManual();
-      alert(`¡Bolo en ${lugar} sincronizado en la nube para toda la charanga!`);
-    } catch (e) {
-      console.error(e);
-      alert('Error de conexión. Se guardará cuando haya red.');
-    }
-  };
-
-  window.cargarFavorito = function(id) {
-    const item = bolosCloud.find(f => f.id === id);
-    if (!item) return;
-
-    document.getElementById('lugar').value = item.lugar;
-    document.getElementById('tipoCliente').value = item.tipoCliente || 'estandar';
-    document.getElementById('horasTocadas').value = item.horasT;
-    document.getElementById('horasEspera').value = item.horasE;
-    document.getElementById('kmTotales').value = item.km;
-    document.getElementById('dias').value = item.dias;
-    document.getElementById('musicos').value = item.numMusicos;
-    document.getElementById('incluyeComida').checked = item.incluyeComida !== undefined ? item.incluyeComida : true;
-    document.getElementById('requiereAlojamiento').checked = !!item.requiereAlojamiento;
-    document.getElementById('incluyeAlojamiento').checked = item.incluyeAlojamiento !== undefined ? item.incluyeAlojamiento : true;
-    
-    window.toggleAlojamiento();
-    window.calcular();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  window.eliminarFavorito = async function(id) {
-    if (!confirm('¿Seguro que quieres borrar este bolo de la base compartida?')) return;
-    try {
-      await deleteDoc(doc(db, "bolos_aprendidos", id));
-    } catch (e) {
-      console.error(e);
-      bolosCloud = bolosCloud.filter(f => f.id !== id);
-      localStorage.setItem('charanga_favoritos', JSON.stringify(bolosCloud));
-      renderFavoritos();
-      window.calcular();
-    }
+    document.getElementById('m_lugar').value = '';
+    document.getElementById('m_precioPactado').value = '';
+    window.toggleFormularioManual();
+    alert(`¡Bolo en ${lugar} sincronizado!`);
   };
 
   function renderFavoritos() {
-    const contenedor = document.getElementById('contenedorFavoritos');
-    document.getElementById('learningStatus').innerHTML = `🧠 Memoria compartida en la nube: <span>${bolosCloud.length}</span> bolos aprendidos`;
-
+    document.getElementById('countAprendidos').innerText = bolosCloud.length;
+    const cont = document.getElementById('contenedorFavoritos');
     if (bolosCloud.length === 0) {
-      contenedor.innerHTML = '<p class="no-favs">No hay bolos en la nube. Añade bolos para que todos compartan el mismo aprendizaje.</p>';
+      cont.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay bolos aprendidos.</p>';
       return;
     }
-
-    const etiquetasCliente = {
-      'estandar': 'Estándar',
-      'particular': 'Particular'
-    };
-
-    contenedor.innerHTML = bolosCloud.map(f => `
-      <div class="fav-item">
+    cont.innerHTML = bolosCloud.map(f => `
+      <div class="item-card">
         <div>
-          <div class="fav-title">${f.lugar} · <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">${etiquetasCliente[f.tipoCliente] || 'Estándar'}</span></div>
-          <div class="fav-meta">
-            ${f.dias > 1 ? f.dias + ' días · ' : ''}${f.horasT}h toque ${f.horasE > 0 ? '+ ' + f.horasE + 'h espera' : ''} · ${f.km} km<br>
-            <strong>${f.precioTotal} €</strong> ${f.dias > 1 ? '· ' + f.precioDia + ' €/día' : ''} · <em>${f.pagoPorMusico || '-'} €/músico</em>
+          <div class="item-title">${f.lugar}</div>
+          <div class="item-meta">
+            ${f.horasT}h música ${f.horasE > 0 ? '+ ' + f.horasE + 'h espera' : ''} · ${f.km} km<br>
+            <strong>${f.precioTotal} €</strong> ${f.dias > 1 ? '(' + f.precioDia + ' €/día)' : ''} · <em>${f.pagoMusico || '-'} €/músico</em>
             ${!f.incluyeComida ? '<br><span style="color:#f59e0b; font-size:0.75rem;">🍽️ Dietas charanga</span>' : ''}
             ${f.requiereAlojamiento ? '<br><span style="color:#93c5fd; font-size:0.75rem;">🛌 Con alojamiento</span>' : ''}
           </div>
         </div>
-        <div class="fav-actions">
-          <button class="btn-sm btn-load" onclick="window.cargarFavorito('${f.id}')">Cargar</button>
-          <button class="btn-sm btn-del" onclick="window.eliminarFavorito('${f.id}')">Borrar</button>
-        </div>
+        <button class="btn-sm btn-fav" style="color:var(--accent-red);" onclick="window.eliminarFavorito('${f.id}')">Borrar</button>
       </div>
     `).join('');
   }
 
+  window.eliminarFavorito = async function(id) {
+    if (confirm('¿Borrar de la memoria compartida?')) {
+      await deleteDoc(doc(db, "bolos_aprendidos", id));
+    }
+  };
+
   window.onload = function() {
     window.calcular();
+    document.getElementById('mov_fecha').value = new Date().toISOString().split('T')[0];
+    document.getElementById('conf_fecha').value = new Date().toISOString().split('T')[0];
   };
 </script>
 
