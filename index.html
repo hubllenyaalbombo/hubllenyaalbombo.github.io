@@ -121,36 +121,37 @@
 
     .header-banner {
       text-align: center;
-      padding: 6px 0 20px 0;
-    }
-
-    .header-banner h1 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .header-banner h1 span {
-      color: var(--primary-red);
+      padding: 6px 0 24px 0;
     }
 
     .welcome-hero-text {
-      font-size: 1.4rem;
-      font-weight: 800;
+      font-size: 2.2rem;
+      font-weight: 900;
       color: var(--text-white);
-      margin-top: 12px;
-      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
     }
 
     .welcome-hero-text span {
-      color: var(--accent-red);
+      color: var(--primary-red);
+      text-transform: uppercase;
+    }
+
+    .header-banner h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border: none;
+      padding: 0;
+      margin-bottom: 4px;
     }
 
     .header-banner p {
       font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
+      color: #737373;
     }
 
     .nav-tabs {
@@ -216,7 +217,7 @@
       margin-bottom: 20px;
     }
 
-    h2, h3 {
+    h3 {
       font-size: 1.15rem;
       margin-bottom: 16px;
       font-weight: 700;
@@ -532,6 +533,7 @@
       line-height: 1.5;
     }
 
+    /* BOTE Y CAJA */
     .caja-balance-card {
       background: #000000;
       border: 2px solid var(--accent-green);
@@ -662,17 +664,14 @@
   <!-- ==================== CONTENIDO DEL HUB ==================== -->
   <div id="hubView">
     
-    <!-- Botón superior limpio a la derecha -->
     <div class="top-actions">
       <button class="btn-sm btn-fav" onclick="window.cerrarSesion()" style="color:var(--accent-red);">Cerrar Sesión 🚪</button>
     </div>
 
-    <!-- Header con el mensaje grande de Bienvenida -->
     <div class="header-banner">
-      <h1>Xaranga <span>Llenya al Bombo</span></h1>
       <div class="welcome-hero-text" id="saludoUsuarioGrande">Bienvenido de nuevo</div>
+      <h2>Xaranga Llenya al Bombo</h2>
       <p>Hub Oficial de Gestión · Salida desde Onda</p>
-      <div style="margin-top:8px; font-size:0.75rem; color:#a3a3a3;" id="cloudSyncStatus">🔄 Conectando con Google Calendar...</div>
     </div>
 
     <div class="nav-tabs">
@@ -684,7 +683,7 @@
     <!-- PESTAÑA 1: CALENDARIO -->
     <div id="tab-inicio" class="tab-content active">
       <div class="countdown-hero">
-        <div class="countdown-title">🔥 Próximo Bolo Oficial 🔥</div>
+        <div class="countdown-title">PRÓXIMO BOLO</div>
         <div class="countdown-location" id="heroLugar">Cargando bolos...</div>
         
         <div class="countdown-timer">
@@ -735,7 +734,7 @@
     <div id="tab-presupuesto" class="tab-content">
       <div class="grid-2col">
         <div class="card">
-          <h2>Calculadora de Bolo</h2>
+          <h3>Calculadora de Bolo</h3>
           <div class="form-group">
             <label for="lugar">Población / Actuación</label>
             <input type="text" id="lugar" value="Nules" oninput="window.calcular()">
@@ -783,7 +782,7 @@
 
         <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
           <div>
-            <h2>Presupuesto</h2>
+            <h3>Presupuesto</h3>
             <div class="total-display">
               <div style="font-size:0.75rem; color:#a3a3a3; text-transform:uppercase; font-weight:700;">Presupuesto Sugerido</div>
               <div class="total-amount" id="precioTotal">700 <span>€</span></div>
@@ -854,22 +853,40 @@
       </div>
     </div>
 
-    <!-- PESTAÑA 3: CAJA & BOTE -->
+    <!-- PESTAÑA 3: CAJA & BOTE DESGLOSADO -->
     <div id="tab-caja" class="tab-content">
       <div class="caja-balance-card">
         <div style="font-size:0.85rem; color:#a3a3a3; text-transform:uppercase; font-weight:800;">Bote Total Disponible en Caja</div>
         <div class="caja-balance-amount" id="cajaTotalDisplay">0 €</div>
+        
         <div class="caja-stats">
-          <div class="caja-stat-box"><span style="color:#a3a3a3; font-size:0.75rem; display:block;">Total Ingresos</span><strong id="cajaIngresosDisplay" style="color:var(--accent-green);">+0 €</strong></div>
-          <div class="caja-stat-box"><span style="color:#a3a3a3; font-size:0.75rem; display:block;">Total Gastos</span><strong id="cajaGastosDisplay" style="color:var(--accent-red);">-0 €</strong></div>
+          <div class="caja-stat-box">
+            <span style="color:#a3a3a3; font-size:0.75rem; display:block;">🏦 En Banco / Cuenta</span>
+            <strong id="cajaBancoDisplay" style="color:var(--accent-blue); font-size:1.3rem;">0 €</strong>
+          </div>
+          <div class="caja-stat-box">
+            <span style="color:#a3a3a3; font-size:0.75rem; display:block;">💵 En Efectivo / Mano</span>
+            <strong id="cajaEfectivoDisplay" style="color:var(--accent-green); font-size:1.3rem;">0 €</strong>
+          </div>
+        </div>
+
+        <div class="caja-stats" style="margin-top:10px;">
+          <div class="caja-stat-box"><span style="color:#737373; font-size:0.7rem; display:block;">Total Entradas</span><strong id="cajaIngresosDisplay" style="color:var(--accent-green); font-size:0.95rem;">+0 €</strong></div>
+          <div class="caja-stat-box"><span style="color:#737373; font-size:0.7rem; display:block;">Total Salidas</span><strong id="cajaGastosDisplay" style="color:var(--accent-red); font-size:0.95rem;">-0 €</strong></div>
         </div>
       </div>
 
       <div class="card">
-        <h3>➕ Registrar Movimiento de Caja</h3>
+        <h3>➕ Registrar Movimiento de Bote</h3>
         <div class="grid-2col">
-          <div class="form-group"><label>Concepto</label><input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote bolo Nules, Gasolina..."></div>
-          <div class="form-group"><label>Importe (€)</label><input type="number" id="mov_importe" placeholder="Ej. 50"></div>
+          <div class="form-group">
+            <label>Concepto</label>
+            <input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote bolo Nules...">
+          </div>
+          <div class="form-group">
+            <label>Importe (€)</label>
+            <input type="number" id="mov_importe" placeholder="Ej. 50">
+          </div>
           <div class="form-group">
             <label>Tipo de Movimiento</label>
             <select id="mov_tipo">
@@ -877,7 +894,36 @@
               <option value="gasto">🔴 Gasto (Material, furgoneta, cenas...)</option>
             </select>
           </div>
-          <div class="form-group"><label>Fecha</label><input type="date" id="mov_fecha"></div>
+          <div class="form-group">
+            <label>Medio de Pago</label>
+            <select id="mov_medio">
+              <option value="efectivo">💵 En Efectivo (Mano / Bote físico)</option>
+              <option value="banco">🏦 En Cuenta / Banco (Transferencia / Bizum)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Músico Responsable</label>
+            <select id="mov_responsable">
+              <option value="Diego">Diego</option>
+              <option value="Aarón">Aarón</option>
+              <option value="Carlos">Carlos</option>
+              <option value="Jaime">Jaime</option>
+              <option value="Joanico">Joanico</option>
+              <option value="Joe">Joe</option>
+              <option value="Víctor">Víctor</option>
+              <option value="Joan Miquel">Joan Miquel</option>
+              <option value="Lluís">Lluís</option>
+              <option value="Marc">Marc</option>
+              <option value="Rubén">Rubén</option>
+              <option value="Rubén Martínez">Rubén Martínez</option>
+              <option value="Toni">Toni</option>
+              <option value="Charanga (General)">Charanga (General)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" id="mov_fecha">
+          </div>
         </div>
         <button class="btn btn-confirm" style="width:100%; margin-top:6px;" onclick="guardarMovimientoCaja()">💾 Registrar Movimiento</button>
       </div>
@@ -966,6 +1012,7 @@
   let bolosCloud = [];
   let movimientosCaja = [];
   let resumenCalculo = {};
+  let usuarioNombreActual = "Diego";
 
   // ================= AUTENTICACIÓN GOOGLE =================
   onAuthStateChanged(auth, (user) => {
@@ -982,11 +1029,19 @@
         hubView.style.display = 'block';
         errBox.style.display = 'none';
 
-        // Obtener el nombre asignado
         const nombreMostrar = NOMBRES_MUSICOS[emailUsuario] || (user.displayName ? user.displayName.split(' ')[0] : 'Músico');
+        usuarioNombreActual = nombreMostrar;
         
-        // Mensaje de bienvenida en el encabezado principal
         document.getElementById('saludoUsuarioGrande').innerHTML = `Bienvenido de nuevo <span>${nombreMostrar}</span>`;
+
+        // Autoseleccionar su nombre en el desplegable de caja
+        const respSelect = document.getElementById('mov_responsable');
+        for (let i = 0; i < respSelect.options.length; i++) {
+          if (respSelect.options[i].value === nombreMostrar) {
+            respSelect.selectedIndex = i;
+            break;
+          }
+        }
 
         iniciarHub();
       } else {
@@ -1106,9 +1161,6 @@
   }
 
   async function cargarEventosGoogleCalendar() {
-    const status = document.getElementById('cloudSyncStatus');
-    status.innerText = "🔄 Sincronizando con Google Calendar...";
-
     try {
       const timeMin = new Date(new Date().setMonth(new Date().getMonth() - 3)).toISOString();
       const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${firebaseConfig.apiKey}&singleEvents=true&orderBy=startTime&timeMin=${timeMin}`;
@@ -1139,12 +1191,10 @@
         };
       });
 
-      status.innerText = `🟢 Sincronizado (${gEvents.length} bolos leídos de Google Calendar)`;
       renderCalendar();
       actualizarProximoBoloHero();
     } catch (e) {
       console.warn("Error cargando Google Calendar:", e);
-      status.innerText = "⚠️ Modo sin conexión a Google Calendar";
       renderCalendar();
     }
   }
@@ -1326,11 +1376,13 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // ================= CAJA & TESORERÍA =================
+  // ================= CAJA & BOTE DESGLOSADO =================
   window.guardarMovimientoCaja = async function() {
     const concepto = document.getElementById('mov_concepto').value.trim();
     const importe = parseFloat(document.getElementById('mov_importe').value);
     const tipo = document.getElementById('mov_tipo').value;
+    const medio = document.getElementById('mov_medio').value;
+    const responsable = document.getElementById('mov_responsable').value;
     const fecha = document.getElementById('mov_fecha').value || new Date().toISOString().split('T')[0];
 
     if (!concepto || !importe || importe <= 0) {
@@ -1338,7 +1390,16 @@
       return;
     }
 
-    await addDoc(cajaMovimientosCol, { concepto, importe, tipo, fecha, fechaCreacion: Date.now() });
+    await addDoc(cajaMovimientosCol, {
+      concepto,
+      importe,
+      tipo,
+      medio,
+      responsable,
+      fecha,
+      fechaCreacion: Date.now()
+    });
+
     document.getElementById('mov_concepto').value = '';
     document.getElementById('mov_importe').value = '';
   };
@@ -1346,14 +1407,26 @@
   function renderCaja() {
     let ingresos = 0;
     let gastos = 0;
+    let totalBanco = 0;
+    let totalEfectivo = 0;
 
     movimientosCaja.forEach(m => {
-      if (m.tipo === 'ingreso') ingresos += m.importe;
-      else gastos += m.importe;
+      const medio = m.medio || 'efectivo'; // Compatibilidad hacia atrás
+      if (m.tipo === 'ingreso') {
+        ingresos += m.importe;
+        if (medio === 'banco') totalBanco += m.importe;
+        else totalEfectivo += m.importe;
+      } else {
+        gastos += m.importe;
+        if (medio === 'banco') totalBanco -= m.importe;
+        else totalEfectivo -= m.importe;
+      }
     });
 
     const saldoTotal = ingresos - gastos;
     document.getElementById('cajaTotalDisplay').innerText = `${saldoTotal.toLocaleString('es-ES')} €`;
+    document.getElementById('cajaBancoDisplay').innerText = `${totalBanco.toLocaleString('es-ES')} €`;
+    document.getElementById('cajaEfectivoDisplay').innerText = `${totalEfectivo.toLocaleString('es-ES')} €`;
     document.getElementById('cajaIngresosDisplay').innerText = `+${ingresos.toLocaleString('es-ES')} €`;
     document.getElementById('cajaGastosDisplay').innerText = `-${gastos.toLocaleString('es-ES')} €`;
 
@@ -1366,8 +1439,10 @@
     contenedor.innerHTML = movimientosCaja.map(m => `
       <div class="tx-item ${m.tipo === 'ingreso' ? 'tx-ingreso' : 'tx-gasto'}">
         <div>
-          <div style="font-weight:700; font-size:0.9rem;">${m.concepto}</div>
-          <div style="font-size:0.75rem; color:#a3a3a3;">📅 ${m.fecha}</div>
+          <div style="font-weight:700; font-size:0.95rem;">${m.concepto}</div>
+          <div style="font-size:0.75rem; color:#a3a3a3; margin-top:2px;">
+            📅 ${m.fecha} · 👤 <strong>${m.responsable || 'Charanga'}</strong> · ${m.medio === 'banco' ? '🏦 Banco' : '💵 Efectivo'}
+          </div>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
           <strong style="font-size:1.1rem; color:${m.tipo === 'ingreso' ? 'var(--accent-green)' : 'var(--accent-red)'};">
