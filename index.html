@@ -122,7 +122,7 @@
       border-radius: 8px;
       padding: 8px 14px;
       margin-bottom: 16px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
 
     .header-banner {
@@ -652,7 +652,7 @@
   <div id="hubView">
     
     <div class="user-bar">
-      <span style="color:#cbd5e1;">👤 Músico: <strong id="userEmailDisplay" style="color:var(--text-white);">--</strong></span>
+      <span style="color:#cbd5e1;" id="saludoUsuario">Bienvenido de nuevo</span>
       <button class="btn-sm btn-fav" onclick="window.cerrarSesion()" style="color:var(--accent-red);">Cerrar Sesión 🚪</button>
     </div>
 
@@ -915,7 +915,6 @@
   const cajaMovimientosCol = collection(db, "caja_movimientos");
 
   // ================= LISTA BLANCA DE MÚSICOS =================
-  // Agrega o edita aquí los correos autorizados
   const WHITELIST_CORREOS = [
     "xarangallenyaalbombo@gmail.com",
     "aaronsm2492@gmail.com",
@@ -931,8 +930,25 @@
     "rubencerisuelo72@gmail.com",
     "rubenmartinezvarelles@gmail.com",
     "toniesbri89@gmail.com"
-    
   ];
+
+  // ================= MAPA DE NOMBRES DE MÚSICOS =================
+  const NOMBRES_MUSICOS = {
+    "xarangallenyaalbombo@gmail.com": "Llenya al Bombo",
+    "aaronsm2492@gmail.com": "Aarón",
+    "carloscatalanparra1@gmail.com": "Carlos",
+    "dsansano070403@gmail.com": "Diego",
+    "jaaguilellagarcia@gmail.com": "Jaime",
+    "joanicogr@gmail.com": "Joanico",
+    "joevericat@gmail.com": "Joe",
+    "karatekavictor@gmail.com": "Víctor",
+    "laracubells.joanmiquel@gmail.com": "Joan Miquel",
+    "lluis.b.ramos98@gmail.com": "Lluís",
+    "maguilellagarcia@gmail.com": "Marc",
+    "rubencerisuelo72@gmail.com": "Rubén",
+    "rubenmartinezvarelles@gmail.com": "Rubén Martínez",
+    "toniesbri89@gmail.com": "Toni"
+  };
 
   let bolosCloud = [];
   let movimientosCaja = [];
@@ -952,7 +968,11 @@
         loginView.style.display = 'none';
         hubView.style.display = 'block';
         errBox.style.display = 'none';
-        document.getElementById('userEmailDisplay').innerText = user.displayName ? `${user.displayName} (${user.email})` : user.email;
+
+        // Obtener el nombre asignado o el de la cuenta de Google
+        const nombreMostrar = NOMBRES_MUSICOS[emailUsuario] || (user.displayName ? user.displayName.split(' ')[0] : 'Músico');
+        document.getElementById('saludoUsuario').innerHTML = `Bienvenido de nuevo <strong>${nombreMostrar}</strong>`;
+
         iniciarHub();
       } else {
         errBox.innerHTML = `⛔ <strong>Acceso denegado:</strong> La cuenta <em>${user.email}</em> no pertenece a la plantilla de la charanga.`;
