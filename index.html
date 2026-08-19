@@ -113,21 +113,15 @@
       display: none;
     }
 
-    .user-bar {
+    .top-actions {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #141414;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 8px 14px;
-      margin-bottom: 16px;
-      font-size: 0.85rem;
+      justify-content: flex-end;
+      margin-bottom: 10px;
     }
 
     .header-banner {
       text-align: center;
-      padding: 6px 0 16px 0;
+      padding: 6px 0 20px 0;
     }
 
     .header-banner h1 {
@@ -139,6 +133,18 @@
 
     .header-banner h1 span {
       color: var(--primary-red);
+    }
+
+    .welcome-hero-text {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .welcome-hero-text span {
+      color: var(--accent-red);
     }
 
     .header-banner p {
@@ -319,13 +325,18 @@
     }
 
     .btn-sm {
-      padding: 6px 10px;
+      padding: 6px 12px;
       font-size: 0.75rem;
-      border-radius: 4px;
-      border: none;
+      border-radius: 6px;
+      border: 1px solid #404040;
       cursor: pointer;
       font-weight: 700;
       text-transform: uppercase;
+      background: #1f1f1f;
+    }
+
+    .btn-sm:hover {
+      background: #2a2a2a;
     }
 
     .countdown-hero {
@@ -651,13 +662,15 @@
   <!-- ==================== CONTENIDO DEL HUB ==================== -->
   <div id="hubView">
     
-    <div class="user-bar">
-      <span style="color:#cbd5e1;" id="saludoUsuario">Bienvenido de nuevo</span>
+    <!-- Botón superior limpio a la derecha -->
+    <div class="top-actions">
       <button class="btn-sm btn-fav" onclick="window.cerrarSesion()" style="color:var(--accent-red);">Cerrar Sesión 🚪</button>
     </div>
 
+    <!-- Header con el mensaje grande de Bienvenida -->
     <div class="header-banner">
       <h1>Xaranga <span>Llenya al Bombo</span></h1>
+      <div class="welcome-hero-text" id="saludoUsuarioGrande">Bienvenido de nuevo</div>
       <p>Hub Oficial de Gestión · Salida desde Onda</p>
       <div style="margin-top:8px; font-size:0.75rem; color:#a3a3a3;" id="cloudSyncStatus">🔄 Conectando con Google Calendar...</div>
     </div>
@@ -938,15 +951,15 @@
     "aaronsm2492@gmail.com": "Aarón",
     "carloscatalanparra1@gmail.com": "Carlos",
     "dsansano070403@gmail.com": "Diego",
-    "jaaguilellagarcia@gmail.com": "Gavi",
-    "joanicogr@gmail.com": "Joan",
-    "joevericat@gmail.com": "Joel",
+    "jaaguilellagarcia@gmail.com": "Jaime",
+    "joanicogr@gmail.com": "Joanico",
+    "joevericat@gmail.com": "Joe",
     "karatekavictor@gmail.com": "Víctor",
-    "laracubells.joanmiquel@gmail.com": "Joanmi",
+    "laracubells.joanmiquel@gmail.com": "Joan Miquel",
     "lluis.b.ramos98@gmail.com": "Lluís",
-    "maguilellagarcia@gmail.com": "Miki",
+    "maguilellagarcia@gmail.com": "Marc",
     "rubencerisuelo72@gmail.com": "Rubén",
-    "rubenmartinezvarelles@gmail.com": "Rubén",
+    "rubenmartinezvarelles@gmail.com": "Rubén Martínez",
     "toniesbri89@gmail.com": "Toni"
   };
 
@@ -969,9 +982,11 @@
         hubView.style.display = 'block';
         errBox.style.display = 'none';
 
-        // Obtener el nombre asignado o el de la cuenta de Google
+        // Obtener el nombre asignado
         const nombreMostrar = NOMBRES_MUSICOS[emailUsuario] || (user.displayName ? user.displayName.split(' ')[0] : 'Músico');
-        document.getElementById('saludoUsuario').innerHTML = `Bienvenido de nuevo <strong>${nombreMostrar}</strong>`;
+        
+        // Mensaje de bienvenida en el encabezado principal
+        document.getElementById('saludoUsuarioGrande').innerHTML = `Bienvenido de nuevo <span>${nombreMostrar}</span>`;
 
         iniciarHub();
       } else {
