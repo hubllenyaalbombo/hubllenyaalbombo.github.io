@@ -585,6 +585,7 @@
       <button class="btn-manual-toggle" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
     </div>
 
+    <!-- Formulario Manual Completo con Dietas y Alojamiento -->
     <div class="manual-form-container" id="manualForm">
       <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--primary-red); text-transform:uppercase;">Registrar Bolo Pasado con Precio Real</h4>
       <div class="manual-grid">
@@ -615,12 +616,28 @@
           <label for="m_dias">Días de Bolo</label>
           <input type="number" id="m_dias" value="1" min="1">
         </div>
-        <div class="form-group">
+        
+        <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px;">
+          <div class="checkbox-group" style="margin-top:0;">
+            <input type="checkbox" id="m_incluyeComida" checked>
+            <label for="m_incluyeComida" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">La organización puso la comida/cena</label>
+          </div>
+          <div class="checkbox-group" style="margin-top:0;">
+            <input type="checkbox" id="m_requiereAlojamiento" onchange="window.toggleManualAlojamiento()">
+            <label for="m_requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">Requirió noche / alojamiento</label>
+          </div>
+          <div class="checkbox-group sub-checkbox" id="m_contenedorIncluyeAlojamiento" style="display:none; margin-top:0;">
+            <input type="checkbox" id="m_incluyeAlojamiento" checked>
+            <label for="m_incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">El alojamiento lo cubrió la organización</label>
+          </div>
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
           <label for="m_precioPactado" style="color:var(--accent-red);">Precio Total Cobrado Real (€)</label>
           <input type="number" id="m_precioPactado" placeholder="Ej. 750" step="10">
         </div>
-        <div class="form-group" style="display:flex; align-items:flex-end;">
-          <button class="btn btn-fav" style="width:100%;" onclick="window.guardarBoloManual()">💾 Guardar y Sincronizar</button>
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <button class="btn btn-fav" style="width:100%;" onclick="window.guardarBoloManual()">💾 Guardar y Sincronizar en la Nube</button>
         </div>
       </div>
     </div>
@@ -658,7 +675,6 @@
   let bolosCloud = [];
   let resumenCalculo = {};
 
-  // Sincronización en tiempo real desde Firestore
   onSnapshot(bolosCollection, (snapshot) => {
     bolosCloud = [];
     snapshot.forEach(docSnap => {
@@ -679,6 +695,12 @@
   window.toggleFormularioManual = function() {
     const f = document.getElementById('manualForm');
     f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+  };
+
+  window.toggleManualAlojamiento = function() {
+    const req = document.getElementById('m_requiereAlojamiento').checked;
+    const sub = document.getElementById('m_contenedorIncluyeAlojamiento');
+    sub.style.display = req ? 'flex' : 'none';
   };
 
   window.toggleAlojamiento = function() {
@@ -747,7 +769,7 @@
     return BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
   }
 
-  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente) {
+  function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente, incluyeComida, requiereAlojamiento) {
     if (bolosCloud.length === 0) return 0;
     let sumaPonderada = 0;
     let pesoTotal = 0;
@@ -758,10 +780,12 @@
       const distKm = Math.abs(b.km - km) / 100.0;
       const distDias = Math.abs(b.dias - dias);
       const distCliente = (b.tipoCliente === tipoCliente) ? 0 : 0.5;
+      const distComida = (b.incluyeComida === incluyeComida) ? 0 : 0.3;
+      const distAloj = (b.requiereAlojamiento === requiereAlojamiento) ? 0 : 0.4;
 
-      const distanciaTotal = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2);
+      const distanciaTotal = Math.sqrt(distHoras**2 + distEspera**2 + distKm**2 + distDias**2 + distCliente**2 + distComida**2 + distAloj**2);
 
-      if (distanciaTotal < 1.6) {
+      if (distanciaTotal < 1.7) {
         const peso = 1.0 / (distanciaTotal + 0.08);
         const subtotalRef = b.subtotalBaseTeorico || b.precioDia;
         const ratioCorreccion = (b.precioDia - subtotalRef) || 0;
@@ -819,7 +843,7 @@
 
     let subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalBase * factorDescuento);
 
-    const correccionAprendida = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente);
+    const correccionAprendida = calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente, incluyeComida, requiereAlojamiento);
     subtotalDia = Math.max(BASE_MINIMA_CHARANGA, subtotalDia + correccionAprendida);
 
     const partesTotales = numMusicos + 1;
@@ -975,6 +999,9 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
     const horasE = parseFloat(document.getElementById('m_horasE').value) || 0;
     const km = parseFloat(document.getElementById('m_km').value) || 40;
     const dias = parseInt(document.getElementById('m_dias').value) || 1;
+    const incluyeComida = document.getElementById('m_incluyeComida').checked;
+    const requiereAlojamiento = document.getElementById('m_requiereAlojamiento').checked;
+    const incluyeAlojamiento = document.getElementById('m_incluyeAlojamiento').checked;
     const precioPactado = parseFloat(document.getElementById('m_precioPactado').value);
 
     if (!precioPactado || precioPactado <= 0) {
@@ -982,7 +1009,7 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
       return;
     }
 
-    const subtotalTeorico = calcularSubtotalTeoricoPuro(horasT, horasE, km, 9, true, false, true);
+    const subtotalTeorico = calcularSubtotalTeoricoPuro(horasT, horasE, km, 9, incluyeComida, requiereAlojamiento, incluyeAlojamiento);
     const precioDia = Math.round(precioPactado / dias);
     const pagoPorMusico = Math.round((precioDia / 10) / 5) * 5;
 
@@ -994,9 +1021,9 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
       km,
       dias,
       numMusicos: 9,
-      incluyeComida: true,
-      requiereAlojamiento: false,
-      incluyeAlojamiento: true,
+      incluyeComida,
+      requiereAlojamiento,
+      incluyeAlojamiento,
       subtotalBaseTeorico: subtotalTeorico,
       precioTotal: precioPactado,
       precioDia: precioDia,
@@ -1027,7 +1054,7 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
     document.getElementById('kmTotales').value = item.km;
     document.getElementById('dias').value = item.dias;
     document.getElementById('musicos').value = item.numMusicos;
-    document.getElementById('incluyeComida').checked = item.incluyeComida;
+    document.getElementById('incluyeComida').checked = item.incluyeComida !== undefined ? item.incluyeComida : true;
     document.getElementById('requiereAlojamiento').checked = !!item.requiereAlojamiento;
     document.getElementById('incluyeAlojamiento').checked = item.incluyeAlojamiento !== undefined ? item.incluyeAlojamiento : true;
     
@@ -1070,6 +1097,7 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
           <div class="fav-meta">
             ${f.dias > 1 ? f.dias + ' días · ' : ''}${f.horasT}h toque ${f.horasE > 0 ? '+ ' + f.horasE + 'h espera' : ''} · ${f.km} km<br>
             <strong>${f.precioTotal} €</strong> ${f.dias > 1 ? '· ' + f.precioDia + ' €/día' : ''} · <em>${f.pagoPorMusico || '-'} €/músico</em>
+            ${!f.incluyeComida ? '<br><span style="color:#f59e0b; font-size:0.75rem;">🍽️ Dietas charanga</span>' : ''}
             ${f.requiereAlojamiento ? '<br><span style="color:#93c5fd; font-size:0.75rem;">🛌 Con alojamiento</span>' : ''}
           </div>
         </div>
