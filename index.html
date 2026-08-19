@@ -108,11 +108,7 @@
       text-align: left;
     }
 
-    /* HUB INTERNO */
-    #hubView {
-      display: none;
-    }
-
+    /* ESTILOS DINÁMICOS DEL HUB */
     .top-actions {
       display: flex;
       justify-content: flex-end;
@@ -533,7 +529,7 @@
       line-height: 1.5;
     }
 
-    /* TARJETA DINÁMICA DE CAJA (VERDE / ROJO) */
+    /* CAJA REACTIVA */
     .caja-dashboard {
       background: #000000;
       border: 2px solid var(--accent-green);
@@ -698,7 +694,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="mainContainer">
 
   <!-- ==================== PANTALLA DE ACCESO GOOGLE ==================== -->
   <div id="loginView">
@@ -724,285 +720,8 @@
     </div>
   </div>
 
-  <!-- ==================== CONTENIDO DEL HUB ==================== -->
-  <div id="hubView">
-    
-    <div class="top-actions">
-      <button class="btn-sm btn-fav" onclick="window.cerrarSesion()" style="color:var(--accent-red);">Cerrar Sesión 🚪</button>
-    </div>
-
-    <div class="header-banner">
-      <div class="welcome-hero-text" id="saludoUsuarioGrande">Bienvenido de nuevo</div>
-      <h2>Xaranga Llenya al Bombo</h2>
-      <p>Hub Oficial de Gestión · Salida desde Onda</p>
-    </div>
-
-    <div class="nav-tabs">
-      <button class="tab-btn active" onclick="switchTab('tab-inicio')">📅 Calendario</button>
-      <button class="tab-btn" onclick="switchTab('tab-presupuesto')">💰 Presupuestos</button>
-      <button class="tab-btn" onclick="switchTab('tab-caja')">📊 Caja & Bote</button>
-    </div>
-
-    <!-- PESTAÑA 1: CALENDARIO -->
-    <div id="tab-inicio" class="tab-content active">
-      <div class="countdown-hero">
-        <div class="countdown-title">PRÓXIMO BOLO</div>
-        <div class="countdown-location" id="heroLugar">Cargando bolos...</div>
-        
-        <div class="countdown-timer">
-          <div class="countdown-box"><div class="countdown-num" id="cdDays">00</div><div class="countdown-lbl">Días</div></div>
-          <div class="countdown-box"><div class="countdown-num" id="cdHours">00</div><div class="countdown-lbl">Horas</div></div>
-          <div class="countdown-box"><div class="countdown-num" id="cdMinutes">00</div><div class="countdown-lbl">Min</div></div>
-          <div class="countdown-box"><div class="countdown-num" id="cdSeconds">00</div><div class="countdown-lbl">Seg</div></div>
-        </div>
-
-        <div class="hero-meta">
-          <span id="heroFecha">📅 --/--/----</span>
-          <span id="heroHora">🎺 --:-- h</span>
-          <span id="heroLugarUbi">📍 --</span>
-        </div>
-
-        <div style="display:flex; gap:10px; max-width:400px; margin:0 auto;">
-          <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMapsHero()">📍 Ver en Google Maps</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="cal-header">
-          <button class="cal-nav-btn" onclick="cambiarMes(-1)">◀ Mes Anterior</button>
-          <div class="cal-month-title" id="calMesTitulo">Agosto 2026</div>
-          <button class="cal-nav-btn" onclick="cambiarMes(1)">Mes Siguiente ▶</button>
-        </div>
-
-        <div class="cal-grid" id="calDiasGrid">
-          <div class="cal-day-name">Lun</div>
-          <div class="cal-day-name">Mar</div>
-          <div class="cal-day-name">Mié</div>
-          <div class="cal-day-name">Jue</div>
-          <div class="cal-day-name">Vie</div>
-          <div class="cal-day-name">Sáb</div>
-          <div class="cal-day-name">Dom</div>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:12px;">
-          <h3 id="tituloEventosSeleccionados" style="margin-bottom:0;">🎺 Próximos Bolos Agendados</h3>
-          <button class="btn-sm btn-fav" onclick="cargarEventosGoogleCalendar()">🔄 Actualizar Calendario</button>
-        </div>
-
-        <div id="contenedorEventosFeed" class="cal-events-feed"></div>
-      </div>
-    </div>
-
-    <!-- PESTAÑA 2: PRESUPUESTADOR -->
-    <div id="tab-presupuesto" class="tab-content">
-      <div class="grid-2col">
-        <div class="card">
-          <h3>Calculadora de Bolo</h3>
-          <div class="form-group">
-            <label for="lugar">Población / Actuación</label>
-            <input type="text" id="lugar" value="Nules" oninput="window.calcular()">
-          </div>
-          <div class="form-group">
-            <label for="tipoCliente">Tipo de Contratante</label>
-            <select id="tipoCliente" onchange="window.calcular()">
-              <option value="estandar" selected>Peña / Comisión / Ayto · Estándar</option>
-              <option value="particular">Particular / Despedida · -5%</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="horasTocadas">Horas tocando (por día)</label>
-            <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="window.calcular()">
-          </div>
-          <div class="form-group">
-            <label for="horasEspera">Horas espera / descanso (por día)</label>
-            <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="window.calcular()">
-          </div>
-          <div class="form-group">
-            <label for="kmTotales">Km totales ida/vuelta (desde Onda)</label>
-            <input type="number" id="kmTotales" value="42" step="5" oninput="window.calcular()">
-          </div>
-          <div class="form-group">
-            <label for="dias">Días de actuación consecutivos</label>
-            <input type="number" id="dias" value="1" min="1" oninput="window.calcular()">
-          </div>
-          <div class="form-group">
-            <label for="musicos">Músicos en plantilla</label>
-            <input type="number" id="musicos" value="9" min="1" oninput="window.calcular()">
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="incluyeComida" checked onchange="window.calcular()">
-            <label for="incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización pone la comida/cena</label>
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="requiereAlojamiento" onchange="window.toggleAlojamiento()">
-            <label for="requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">Requiere hacer noche / alojamiento</label>
-          </div>
-          <div class="checkbox-group sub-checkbox" id="contenedorIncluyeAlojamiento" style="display:none;">
-            <input type="checkbox" id="incluyeAlojamiento" checked onchange="window.calcular()">
-            <label for="incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">El alojamiento lo cubre la organización</label>
-          </div>
-        </div>
-
-        <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
-          <div>
-            <h3>Presupuesto</h3>
-            <div class="total-display">
-              <div style="font-size:0.75rem; color:#a3a3a3; text-transform:uppercase; font-weight:700;">Presupuesto Sugerido</div>
-              <div class="total-amount" id="precioTotal">700 <span>€</span></div>
-              <div id="precioPorDia" style="color:#a3a3a3; font-size:0.9rem;">700 € / día</div>
-            </div>
-
-            <ul class="breakdown">
-              <li><span>Mínimo base (hasta 2h):</span><span id="baseMin">500 €</span></li>
-              <li><span>Horas extra toque:</span><span id="costeHorasExtra">0 €</span></li>
-              <li><span>Horas de espera:</span><span id="costeEspera">0 €</span></li>
-              <li><span>Desplazamiento furgoneta:</span><span id="costeKm">0 €</span></li>
-              <li><span>Dietas manutención:</span><span id="costeDietas">0 €</span></li>
-              <li><span>Suplemento hotel:</span><span id="costeHotel">0 €</span></li>
-              <li><span>Descuento multidía:</span><span id="descuentoVolumen" style="color:var(--primary-red);">0 %</span></li>
-              <li><span>Ajuste histórico aprendido:</span><span id="ajusteHistorico" style="color:#60a5fa;">0 €</span></li>
-            </ul>
-
-            <div class="share-box">
-              <div class="share-item"><span>Por Músico</span><strong id="pagoMusico">70 €</strong></div>
-              <div class="share-item"><span>Bote</span><strong id="pagoFurgoneta">70 €</strong></div>
-            </div>
-          </div>
-
-          <div class="btn-group" style="display:flex; gap:10px; margin-top:16px;">
-            <button class="btn btn-fav" id="btnGuardar" onclick="window.guardarFavorito()">⭐ Guardar</button>
-            <button class="btn btn-whatsapp" id="btnCopiar" onclick="window.copiarMensajeWhatsApp()">📋 WhatsApp</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <h3>🧠 Memoria en la Nube (<span id="countAprendidos">0</span> bolos)</h3>
-          <button class="btn-sm btn-fav" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
-        </div>
-
-        <div id="manualForm" style="display:none; background:#000; padding:16px; border-radius:8px; border:1px solid #333; margin-bottom:16px;">
-          <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--primary-red);">Registrar Bolo Histórico con Precio Real</h4>
-          <div class="grid-2col">
-            <div class="form-group"><label>Población</label><input type="text" id="m_lugar"></div>
-            <div class="form-group"><label>Tipo de Cliente</label><select id="m_tipoCliente"><option value="estandar">Peña / Ayto</option><option value="particular">Particular</option></select></div>
-            <div class="form-group"><label>Horas Música</label><input type="number" id="m_horasT" value="3" step="0.5"></div>
-            <div class="form-group"><label>Horas Espera</label><input type="number" id="m_horasE" value="0" step="0.5"></div>
-            <div class="form-group"><label>Km Totales</label><input type="number" id="m_km" value="40" step="5"></div>
-            <div class="form-group"><label>Días</label><input type="number" id="m_dias" value="1"></div>
-            
-            <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px;">
-              <div class="checkbox-group" style="margin-top:0;">
-                <input type="checkbox" id="m_incluyeComida" checked>
-                <label for="m_incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización puso la comida/cena</label>
-              </div>
-              <div class="checkbox-group" style="margin-top:0;">
-                <input type="checkbox" id="m_requiereAlojamiento" onchange="window.toggleManualAlojamiento()">
-                <label for="m_requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">Requirió noche / alojamiento</label>
-              </div>
-              <div class="checkbox-group sub-checkbox" id="m_contenedorIncluyeAlojamiento" style="display:none; margin-top:0;">
-                <input type="checkbox" id="m_incluyeAlojamiento" checked>
-                <label for="m_incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">El alojamiento lo cubrió la organización</label>
-              </div>
-            </div>
-
-            <div class="form-group" style="grid-column:1/-1;"><label style="color:var(--accent-red);">Precio Real Cobrado (€)</label><input type="number" id="m_precioPactado"></div>
-          </div>
-          <button class="btn btn-fav" style="width:100%; margin-top:10px;" onclick="window.guardarBoloManual()">💾 Guardar y Entrenar</button>
-        </div>
-
-        <div id="contenedorFavoritos" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px;"></div>
-      </div>
-    </div>
-
-    <!-- PESTAÑA 3: CAJA & BOTE CON MARCO INTELIGENTE -->
-    <div id="tab-caja" class="tab-content">
-      
-      <!-- DASHBOARD CON MARCO REACTIVO (VERDE / ROJO) -->
-      <div class="caja-dashboard positivo" id="cajaDashboardCard">
-        <div class="caja-hero-header">
-          <div class="caja-hero-label">Bote Total Disponible en Caja</div>
-          <div class="caja-hero-total" id="cajaTotalDisplay">0 €</div>
-        </div>
-        
-        <div class="caja-cards-grid">
-          <div class="caja-pill-card">
-            <div class="caja-pill-header">
-              <span>🏦</span>
-              <span>En Banco / Cuenta</span>
-            </div>
-            <div class="caja-pill-amount" id="cajaBancoDisplay" style="color: var(--accent-blue);">0 €</div>
-          </div>
-
-          <div class="caja-pill-card">
-            <div class="caja-pill-header">
-              <span>💵</span>
-              <span>En Efectivo / Mano</span>
-            </div>
-            <div class="caja-pill-amount" id="cajaEfectivoDisplay" style="color: var(--accent-green);">0 €</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>➕ Registrar Movimiento de Bote</h3>
-        <div class="grid-2col">
-          <div class="form-group">
-            <label>Concepto</label>
-            <input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote bolo Nules...">
-          </div>
-          <div class="form-group">
-            <label>Importe (€)</label>
-            <input type="number" id="mov_importe" placeholder="Ej. 50">
-          </div>
-          <div class="form-group">
-            <label>Tipo de Movimiento</label>
-            <select id="mov_tipo">
-              <option value="ingreso">🟢 Ingreso (Bote bolo, aportación, lotería...)</option>
-              <option value="gasto">🔴 Gasto (Material, furgoneta, cenas...)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Medio de Pago</label>
-            <select id="mov_medio">
-              <option value="efectivo">💵 En Efectivo (Mano / Bote físico)</option>
-              <option value="banco">🏦 En Cuenta / Banco (Transferencia / Bizum)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Músico Responsable</label>
-            <select id="mov_responsable">
-              <option value="Diego">Diego</option>
-              <option value="Aarón">Aarón</option>
-              <option value="Carlos">Carlos</option>
-              <option value="Gavi">Gavi</option>
-              <option value="Joan">Joan</option>
-              <option value="Joel">Joel</option>
-              <option value="Víctor">Víctor</option>
-              <option value="Joan Miquel">Joan Miquel</option>
-              <option value="Lluís">Lluís</option>
-              <option value="Miki">Miki</option>
-              <option value="Rubén Cerisuelo">Rubén Cerisuelo</option>
-              <option value="Rubén Martínez">Rubén Martínez</option>
-              <option value="Toni">Toni</option>
-              <option value="Charanga (General)">Charanga (General)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Fecha</label>
-            <input type="date" id="mov_fecha">
-          </div>
-        </div>
-        <button class="btn btn-confirm" style="width:100%; margin-top:6px;" onclick="guardarMovimientoCaja()">💾 Registrar Movimiento</button>
-      </div>
-
-      <div class="card">
-        <h3>📋 Historial de Movimientos</h3>
-        <div id="listaMovimientosCaja"></div>
-      </div>
-    </div>
-  </div>
+  <!-- CONTENEDOR VACÍO DEL HUB (SE CONSTRUYE SÓLO DESPUÉS DE VALIDAR CON GOOGLE) -->
+  <div id="hubRoot"></div>
 
 </div>
 
@@ -1060,7 +779,6 @@
     "toniesbri89@gmail.com"
   ];
 
-  // ================= MAPA DE SALUDO DE BIENVENIDA =================
   const NOMBRES_MUSICOS = {
     "xarangallenyaalbombo@gmail.com": "Llenya al Bombo",
     "aaronsm2492@gmail.com": "Aarón",
@@ -1078,7 +796,6 @@
     "toniesbri89@gmail.com": "Toni"
   };
 
-  // ================= MAPA PARA EL SELECTOR DE CAJA =================
   const NOMBRES_CAJA = {
     "xarangallenyaalbombo@gmail.com": "Charanga (General)",
     "aaronsm2492@gmail.com": "Aarón",
@@ -1100,10 +817,304 @@
   let movimientosCaja = [];
   let resumenCalculo = {};
 
-  // ================= AUTENTICACIÓN GOOGLE =================
+  // ================= INYECCIÓN DINÁMICA DEL HUB =================
+  function renderHubCompleto(nombreBienvenida, nombreCaja) {
+    const hubRoot = document.getElementById('hubRoot');
+    hubRoot.innerHTML = `
+      <div id="hubView" style="display:block;">
+        <div class="top-actions">
+          <button class="btn-sm btn-fav" onclick="window.cerrarSesion()" style="color:var(--accent-red);">Cerrar Sesión 🚪</button>
+        </div>
+
+        <div class="header-banner">
+          <div class="welcome-hero-text" id="saludoUsuarioGrande">Bienvenido de nuevo <span>${nombreBienvenida}</span></div>
+          <h2>Xaranga Llenya al Bombo</h2>
+          <p>Hub Oficial de Gestión · Salida desde Onda</p>
+        </div>
+
+        <div class="nav-tabs">
+          <button class="tab-btn active" onclick="switchTab('tab-inicio')">📅 Calendario</button>
+          <button class="tab-btn" onclick="switchTab('tab-presupuesto')">💰 Presupuestos</button>
+          <button class="tab-btn" onclick="switchTab('tab-caja')">📊 Caja & Bote</button>
+        </div>
+
+        <!-- PESTAÑA 1: CALENDARIO -->
+        <div id="tab-inicio" class="tab-content active">
+          <div class="countdown-hero">
+            <div class="countdown-title">PRÓXIMO BOLO</div>
+            <div class="countdown-location" id="heroLugar">Cargando bolos...</div>
+            
+            <div class="countdown-timer">
+              <div class="countdown-box"><div class="countdown-num" id="cdDays">00</div><div class="countdown-lbl">Días</div></div>
+              <div class="countdown-box"><div class="countdown-num" id="cdHours">00</div><div class="countdown-lbl">Horas</div></div>
+              <div class="countdown-box"><div class="countdown-num" id="cdMinutes">00</div><div class="countdown-lbl">Min</div></div>
+              <div class="countdown-box"><div class="countdown-num" id="cdSeconds">00</div><div class="countdown-lbl">Seg</div></div>
+            </div>
+
+            <div class="hero-meta">
+              <span id="heroFecha">📅 --/--/----</span>
+              <span id="heroHora">🎺 --:-- h</span>
+              <span id="heroLugarUbi">📍 --</span>
+            </div>
+
+            <div style="display:flex; gap:10px; max-width:400px; margin:0 auto;">
+              <button class="btn btn-fav" id="btnHeroMaps" onclick="abrirGoogleMapsHero()">📍 Ver en Google Maps</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cal-header">
+              <button class="cal-nav-btn" onclick="cambiarMes(-1)">◀ Mes Anterior</button>
+              <div class="cal-month-title" id="calMesTitulo">Agosto 2026</div>
+              <button class="cal-nav-btn" onclick="cambiarMes(1)">Mes Siguiente ▶</button>
+            </div>
+
+            <div class="cal-grid" id="calDiasGrid">
+              <div class="cal-day-name">Lun</div>
+              <div class="cal-day-name">Mar</div>
+              <div class="cal-day-name">Mié</div>
+              <div class="cal-day-name">Jue</div>
+              <div class="cal-day-name">Vie</div>
+              <div class="cal-day-name">Sáb</div>
+              <div class="cal-day-name">Dom</div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:12px;">
+              <h3 id="tituloEventosSeleccionados" style="margin-bottom:0;">🎺 Próximos Bolos Agendados</h3>
+              <button class="btn-sm btn-fav" onclick="cargarEventosGoogleCalendar()">🔄 Actualizar Calendario</button>
+            </div>
+
+            <div id="contenedorEventosFeed" class="cal-events-feed"></div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: PRESUPUESTADOR -->
+        <div id="tab-presupuesto" class="tab-content">
+          <div class="grid-2col">
+            <div class="card">
+              <h3>Calculadora de Bolo</h3>
+              <div class="form-group">
+                <label for="lugar">Población / Actuación</label>
+                <input type="text" id="lugar" value="Nules" oninput="window.calcular()">
+              </div>
+              <div class="form-group">
+                <label for="tipoCliente">Tipo de Contratante</label>
+                <select id="tipoCliente" onchange="window.calcular()">
+                  <option value="estandar" selected>Peña / Comisión / Ayto · Estándar</option>
+                  <option value="particular">Particular / Despedida · -5%</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="horasTocadas">Horas tocando (por día)</label>
+                <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="window.calcular()">
+              </div>
+              <div class="form-group">
+                <label for="horasEspera">Horas espera / descanso (por día)</label>
+                <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="window.calcular()">
+              </div>
+              <div class="form-group">
+                <label for="kmTotales">Km totales ida/vuelta (desde Onda)</label>
+                <input type="number" id="kmTotales" value="42" step="5" oninput="window.calcular()">
+              </div>
+              <div class="form-group">
+                <label for="dias">Días de actuación consecutivos</label>
+                <input type="number" id="dias" value="1" min="1" oninput="window.calcular()">
+              </div>
+              <div class="form-group">
+                <label for="musicos">Músicos en plantilla</label>
+                <input type="number" id="musicos" value="9" min="1" oninput="window.calcular()">
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="incluyeComida" checked onchange="window.calcular()">
+                <label for="incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización pone la comida/cena</label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="requiereAlojamiento" onchange="window.toggleAlojamiento()">
+                <label for="requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">Requiere hacer noche / alojamiento</label>
+              </div>
+              <div class="checkbox-group sub-checkbox" id="contenedorIncluyeAlojamiento" style="display:none;">
+                <input type="checkbox" id="incluyeAlojamiento" checked onchange="window.calcular()">
+                <label for="incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">El alojamiento lo cubre la organización</label>
+              </div>
+            </div>
+
+            <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <h3>Presupuesto</h3>
+                <div class="total-display">
+                  <div style="font-size:0.75rem; color:#a3a3a3; text-transform:uppercase; font-weight:700;">Presupuesto Sugerido</div>
+                  <div class="total-amount" id="precioTotal">700 <span>€</span></div>
+                  <div id="precioPorDia" style="color:#a3a3a3; font-size:0.9rem;">700 € / día</div>
+                </div>
+
+                <ul class="breakdown">
+                  <li><span>Mínimo base (hasta 2h):</span><span id="baseMin">500 €</span></li>
+                  <li><span>Horas extra toque:</span><span id="costeHorasExtra">0 €</span></li>
+                  <li><span>Horas de espera:</span><span id="costeEspera">0 €</span></li>
+                  <li><span>Desplazamiento furgoneta:</span><span id="costeKm">0 €</span></li>
+                  <li><span>Dietas manutención:</span><span id="costeDietas">0 €</span></li>
+                  <li><span>Suplemento hotel:</span><span id="costeHotel">0 €</span></li>
+                  <li><span>Descuento multidía:</span><span id="descuentoVolumen" style="color:var(--primary-red);">0 %</span></li>
+                  <li><span>Ajuste histórico aprendido:</span><span id="ajusteHistorico" style="color:#60a5fa;">0 €</span></li>
+                </ul>
+
+                <div class="share-box">
+                  <div class="share-item"><span>Por Músico</span><strong id="pagoMusico">70 €</strong></div>
+                  <div class="share-item"><span>Bote</span><strong id="pagoFurgoneta">70 €</strong></div>
+                </div>
+              </div>
+
+              <div class="btn-group" style="display:flex; gap:10px; margin-top:16px;">
+                <button class="btn btn-fav" id="btnGuardar" onclick="window.guardarFavorito()">⭐ Guardar</button>
+                <button class="btn btn-whatsapp" id="btnCopiar" onclick="window.copiarMensajeWhatsApp()">📋 WhatsApp</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h3>🧠 Memoria en la Nube (<span id="countAprendidos">0</span> bolos)</h3>
+              <button class="btn-sm btn-fav" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
+            </div>
+
+            <div id="manualForm" style="display:none; background:#000; padding:16px; border-radius:8px; border:1px solid #333; margin-bottom:16px;">
+              <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--primary-red);">Registrar Bolo Histórico con Precio Real</h4>
+              <div class="grid-2col">
+                <div class="form-group"><label>Población</label><input type="text" id="m_lugar"></div>
+                <div class="form-group"><label>Tipo de Cliente</label><select id="m_tipoCliente"><option value="estandar">Peña / Ayto</option><option value="particular">Particular</option></select></div>
+                <div class="form-group"><label>Horas Música</label><input type="number" id="m_horasT" value="3" step="0.5"></div>
+                <div class="form-group"><label>Horas Espera</label><input type="number" id="m_horasE" value="0" step="0.5"></div>
+                <div class="form-group"><label>Km Totales</label><input type="number" id="m_km" value="40" step="5"></div>
+                <div class="form-group"><label>Días</label><input type="number" id="m_dias" value="1"></div>
+                
+                <div class="form-group" style="grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px;">
+                  <div class="checkbox-group" style="margin-top:0;">
+                    <input type="checkbox" id="m_incluyeComida" checked>
+                    <label for="m_incluyeComida" style="margin-bottom:0; cursor:pointer; color:#fff;">La organización puso la comida/cena</label>
+                  </div>
+                  <div class="checkbox-group" style="margin-top:0;">
+                    <input type="checkbox" id="m_requiereAlojamiento" onchange="window.toggleManualAlojamiento()">
+                    <label for="m_requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">Requirió noche / alojamiento</label>
+                  </div>
+                  <div class="checkbox-group sub-checkbox" id="m_contenedorIncluyeAlojamiento" style="display:none; margin-top:0;">
+                    <input type="checkbox" id="m_incluyeAlojamiento" checked>
+                    <label for="m_incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:#fff;">El alojamiento lo cubrió la organización</label>
+                  </div>
+                </div>
+
+                <div class="form-group" style="grid-column:1/-1;"><label style="color:var(--accent-red);">Precio Real Cobrado (€)</label><input type="number" id="m_precioPactado"></div>
+              </div>
+              <button class="btn btn-fav" style="width:100%; margin-top:10px;" onclick="window.guardarBoloManual()">💾 Guardar y Entrenar</button>
+            </div>
+
+            <div id="contenedorFavoritos" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px;"></div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: CAJA & BOTE REACTIVO -->
+        <div id="tab-caja" class="tab-content">
+          
+          <div class="caja-dashboard positivo" id="cajaDashboardCard">
+            <div class="caja-hero-header">
+              <div class="caja-hero-label">Bote Total Disponible en Caja</div>
+              <div class="caja-hero-total" id="cajaTotalDisplay">0 €</div>
+            </div>
+            
+            <div class="caja-cards-grid">
+              <div class="caja-pill-card">
+                <div class="caja-pill-header">
+                  <span>🏦</span>
+                  <span>En Banco / Cuenta</span>
+                </div>
+                <div class="caja-pill-amount" id="cajaBancoDisplay" style="color: var(--accent-blue);">0 €</div>
+              </div>
+
+              <div class="caja-pill-card">
+                <div class="caja-pill-header">
+                  <span>💵</span>
+                  <span>En Efectivo / Mano</span>
+                </div>
+                <div class="caja-pill-amount" id="cajaEfectivoDisplay" style="color: var(--accent-green);">0 €</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>➕ Registrar Movimiento de Bote</h3>
+            <div class="grid-2col">
+              <div class="form-group">
+                <label>Concepto</label>
+                <input type="text" id="mov_concepto" placeholder="Ej. Parches bombo, Bote bolo Nules...">
+              </div>
+              <div class="form-group">
+                <label>Importe (€)</label>
+                <input type="number" id="mov_importe" placeholder="Ej. 50">
+              </div>
+              <div class="form-group">
+                <label>Tipo de Movimiento</label>
+                <select id="mov_tipo">
+                  <option value="ingreso">🟢 Ingreso (Bote bolo, aportación, lotería...)</option>
+                  <option value="gasto">🔴 Gasto (Material, furgoneta, cenas...)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Medio de Pago</label>
+                <select id="mov_medio">
+                  <option value="efectivo">💵 En Efectivo (Mano / Bote físico)</option>
+                  <option value="banco">🏦 En Cuenta / Banco (Transferencia / Bizum)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Músico Responsable</label>
+                <select id="mov_responsable">
+                  <option value="Diego">Diego</option>
+                  <option value="Aarón">Aarón</option>
+                  <option value="Carlos">Carlos</option>
+                  <option value="Gavi">Gavi</option>
+                  <option value="Joan">Joan</option>
+                  <option value="Joel">Joel</option>
+                  <option value="Víctor">Víctor</option>
+                  <option value="Joan Miquel">Joan Miquel</option>
+                  <option value="Lluís">Lluís</option>
+                  <option value="Miki">Miki</option>
+                  <option value="Rubén Cerisuelo">Rubén Cerisuelo</option>
+                  <option value="Rubén Martínez">Rubén Martínez</option>
+                  <option value="Toni">Toni</option>
+                  <option value="Charanga (General)">Charanga (General)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" id="mov_fecha">
+              </div>
+            </div>
+            <button class="btn btn-confirm" style="width:100%; margin-top:6px;" onclick="guardarMovimientoCaja()">💾 Registrar Movimiento</button>
+          </div>
+
+          <div class="card">
+            <h3>📋 Historial de Movimientos</h3>
+            <div id="listaMovimientosCaja"></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Autoseleccionar responsable de caja
+    const respSelect = document.getElementById('mov_responsable');
+    if (respSelect) {
+      for (let i = 0; i < respSelect.options.length; i++) {
+        if (respSelect.options[i].value === nombreCaja) {
+          respSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+  }
+
+  // ================= AUTENTICACIÓN GOOGLE BLINDADA =================
   onAuthStateChanged(auth, (user) => {
     const loginView = document.getElementById('loginView');
-    const hubView = document.getElementById('hubView');
+    const hubRoot = document.getElementById('hubRoot');
     const errBox = document.getElementById('loginError');
 
     if (user) {
@@ -1112,29 +1123,22 @@
 
       if (estaAutorizado) {
         loginView.style.display = 'none';
-        hubView.style.display = 'block';
         errBox.style.display = 'none';
 
         const nombreBienvenida = NOMBRES_MUSICOS[emailUsuario] || (user.displayName ? user.displayName.split(' ')[0] : 'Músico');
-        document.getElementById('saludoUsuarioGrande').innerHTML = `Bienvenido de nuevo <span>${nombreBienvenida}</span>`;
-
         const nombreCaja = NOMBRES_CAJA[emailUsuario] || "Charanga (General)";
-        const respSelect = document.getElementById('mov_responsable');
-        for (let i = 0; i < respSelect.options.length; i++) {
-          if (respSelect.options[i].value === nombreCaja) {
-            respSelect.selectedIndex = i;
-            break;
-          }
-        }
 
+        // CONSTRUIR EL HUB EN PANTALLA
+        renderHubCompleto(nombreBienvenida, nombreCaja);
         iniciarHub();
       } else {
         errBox.innerHTML = `⛔ <strong>Acceso denegado:</strong> La cuenta <em>${user.email}</em> no pertenece a la plantilla de la charanga.`;
         errBox.style.display = 'block';
+        hubRoot.innerHTML = '';
         signOut(auth);
       }
     } else {
-      hubView.style.display = 'none';
+      hubRoot.innerHTML = '';
       loginView.style.display = 'flex';
     }
   });
@@ -1175,7 +1179,8 @@
   function iniciarHub() {
     cargarEventosGoogleCalendar();
     window.calcular();
-    document.getElementById('mov_fecha').value = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('mov_fecha');
+    if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
 
     onSnapshot(bolosAprendidosCol, (snap) => {
       bolosCloud = [];
@@ -1285,12 +1290,15 @@
   window.cargarEventosGoogleCalendar = cargarEventosGoogleCalendar;
 
   function renderCalendar() {
+    const elMes = document.getElementById('calMesTitulo');
+    const grid = document.getElementById('calDiasGrid');
+    if (!elMes || !grid) return;
+
     const y = fechaActualCal.getFullYear();
     const m = fechaActualCal.getMonth();
 
-    document.getElementById('calMesTitulo').innerText = `${nombresMeses[m]} ${y}`;
+    elMes.innerText = `${nombresMeses[m]} ${y}`;
 
-    const grid = document.getElementById('calDiasGrid');
     while (grid.children.length > 7) {
       grid.removeChild(grid.lastChild);
     }
@@ -1347,6 +1355,7 @@
   function renderFeedEventos(dateKeyFiltro = null) {
     const contenedor = document.getElementById('contenedorEventosFeed');
     const titulo = document.getElementById('tituloEventosSeleccionados');
+    if (!contenedor || !titulo) return;
 
     let filtrados = [];
     if (dateKeyFiltro) {
@@ -1395,11 +1404,14 @@
   };
 
   function actualizarProximoBoloHero() {
+    const elLugar = document.getElementById('heroLugar');
+    if (!elLugar) return;
+
     const ahora = new Date();
     const futuros = gEvents.filter(ev => new Date(ev.startIso) >= ahora);
 
     if (futuros.length === 0) {
-      document.getElementById('heroLugar').innerText = 'No hay bolos próximos';
+      elLugar.innerText = 'No hay bolos próximos';
       document.getElementById('heroFecha').innerText = '📅 --/--/----';
       document.getElementById('heroHora').innerText = '🎺 --:-- h';
       document.getElementById('heroLugarUbi').innerText = '📍 --';
@@ -1408,7 +1420,7 @@
     }
 
     proximoBoloHero = futuros[0];
-    document.getElementById('heroLugar').innerText = proximoBoloHero.titulo;
+    elLugar.innerText = proximoBoloHero.titulo;
     document.getElementById('heroFecha').innerText = `📅 ${proximoBoloHero.dateKey}`;
     document.getElementById('heroHora').innerText = `🎺 ${proximoBoloHero.hora}`;
     document.getElementById('heroLugarUbi').innerText = `📍 ${proximoBoloHero.lugar}`;
@@ -1420,8 +1432,11 @@
   };
 
   setInterval(() => {
+    const elDays = document.getElementById('cdDays');
+    if (!elDays) return;
+
     if (!proximoBoloHero) {
-      document.getElementById('cdDays').innerText = '00';
+      elDays.innerText = '00';
       document.getElementById('cdHours').innerText = '00';
       document.getElementById('cdMinutes').innerText = '00';
       document.getElementById('cdSeconds').innerText = '00';
@@ -1433,7 +1448,7 @@
     const diff = destino - ahora;
 
     if (diff <= 0) {
-      document.getElementById('cdDays').innerText = '00';
+      elDays.innerText = '00';
       document.getElementById('cdHours').innerText = '00';
       document.getElementById('cdMinutes').innerText = '00';
       document.getElementById('cdSeconds').innerText = '00';
@@ -1445,7 +1460,7 @@
     const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const segundos = Math.floor((diff % (1000 * 60)) / 1000);
 
-    document.getElementById('cdDays').innerText = dias.toString().padStart(2, '0');
+    elDays.innerText = dias.toString().padStart(2, '0');
     document.getElementById('cdHours').innerText = horas.toString().padStart(2, '0');
     document.getElementById('cdMinutes').innerText = minutos.toString().padStart(2, '0');
     document.getElementById('cdSeconds').innerText = segundos.toString().padStart(2, '0');
@@ -1455,7 +1470,8 @@
   window.switchTab = function(tabId) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+    const tabEl = document.getElementById(tabId);
+    if (tabEl) tabEl.classList.add('active');
     event.currentTarget.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -1489,6 +1505,11 @@
   };
 
   function renderCaja() {
+    const cajaDashboard = document.getElementById('cajaDashboardCard');
+    const cajaTotalDisplay = document.getElementById('cajaTotalDisplay');
+    const contenedor = document.getElementById('listaMovimientosCaja');
+    if (!cajaDashboard || !cajaTotalDisplay || !contenedor) return;
+
     let ingresos = 0;
     let gastos = 0;
     let totalBanco = 0;
@@ -1508,10 +1529,7 @@
     });
 
     const saldoTotal = ingresos - gastos;
-    const cajaDashboard = document.getElementById('cajaDashboardCard');
-    const cajaTotalDisplay = document.getElementById('cajaTotalDisplay');
 
-    // Comprobación de saldo positivo / negativo para alternar color del marco
     if (saldoTotal < 0) {
       cajaDashboard.classList.remove('positivo');
       cajaDashboard.classList.add('negativo');
@@ -1526,7 +1544,6 @@
     document.getElementById('cajaBancoDisplay').innerText = `${totalBanco.toLocaleString('es-ES')} €`;
     document.getElementById('cajaEfectivoDisplay').innerText = `${totalEfectivo.toLocaleString('es-ES')} €`;
 
-    const contenedor = document.getElementById('listaMovimientosCaja');
     if (movimientosCaja.length === 0) {
       contenedor.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay movimientos de caja registrados.</p>';
       return;
@@ -1559,7 +1576,7 @@
   // ================= PRESUPUESTADOR =================
   window.toggleFormularioManual = function() {
     const f = document.getElementById('manualForm');
-    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+    if (f) f.style.display = (f.style.display === 'block') ? 'none' : 'block';
   };
 
   window.toggleManualAlojamiento = function() {
@@ -1653,7 +1670,10 @@
   }
 
   window.calcular = function() {
-    const lugar = document.getElementById('lugar').value.trim() || 'Vuestra localidad';
+    const lugarEl = document.getElementById('lugar');
+    if (!lugarEl) return;
+
+    const lugar = lugarEl.value.trim() || 'Vuestra localidad';
     const tipoCliente = document.getElementById('tipoCliente').value;
     const horasT = parseFloat(document.getElementById('horasTocadas').value) || 0;
     const horasE = parseFloat(document.getElementById('horasEspera').value) || 0;
@@ -1804,8 +1824,11 @@ Cualquier duda nos decís y lo adaptamos. ¡A dar llenya! 🔥`;
   };
 
   function renderFavoritos() {
-    document.getElementById('countAprendidos').innerText = bolosCloud.length;
+    const countEl = document.getElementById('countAprendidos');
     const cont = document.getElementById('contenedorFavoritos');
+    if (!countEl || !cont) return;
+
+    countEl.innerText = bolosCloud.length;
     if (bolosCloud.length === 0) {
       cont.innerHTML = '<p style="color:#737373; font-size:0.85rem;">No hay bolos aprendidos.</p>';
       return;
