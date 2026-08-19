@@ -585,7 +585,6 @@
       <button class="btn-manual-toggle" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
     </div>
 
-    <!-- Formulario Manual Completo con Dietas y Alojamiento -->
     <div class="manual-form-container" id="manualForm">
       <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--primary-red); text-transform:uppercase;">Registrar Bolo Pasado con Precio Real</h4>
       <div class="manual-grid">
@@ -1021,9 +1020,9 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
       km,
       dias,
       numMusicos: 9,
-      incluyeComida,
-      requiereAlojamiento,
-      incluyeAlojamiento,
+      incluyeComida: incluyeComida,
+      requiereAlojamiento: requiereAlojamiento,
+      incluyeAlojamiento: incluyeAlojamiento,
       subtotalBaseTeorico: subtotalTeorico,
       precioTotal: precioPactado,
       precioDia: precioDia,
