@@ -340,7 +340,6 @@
       border-color: var(--primary-red);
     }
 
-    /* Formulario Manual Ocultable */
     .manual-form-container {
       display: none;
       background: #000000;
@@ -448,21 +447,20 @@
   <div class="header-banner full-width">
     <h1>Xaranga <span>Llenya al Bombo</span></h1>
     <p>Presupuestador Oficial de Actuaciones · Salida desde Onda</p>
-    <div class="learning-badge" id="learningStatus">🧠 Memoria activa: <span>0</span> bolos aprendidos</div>
+    <div class="learning-badge" id="learningStatus">🔄 Conectando a la nube...</div>
   </div>
 
-  <!-- Formulario -->
   <div class="card">
     <h2>Datos del Bolo</h2>
 
     <div class="form-group">
       <label for="lugar">Población / Actuación</label>
-      <input type="text" id="lugar" value="Nules" placeholder="Ej. Iglesuela del Cid, Huerta del Rey..." oninput="calcular()">
+      <input type="text" id="lugar" value="Nules" placeholder="Ej. Iglesuela del Cid, Huerta del Rey..." oninput="window.calcular()">
     </div>
 
     <div class="form-group">
       <label for="tipoCliente">Tipo de Contratante</label>
-      <select id="tipoCliente" onchange="calcular()">
+      <select id="tipoCliente" onchange="window.calcular()">
         <option value="estandar" selected>Peña / Comisión de Fiestas / Ayuntamiento · Estándar</option>
         <option value="particular">Particular / Despedida / Cumpleaños · -5%</option>
       </select>
@@ -470,46 +468,45 @@
 
     <div class="form-group">
       <label for="horasTocadas">Horas de música en directo (por día)</label>
-      <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="calcular()">
+      <input type="number" id="horasTocadas" value="3" min="0.5" step="0.5" oninput="window.calcular()">
     </div>
 
     <div class="form-group">
       <label for="horasEspera">Horas de espera / descanso entre pases</label>
-      <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="calcular()">
+      <input type="number" id="horasEspera" value="0" min="0" step="0.5" oninput="window.calcular()">
     </div>
 
     <div class="form-group">
       <label for="kmTotales">Km totales ida y vuelta (desde Onda)</label>
-      <input type="number" id="kmTotales" value="42" min="0" step="5" oninput="calcular()">
+      <input type="number" id="kmTotales" value="42" min="0" step="5" oninput="window.calcular()">
     </div>
 
     <div class="form-group">
       <label for="dias">Días de actuación consecutivos</label>
-      <input type="number" id="dias" value="1" min="1" step="1" oninput="calcular()">
+      <input type="number" id="dias" value="1" min="1" step="1" oninput="window.calcular()">
     </div>
 
     <div class="form-group">
       <label for="musicos">Músicos en plantilla</label>
-      <input type="number" id="musicos" value="9" min="1" step="1" oninput="calcular()">
+      <input type="number" id="musicos" value="9" min="1" step="1" oninput="window.calcular()">
     </div>
 
     <div class="checkbox-group">
-      <input type="checkbox" id="incluyeComida" checked onchange="calcular()">
+      <input type="checkbox" id="incluyeComida" checked onchange="window.calcular()">
       <label for="incluyeComida" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">La organización pone la comida/cena</label>
     </div>
 
     <div class="checkbox-group">
-      <input type="checkbox" id="requiereAlojamiento" onchange="toggleAlojamiento()">
+      <input type="checkbox" id="requiereAlojamiento" onchange="window.toggleAlojamiento()">
       <label for="requiereAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">Requiere hacer noche / alojamiento</label>
     </div>
 
     <div class="checkbox-group sub-checkbox" id="contenedorIncluyeAlojamiento" style="display: none;">
-      <input type="checkbox" id="incluyeAlojamiento" checked onchange="calcular()">
+      <input type="checkbox" id="incluyeAlojamiento" checked onchange="window.calcular()">
       <label for="incluyeAlojamiento" style="margin-bottom:0; cursor:pointer; color:var(--text-white);">El alojamiento lo cubre la organización</label>
     </div>
   </div>
 
-  <!-- Resultado y Desglose -->
   <div class="card result-box">
     <div>
       <h2>Presupuesto</h2>
@@ -573,23 +570,21 @@
     </div>
 
     <div class="btn-group">
-      <button class="btn btn-fav" id="btnGuardar" onclick="guardarFavorito()">
+      <button class="btn btn-fav" id="btnGuardar" onclick="window.guardarFavorito()">
         ⭐ Guardar
       </button>
-      <button class="btn btn-whatsapp" id="btnCopiar" onclick="copiarMensajeWhatsApp()">
+      <button class="btn btn-whatsapp" id="btnCopiar" onclick="window.copiarMensajeWhatsApp()">
         📋 Copiar WhatsApp
       </button>
     </div>
   </div>
 
-  <!-- Sección de Favoritos y Registro Manual -->
   <div class="card full-width">
     <div class="card-header-flex">
-      <h3>⭐ Bolos Guardados y Aprendidos</h3>
-      <button class="btn-manual-toggle" onclick="toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
+      <h3>⭐ Bolos en la Nube (Base Compartida)</h3>
+      <button class="btn-manual-toggle" onclick="window.toggleFormularioManual()">➕ Registrar Bolo Pasado (Manual)</button>
     </div>
 
-    <!-- Formulario para introducir un bolo histórico manualmente con precio pactado -->
     <div class="manual-form-container" id="manualForm">
       <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--primary-red); text-transform:uppercase;">Registrar Bolo Pasado con Precio Real</h4>
       <div class="manual-grid">
@@ -625,7 +620,7 @@
           <input type="number" id="m_precioPactado" placeholder="Ej. 750" step="10">
         </div>
         <div class="form-group" style="display:flex; align-items:flex-end;">
-          <button class="btn btn-fav" style="width:100%;" onclick="guardarBoloManual()">💾 Guardar y Entrenar Algoritmo</button>
+          <button class="btn btn-fav" style="width:100%;" onclick="window.guardarBoloManual()">💾 Guardar y Sincronizar</button>
         </div>
       </div>
     </div>
@@ -635,15 +630,58 @@
   </div>
 </div>
 
-<script>
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { 
+    getFirestore, 
+    collection, 
+    addDoc, 
+    onSnapshot, 
+    deleteDoc, 
+    doc 
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9R4tfT23XQRymQgtjqXhffh3Xb9T4wQI",
+    authDomain: "xaranga-llenya-presupuestos.firebaseapp.com",
+    projectId: "xaranga-llenya-presupuestos",
+    storageBucket: "xaranga-llenya-presupuestos.firebasestorage.app",
+    messagingSenderId: "486149298412",
+    appId: "1:486149298412:web:9195853ee31faf22206dc9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const bolosCollection = collection(db, "bolos_aprendidos");
+
+  let bolosCloud = [];
   let resumenCalculo = {};
 
-  function toggleFormularioManual() {
+  // Sincronización en tiempo real desde Firestore
+  onSnapshot(bolosCollection, (snapshot) => {
+    bolosCloud = [];
+    snapshot.forEach(docSnap => {
+      bolosCloud.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
+    renderFavoritos();
+    calcular();
+  }, (error) => {
+    console.warn("Modo offline o error al conectar con Firestore:", error);
+    bolosCloud = JSON.parse(localStorage.getItem('charanga_favoritos') || '[]');
+    renderFavoritos();
+    calcular();
+  });
+
+  window.toggleFormularioManual = function() {
     const f = document.getElementById('manualForm');
     f.style.display = (f.style.display === 'block') ? 'none' : 'block';
-  }
+  };
 
-  function toggleAlojamiento() {
+  window.toggleAlojamiento = function() {
     const requiere = document.getElementById('requiereAlojamiento').checked;
     const sub = document.getElementById('contenedorIncluyeAlojamiento');
     if (requiere) {
@@ -653,14 +691,12 @@
       document.getElementById('incluyeAlojamiento').checked = true;
     }
     calcular();
-  }
+  };
 
   function calcularCosteToqueEscalonado(horasT) {
     if (horasT <= 2) return 0;
-    
     let h_extra = horasT - 2;
     let coste = 0;
-
     if (h_extra <= 0.5) {
       coste += h_extra * 240.0;
     } else {
@@ -668,17 +704,14 @@
       coste += 120.0 + (t1 - 0.5) * 186.666;
     }
     h_extra -= Math.min(Math.max(0, h_extra), 2.0);
-
     if (h_extra > 0) {
       let t2 = Math.min(h_extra, 2.0);
       coste += t2 * 150.0;
       h_extra -= t2;
     }
-
     if (h_extra > 0) {
       coste += h_extra * 100.0;
     }
-
     return coste;
   }
 
@@ -695,15 +728,10 @@
 
   function calcularSubtotalTeoricoPuro(horasT, horasE, km, numMusicos, incluyeComida, requiereAlojamiento, incluyeAlojamiento) {
     const BASE_MINIMA_CHARANGA = 500;
-    const KM_CORTESIA = 40;
-    const DIETA_POR_MUSICO = 20;
-    const SUPLEMENTO_HOTEL_PERSONA = 35;
-
     const factorEscalaMusicos = numMusicos / 9;
     const costeExtra = calcularCosteToqueEscalonado(horasT) * factorEscalaMusicos;
     const costeEspera = calcularCosteEsperaEscalonado(horasE) * factorEscalaMusicos;
-    
-    let kmFacturables = Math.max(0, km - KM_CORTESIA);
+    let kmFacturables = Math.max(0, km - 40);
     let costeKmCalc = 0;
     if (kmFacturables > 0) {
       let tramoMedio = Math.min(kmFacturables, 180.0);
@@ -714,21 +742,17 @@
       }
     }
     const costeKm = costeKmCalc > 0 ? (Math.round(costeKmCalc / 10) * 10) : 0;
-
-    const costeDietas = incluyeComida ? 0 : (numMusicos * DIETA_POR_MUSICO);
-    const costeHotel = (requiereAlojamiento && !incluyeAlojamiento) ? (numMusicos * SUPLEMENTO_HOTEL_PERSONA) : 0;
-
+    const costeDietas = incluyeComida ? 0 : (numMusicos * 20);
+    const costeHotel = (requiereAlojamiento && !incluyeAlojamiento) ? (numMusicos * 35) : 0;
     return BASE_MINIMA_CHARANGA + costeExtra + costeEspera + costeKm + costeDietas + costeHotel;
   }
 
   function calcularAjusteAprendizaje(horasT, horasE, km, dias, tipoCliente) {
-    const historico = getFavoritos();
-    if (historico.length === 0) return 0;
-
-    let sumaPonderadaDiferencias = 0;
+    if (bolosCloud.length === 0) return 0;
+    let sumaPonderada = 0;
     let pesoTotal = 0;
 
-    historico.forEach(b => {
+    bolosCloud.forEach(b => {
       const distHoras = Math.abs(b.horasT - horasT) / 4.0;
       const distEspera = Math.abs(b.horasE - horasE) / 3.0;
       const distKm = Math.abs(b.km - km) / 100.0;
@@ -739,18 +763,18 @@
 
       if (distanciaTotal < 1.6) {
         const peso = 1.0 / (distanciaTotal + 0.08);
-        const subtotalRef = b.subtotalBaseTeorico || (b.precioDia);
+        const subtotalRef = b.subtotalBaseTeorico || b.precioDia;
         const ratioCorreccion = (b.precioDia - subtotalRef) || 0;
-        sumaPonderadaDiferencias += ratioCorreccion * peso;
+        sumaPonderada += ratioCorreccion * peso;
         pesoTotal += peso;
       }
     });
 
     if (pesoTotal === 0) return 0;
-    return Math.round((sumaPonderadaDiferencias / pesoTotal) / 10) * 10;
+    return Math.round((sumaPonderada / pesoTotal) / 10) * 10;
   }
 
-  function calcular() {
+  window.calcular = function() {
     const lugar = document.getElementById('lugar').value.trim() || 'Vuestra localidad';
     const tipoCliente = document.getElementById('tipoCliente').value;
     const horasT = parseFloat(document.getElementById('horasTocadas').value) || 0;
@@ -857,16 +881,14 @@
 
     document.getElementById('pagoMusico').innerText = pagoPorMusico + " €";
     document.getElementById('pagoFurgoneta').innerText = boteFurgoneta + " €";
-  }
+  };
 
-  function copiarMensajeWhatsApp() {
+  window.copiarMensajeWhatsApp = function() {
     const r = resumenCalculo;
-    
     let detalleHorario = `• *Actuación:* ${r.horasT} h de música en directo`;
     if (r.horasE > 0) {
       detalleHorario += `\n• *Disponibilidad / Descanso entre pases:* ${r.horasE} h`;
     }
-
     let detalleDias = r.dias > 1 ? `• *Duración:* ${r.dias} días de actuación` : `• *Duración:* 1 jornada`;
     let detalleManutencion = r.incluyeComida 
       ? `• *Manutención:* A cargo de la organización` 
@@ -906,16 +928,14 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
         btn.style.backgroundColor = 'var(--primary-red)';
       }, 2000);
     });
-  }
+  };
 
-  function getFavoritos() {
-    return JSON.parse(localStorage.getItem('charanga_favoritos') || '[]');
-  }
+  window.guardarFavorito = async function() {
+    const btn = document.getElementById('btnGuardar');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Guardando...';
 
-  function guardarFavorito() {
-    const favoritos = getFavoritos();
     const nuevo = {
-      id: Date.now(),
       lugar: resumenCalculo.lugar,
       tipoCliente: resumenCalculo.tipoCliente,
       horasT: resumenCalculo.horasT,
@@ -929,22 +949,26 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
       subtotalBaseTeorico: resumenCalculo.subtotalBaseTeorico,
       precioTotal: resumenCalculo.precioTotal,
       precioDia: resumenCalculo.precioDia,
-      pagoPorMusico: resumenCalculo.pagoPorMusico
+      pagoPorMusico: resumenCalculo.pagoPorMusico,
+      fechaCreacion: Date.now()
     };
 
-    favoritos.push(nuevo);
-    localStorage.setItem('charanga_favoritos', JSON.stringify(favoritos));
-    renderFavoritos();
-    calcular();
-
-    const btn = document.getElementById('btnGuardar');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '⭐ ¡Guardado!';
+    try {
+      await addDoc(bolosCollection, nuevo);
+      btn.innerHTML = '⭐ ¡Guardado en la Nube!';
+    } catch (e) {
+      console.error(e);
+      let local = JSON.parse(localStorage.getItem('charanga_favoritos') || '[]');
+      local.push({ id: Date.now().toString(), ...nuevo });
+      localStorage.setItem('charanga_favoritos', JSON.stringify(local));
+      bolosCloud = local;
+      renderFavoritos();
+      btn.innerHTML = '⭐ ¡Guardado en Local!';
+    }
     setTimeout(() => { btn.innerHTML = originalText; }, 1500);
-  }
+  };
 
-  // Guardar un bolo histórico manualmente con precio cerrado
-  function guardarBoloManual() {
+  window.guardarBoloManual = async function() {
     const lugar = document.getElementById('m_lugar').value.trim() || 'Bolo Histórico';
     const tipoCliente = document.getElementById('m_tipoCliente').value;
     const horasT = parseFloat(document.getElementById('m_horasT').value) || 2;
@@ -963,7 +987,6 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
     const pagoPorMusico = Math.round((precioDia / 10) / 5) * 5;
 
     const nuevo = {
-      id: Date.now(),
       lugar,
       tipoCliente,
       horasT,
@@ -977,26 +1000,24 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
       subtotalBaseTeorico: subtotalTeorico,
       precioTotal: precioPactado,
       precioDia: precioDia,
-      pagoPorMusico: pagoPorMusico
+      pagoPorMusico: pagoPorMusico,
+      fechaCreacion: Date.now()
     };
 
-    const favoritos = getFavoritos();
-    favoritos.push(nuevo);
-    localStorage.setItem('charanga_favoritos', JSON.stringify(favoritos));
-    
-    // Limpiar campos y ocultar formulario
-    document.getElementById('m_lugar').value = '';
-    document.getElementById('m_precioPactado').value = '';
-    toggleFormularioManual();
-    
-    renderFavoritos();
-    calcular();
-    alert(`¡Bolo en ${lugar} guardado! El algoritmo ha aprendido de este precio.`);
-  }
+    try {
+      await addDoc(bolosCollection, nuevo);
+      document.getElementById('m_lugar').value = '';
+      document.getElementById('m_precioPactado').value = '';
+      window.toggleFormularioManual();
+      alert(`¡Bolo en ${lugar} sincronizado en la nube para toda la charanga!`);
+    } catch (e) {
+      console.error(e);
+      alert('Error de conexión. Se guardará cuando haya red.');
+    }
+  };
 
-  function cargarFavorito(id) {
-    const favoritos = getFavoritos();
-    const item = favoritos.find(f => f.id === id);
+  window.cargarFavorito = function(id) {
+    const item = bolosCloud.find(f => f.id === id);
     if (!item) return;
 
     document.getElementById('lugar').value = item.lugar;
@@ -1010,27 +1031,30 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
     document.getElementById('requiereAlojamiento').checked = !!item.requiereAlojamiento;
     document.getElementById('incluyeAlojamiento').checked = item.incluyeAlojamiento !== undefined ? item.incluyeAlojamiento : true;
     
-    toggleAlojamiento();
-    calcular();
+    window.toggleAlojamiento();
+    window.calcular();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  };
 
-  function eliminarFavorito(id) {
-    let favoritos = getFavoritos();
-    favoritos = favoritos.filter(f => f.id !== id);
-    localStorage.setItem('charanga_favoritos', JSON.stringify(favoritos));
-    renderFavoritos();
-    calcular();
-  }
+  window.eliminarFavorito = async function(id) {
+    if (!confirm('¿Seguro que quieres borrar este bolo de la base compartida?')) return;
+    try {
+      await deleteDoc(doc(db, "bolos_aprendidos", id));
+    } catch (e) {
+      console.error(e);
+      bolosCloud = bolosCloud.filter(f => f.id !== id);
+      localStorage.setItem('charanga_favoritos', JSON.stringify(bolosCloud));
+      renderFavoritos();
+      window.calcular();
+    }
+  };
 
   function renderFavoritos() {
     const contenedor = document.getElementById('contenedorFavoritos');
-    const favoritos = getFavoritos();
+    document.getElementById('learningStatus').innerHTML = `🧠 Memoria compartida en la nube: <span>${bolosCloud.length}</span> bolos aprendidos`;
 
-    document.getElementById('learningStatus').innerHTML = `🧠 Memoria activa: <span>${favoritos.length}</span> bolos aprendidos`;
-
-    if (favoritos.length === 0) {
-      contenedor.innerHTML = '<p class="no-favs">No hay bolos en la memoria. Añade bolos pasados arriba para entrenar el algoritmo.</p>';
+    if (bolosCloud.length === 0) {
+      contenedor.innerHTML = '<p class="no-favs">No hay bolos en la nube. Añade bolos para que todos compartan el mismo aprendizaje.</p>';
       return;
     }
 
@@ -1039,7 +1063,7 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
       'particular': 'Particular'
     };
 
-    contenedor.innerHTML = favoritos.map(f => `
+    contenedor.innerHTML = bolosCloud.map(f => `
       <div class="fav-item">
         <div>
           <div class="fav-title">${f.lugar} · <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">${etiquetasCliente[f.tipoCliente] || 'Estándar'}</span></div>
@@ -1050,16 +1074,15 @@ Cualquier ajuste de horarios o formato nos decís y lo adaptamos. ¡A dar llenya
           </div>
         </div>
         <div class="fav-actions">
-          <button class="btn-sm btn-load" onclick="cargarFavorito(${f.id})">Cargar</button>
-          <button class="btn-sm btn-del" onclick="eliminarFavorito(${f.id})">Borrar</button>
+          <button class="btn-sm btn-load" onclick="window.cargarFavorito('${f.id}')">Cargar</button>
+          <button class="btn-sm btn-del" onclick="window.eliminarFavorito('${f.id}')">Borrar</button>
         </div>
       </div>
     `).join('');
   }
 
   window.onload = function() {
-    calcular();
-    renderFavoritos();
+    window.calcular();
   };
 </script>
 
