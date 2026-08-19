@@ -533,26 +533,37 @@
       line-height: 1.5;
     }
 
-    /* REDISEÑO ELEGANTE Y AMIGABLE DE CAJA & BOTE */
+    /* TARJETA DINÁMICA DE CAJA (VERDE / ROJO) */
     .caja-dashboard {
-      background: linear-gradient(180deg, #18181b 0%, #09090b 100%);
-      border: 1px solid #27272a;
-      border-radius: 16px;
+      background: #000000;
+      border: 2px solid var(--accent-green);
+      border-radius: 14px;
       padding: 24px 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
       margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .caja-dashboard.negativo {
+      border-color: var(--accent-red) !important;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.25) !important;
+    }
+
+    .caja-dashboard.positivo {
+      border-color: var(--accent-green) !important;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.25) !important;
     }
 
     .caja-hero-header {
       text-align: center;
       padding-bottom: 18px;
-      border-bottom: 1px solid #27272a;
       margin-bottom: 18px;
+      border-bottom: 1px solid #222222;
     }
 
     .caja-hero-label {
-      font-size: 0.8rem;
-      color: #a1a1aa;
+      font-size: 0.85rem;
+      color: #a3a3a3;
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -561,10 +572,15 @@
     .caja-hero-total {
       font-size: 3rem;
       font-weight: 900;
-      color: #4ade80;
+      color: var(--accent-green);
       margin: 4px 0 0 0;
       line-height: 1.1;
       letter-spacing: -1px;
+      transition: color 0.3s ease;
+    }
+
+    .caja-hero-total.negativo {
+      color: var(--accent-red) !important;
     }
 
     .caja-cards-grid {
@@ -580,19 +596,13 @@
     }
 
     .caja-pill-card {
-      background: rgba(24, 24, 27, 0.75);
-      border: 1px solid #3f3f46;
-      border-radius: 12px;
+      background: #141414;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
       padding: 16px 14px;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .caja-pill-card:hover {
-      border-color: #52525b;
-      background: rgba(39, 39, 42, 0.7);
     }
 
     .caja-pill-header {
@@ -610,18 +620,6 @@
       font-size: 1.7rem;
       font-weight: 900;
       line-height: 1.2;
-    }
-
-    .caja-summary-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #121214;
-      border: 1px solid #27272a;
-      border-radius: 10px;
-      padding: 10px 16px;
-      margin-top: 14px;
-      font-size: 0.8rem;
     }
 
     .tx-item {
@@ -918,11 +916,11 @@
       </div>
     </div>
 
-    <!-- PESTAÑA 3: CAJA & BOTE ELEGANTE -->
+    <!-- PESTAÑA 3: CAJA & BOTE CON MARCO INTELIGENTE -->
     <div id="tab-caja" class="tab-content">
       
-      <!-- DASHBOARD MODERNO DE CAJA -->
-      <div class="caja-dashboard">
+      <!-- DASHBOARD CON MARCO REACTIVO (VERDE / ROJO) -->
+      <div class="caja-dashboard positivo" id="cajaDashboardCard">
         <div class="caja-hero-header">
           <div class="caja-hero-label">Bote Total Disponible en Caja</div>
           <div class="caja-hero-total" id="cajaTotalDisplay">0 €</div>
@@ -944,11 +942,6 @@
             </div>
             <div class="caja-pill-amount" id="cajaEfectivoDisplay" style="color: var(--accent-green);">0 €</div>
           </div>
-        </div>
-
-        <div class="caja-summary-bar">
-          <div><span style="color:#71717a;">Entradas:</span> <strong id="cajaIngresosDisplay" style="color:var(--accent-green); font-size:0.9rem;">+0 €</strong></div>
-          <div><span style="color:#71717a;">Salidas:</span> <strong id="cajaGastosDisplay" style="color:var(--accent-red); font-size:0.9rem;">-0 €</strong></div>
         </div>
       </div>
 
@@ -1122,11 +1115,9 @@
         hubView.style.display = 'block';
         errBox.style.display = 'none';
 
-        // Saludo personalizado (se mantiene el nombre pedido para bienvenida)
         const nombreBienvenida = NOMBRES_MUSICOS[emailUsuario] || (user.displayName ? user.displayName.split(' ')[0] : 'Músico');
         document.getElementById('saludoUsuarioGrande').innerHTML = `Bienvenido de nuevo <span>${nombreBienvenida}</span>`;
 
-        // Nombre para el selector de caja
         const nombreCaja = NOMBRES_CAJA[emailUsuario] || "Charanga (General)";
         const respSelect = document.getElementById('mov_responsable');
         for (let i = 0; i < respSelect.options.length; i++) {
@@ -1469,7 +1460,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // ================= CAJA & BOTE ELEGANTE =================
+  // ================= CAJA & BOTE REACTIVO =================
   window.guardarMovimientoCaja = async function() {
     const concepto = document.getElementById('mov_concepto').value.trim();
     const importe = parseFloat(document.getElementById('mov_importe').value);
@@ -1517,11 +1508,23 @@
     });
 
     const saldoTotal = ingresos - gastos;
-    document.getElementById('cajaTotalDisplay').innerText = `${saldoTotal.toLocaleString('es-ES')} €`;
+    const cajaDashboard = document.getElementById('cajaDashboardCard');
+    const cajaTotalDisplay = document.getElementById('cajaTotalDisplay');
+
+    // Comprobación de saldo positivo / negativo para alternar color del marco
+    if (saldoTotal < 0) {
+      cajaDashboard.classList.remove('positivo');
+      cajaDashboard.classList.add('negativo');
+      cajaTotalDisplay.classList.add('negativo');
+    } else {
+      cajaDashboard.classList.remove('negativo');
+      cajaDashboard.classList.add('positivo');
+      cajaTotalDisplay.classList.remove('negativo');
+    }
+
+    cajaTotalDisplay.innerText = `${saldoTotal.toLocaleString('es-ES')} €`;
     document.getElementById('cajaBancoDisplay').innerText = `${totalBanco.toLocaleString('es-ES')} €`;
     document.getElementById('cajaEfectivoDisplay').innerText = `${totalEfectivo.toLocaleString('es-ES')} €`;
-    document.getElementById('cajaIngresosDisplay').innerText = `+${ingresos.toLocaleString('es-ES')} €`;
-    document.getElementById('cajaGastosDisplay').innerText = `-${gastos.toLocaleString('es-ES')} €`;
 
     const contenedor = document.getElementById('listaMovimientosCaja');
     if (movimientosCaja.length === 0) {
